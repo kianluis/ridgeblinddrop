@@ -1053,3 +1053,151 @@ body {
 .icon-commuter { width:32px;height:32px;background:#2a2a1a;border:2px solid #555533;position:relative; }
 .icon-commuter::before { content:'';position:absolute;top:4px;left:50%;transform:translateX(-50%);width:12px;height:4px;background:#555533;border-radius:2px; }
 .icon-commuter::after  { content:'';position:absolute;top:10px;left:4px;right:4px;bottom:4px;background:#444433;border:1px solid #555533; }
+
+/* ═══════════════════════════════════════════════════════
+   GUIDE OVERLAY
+   ═══════════════════════════════════════════════════════ */
+
+/* persistent topbar button */
+.guide-topbar-btn {
+  color: var(--amber);
+  border: 1px solid var(--amber);
+  font-size: var(--fs-sm);
+  animation: guide-pulse 2.4s ease-in-out infinite;
+}
+.guide-topbar-btn:hover {
+  background: var(--amber);
+  color: var(--bg);
+  animation: none;
+}
+@keyframes guide-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50%       { box-shadow: 0 0 0 3px color-mix(in srgb, var(--amber) 35%, transparent); }
+}
+
+/* overlay backdrop */
+.guide-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-3);
+  overflow-y: auto;
+}
+.guide-overlay.hidden { display: none; }
+
+/* main box */
+.guide-box {
+  background: var(--bg2);
+  border: 2px solid var(--border-hi);
+  max-width: 680px;
+  width: 100%;
+  padding: var(--sp-4) var(--sp-4) var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  image-rendering: pixelated;
+}
+
+/* header */
+.guide-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-1);
+  border-bottom: 1px solid var(--border-hi);
+  padding-bottom: var(--sp-3);
+}
+.guide-logo {
+  font-size: var(--fs-xs);
+  color: var(--amber);
+  letter-spacing: 0.25em;
+}
+.guide-title {
+  font-size: var(--fs-lg);
+  color: var(--text);
+  letter-spacing: 0.12em;
+}
+
+/* 3-col grid of cards */
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+}
+@media (max-width: 500px) {
+  .guide-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.guide-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  transition: border-color 0.15s;
+}
+.guide-card:hover { border-color: var(--border-hi); }
+
+.guide-card-icon {
+  font-size: 1.5em;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.guide-card-head {
+  font-size: var(--fs-xs);
+  color: var(--amber);
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+.guide-card-body {
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+  line-height: 1.9;
+  font-family: sans-serif;
+  letter-spacing: 0;
+}
+.guide-card-body strong {
+  color: var(--text);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.85em;
+}
+
+/* rarity legend */
+.guide-rarities {
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  padding: var(--sp-2) 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.guide-rar {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+}
+.guide-rar-common   { color: var(--common); }
+.guide-rar-uncommon { color: var(--uncommon); }
+.guide-rar-rare     { color: var(--rare); }
+.guide-rar-ultra    { color: var(--ultra); }
+
+/* start button */
+.guide-start-btn {
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--amber);
+  color: var(--bg);
+  border: none;
+  font-family: 'Press Start 2P', monospace;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.guide-start-btn:hover  { background: var(--amber2); }
+.guide-start-btn:active { transform: scale(0.98); }

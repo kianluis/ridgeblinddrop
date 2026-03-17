@@ -27,6 +27,7 @@
       <span class="chip-label">COLLECTION</span>
       <span class="chip-val" id="hud-collection">0/18</span>
     </div>
+    <button id="guide-btn" class="icon-btn guide-topbar-btn" onclick="openGuide()" title="How to Play">?</button>
     <button id="mute-btn" class="icon-btn" onclick="toggleSound()" title="Toggle Sound">🔊</button>
   </div>
 </header>
@@ -225,6 +226,89 @@
       <div class="reveal-credits"   id="reveal-credits"></div>
     </div>
     <button class="reveal-close" id="reveal-close-btn" onclick="closeReveal()">ADD TO COLLECTION</button>
+  </div>
+</div>
+
+<!-- ══ GUIDE OVERLAY ════════════════════════════════════════ -->
+<div id="guide-overlay" class="guide-overlay">
+  <div class="guide-box">
+    <div class="guide-header">
+      <span class="guide-logo">RIDGE</span>
+      <span class="guide-title">HOW TO PLAY</span>
+    </div>
+
+    <div class="guide-grid">
+
+      <div class="guide-card">
+        <div class="guide-card-icon">🪙</div>
+        <div class="guide-card-head">EARN CREDITS</div>
+        <div class="guide-card-body">
+          You start with <strong>100 credits</strong>.<br>
+          Idle income trickles in over time.<br>
+          Duplicates also pay credits back.
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-icon">▦</div>
+        <div class="guide-card-head">PLACE AN ORDER</div>
+        <div class="guide-card-body">
+          Hit <strong>PLACE ORDER</strong> and pick a tier.<br>
+          Higher tier = faster delivery<br>
+          and better rare odds.
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-icon">⏱</div>
+        <div class="guide-card-head">WAIT FOR DELIVERY</div>
+        <div class="guide-card-body">
+          Orders ship in <strong>real time</strong>.<br>
+          Watch the IN TRANSIT panel.<br>
+          A toast pops when it arrives!
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-icon">🎁</div>
+        <div class="guide-card-head">OPEN YOUR PACKAGE</div>
+        <div class="guide-card-body">
+          Click an arrived order to open it.<br>
+          Reveals a random Ridge collectible<br>
+          across <strong>4 rarities</strong>.
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-icon">◈</div>
+        <div class="guide-card-head">COLLECT ALL 18</div>
+        <div class="guide-card-body">
+          Fill your Booklet to unlock<br>
+          <strong>Prestige</strong> — a permanent rare boost.<br>
+          Complete Missions for extra rewards.
+        </div>
+      </div>
+
+      <div class="guide-card">
+        <div class="guide-card-icon">⬆</div>
+        <div class="guide-card-head">UPGRADE CARRIERS</div>
+        <div class="guide-card-body">
+          Buy faster carriers in the<br>
+          order modal to slash wait times.<br>
+          Up to <strong>5× speed</strong> available.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="guide-rarities">
+      <span class="guide-rar guide-rar-common">■ COMMON</span>
+      <span class="guide-rar guide-rar-uncommon">■ UNCOMMON</span>
+      <span class="guide-rar guide-rar-rare">■ RARE</span>
+      <span class="guide-rar guide-rar-ultra">■ ULTRA RARE</span>
+    </div>
+
+    <button class="guide-start-btn" onclick="closeGuide()">▶ START PLAYING</button>
   </div>
 </div>
 

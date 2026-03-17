@@ -116,6 +116,19 @@ function gameTick() {
 
 let _dayNightCounter = 0;
 
+// ── Guide overlay ─────────────────────────────────────────
+
+const GUIDE_KEY = 'ridgeMysteryGuideShown';
+
+function openGuide() {
+  document.getElementById('guide-overlay').classList.remove('hidden');
+}
+
+function closeGuide() {
+  document.getElementById('guide-overlay').classList.add('hidden');
+  localStorage.setItem(GUIDE_KEY, '1');
+}
+
 // ── Init ──────────────────────────────────────────────────
 
 function init() {
@@ -135,6 +148,11 @@ function init() {
 
   // Clear the lastNewItemId after first booklet render so the animation only plays once
   setTimeout(() => { state.lastNewItemId = null; }, 800);
+
+  // Show guide on first visit only
+  if (!localStorage.getItem(GUIDE_KEY)) {
+    openGuide();
+  }
 }
 
 init();
