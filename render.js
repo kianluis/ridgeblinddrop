@@ -117,11 +117,11 @@ function renderOrderQueue() {
     const pct      = order.ready ? 100 : Math.min(100, (elapsed / order.duration) * 100);
     const remaining = order.ready ? 0 : Math.max(0, order.duration - elapsed);
     const div = document.createElement('div');
-    div.className = 'order-card' + (order.ready ? ' ready' : '');
+    div.className = 'order-card tier-' + order.tier + (order.ready ? ' ready' : '');
     div.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+      <div class="order-card-top">
         <span class="order-tier-badge ${tier.cls}">${tier.name.toUpperCase()}</span>
-        <span style="font-size:5px;color:var(--text-dim)">via ${carrier.name}</span>
+        <span class="order-carrier-name">via ${carrier.name}</span>
       </div>
       <div class="order-progress-bar">
         <div class="order-progress-fill" style="width:${pct}%"></div>
@@ -256,12 +256,14 @@ function renderMilestones() {
     const div  = document.createElement('div');
     div.className = 'milestone-card' + (done ? ' done' : '');
     div.innerHTML = `
-      <div>
+      <div class="ms-info">
         <div class="ms-name">${ms.name}</div>
         <div class="ms-desc">${ms.desc}</div>
       </div>
-      <div class="ms-reward">+${ms.reward} cr</div>
-      <div class="ms-status">${done ? '✓ DONE' : 'PENDING'}</div>
+      <div class="ms-right">
+        <div class="ms-reward">+${ms.reward} cr</div>
+        <div class="ms-status">${done ? '✓ DONE' : 'PENDING'}</div>
+      </div>
     `;
     el.appendChild(div);
   });
