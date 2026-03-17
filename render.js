@@ -152,8 +152,8 @@ function renderPullHistory() {
       const entry = recent[i];
       div.className = 'pull-entry rarity-' + entry.rarity;
       div.innerHTML = `
-        <div class="rarity-dot"></div>
-        <div class="pull-name">${entry.name.replace('\n', ' ')}</div>`;
+        <div class="pull-name">${entry.name.replace('\n', ' ')}</div>
+        <div class="pull-rarity-label">(${rarityLabel(entry.rarity).charAt(0) + rarityLabel(entry.rarity).slice(1).toLowerCase()})</div>`;
     } else {
       div.className = 'pull-entry pull-entry--empty';
     }

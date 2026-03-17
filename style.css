@@ -638,7 +638,21 @@ body {
   color: var(--text);
   line-height: 1.4;
   padding: 0 var(--sp-1);
+  text-align: center;
 }
+
+.pull-rarity-label {
+  font-family: sans-serif;
+  font-size: 9px;
+  font-style: italic;
+  text-align: center;
+  margin-top: 2px;
+  padding: 0 var(--sp-1);
+}
+.rarity-common   .pull-rarity-label { color: var(--common); }
+.rarity-uncommon .pull-rarity-label { color: var(--uncommon); }
+.rarity-rare     .pull-rarity-label { color: var(--rare); }
+.rarity-ultra    .pull-rarity-label { color: var(--ultra); }
 
 /* ── INLINE ORDER PANEL ──────────────────────────────────── */
 .order-panel-hint  { font-size: var(--fs-xs); color: var(--text-dim); margin: 0 0 var(--sp-3); line-height: 2; }
