@@ -280,18 +280,18 @@ function updateDayNight() {
 
   let skyTop, skyBot, lightColor, lightGlow, nightMode = false;
 
-  if (hour >= 5 && hour < 8) {        // Dawn
-    skyTop = '#1e2d4a'; skyBot = '#3a1f0e';
-    lightColor = '#ffaa50'; lightGlow = 'rgba(255,170,80,0.45)';
-  } else if (hour >= 8 && hour < 17) { // Day
-    skyTop = '#1a2035'; skyBot = '#2a1f0e';
-    lightColor = '#f0d080'; lightGlow = 'rgba(240,165,0,0.30)';
-  } else if (hour >= 17 && hour < 20) { // Dusk
-    skyTop = '#2a1020'; skyBot = '#3a1508';
-    lightColor = '#ff7040'; lightGlow = 'rgba(255,110,60,0.55)';
-  } else {                              // Night
-    skyTop = '#05050f'; skyBot = '#1a0a05';
-    lightColor = '#a090ff'; lightGlow = 'rgba(150,130,255,0.55)';
+  if (hour >= 5 && hour < 8) {         // Dawn — soft rose-gold morning light
+    skyTop = '#d4a060'; skyBot = '#a87040';
+    lightColor = '#ffd090'; lightGlow = 'rgba(255,190,100,0.55)';
+  } else if (hour >= 8 && hour < 17) { // Day — warm honey interior
+    skyTop = '#d4a868'; skyBot = '#b87840';
+    lightColor = '#ffe8a0'; lightGlow = 'rgba(255,220,120,0.50)';
+  } else if (hour >= 17 && hour < 20) { // Dusk — deep amber warmth
+    skyTop = '#b86830'; skyBot = '#904a18';
+    lightColor = '#ffb060'; lightGlow = 'rgba(255,160,70,0.65)';
+  } else {                              // Night — cozy lamp glow
+    skyTop = '#6a3c18'; skyBot = '#3e2008';
+    lightColor = '#ffb880'; lightGlow = 'rgba(255,170,100,0.65)';
     nightMode = true;
   }
 
