@@ -1,0 +1,110 @@
+// ═══════════════════════════════════════════════════════
+// RIDGE MYSTERY DROP — state.js
+// State object, persistence, and pure helper functions
+// ═══════════════════════════════════════════════════════
+
+let state = {
+  credits: 100,
+  packagesOpened: 0,
+  totalCreditsEarned: 100,
+  carrier: 'budget',
+  carriersOwned: ['budget'],
+  collection: {},        // id -> count
+  orders: [],            // { id, tier, startTime, duration, ready }
+  pullHistory: [],       // { id, name, rarity }
+  milestonesCompleted: [],
+  firstRare: false,
+  firstUltra: false,
+  nextOrderId: 1,
+  lastIdleTick: Date.now(),
+  soundEnabled: true,
+  prestigeCount: 0,
+  prestigeRareBonus: 0,  // additive bonus to rare rates
+  bookletFilter: 'all',
+  lastNewItemId: null,   // used for flip animation
+};
+
+// ── Persistence ──────────────────────────────────────────
+
+function saveState() {
+  try { localStorage.setItem('ridgemysterydrop_v2', JSON.stringify(state)); } catch(e){}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem('ridgemysterydrop_v2');
+    if (raw) {
+      const loaded = JSON.parse(raw);
+      // Merge loaded into defaults so new keys survive upgrades
+      state = Object.assign(state, loaded);
+      // Ensure lastIdleTick is valid
+      if (!state.lastIdleTick) state.lastIdleTick = Date.now();
+      // Recalculate readiness based on real timestamps
+      const now = Date.now();
+      state.orders = (state.orders || []).map(o => {
+        if (!o.ready && now >= o.startTime + o.duration * 1000) o.ready = true;
+        return o;
+      });
+    }
+  } catch(e) { console.warn('Save load failed', e); }
+}
+
+// ── Pure helpers ─────────────────────────────────────────
+
+function uniqueCount() {
+  return Object.values(state.collection).filter(c => c > 0).length;
+}
+
+function getTotalItems() { return COLLECTIBLES.length; }
+
+function getCurrentCarrier() {
+  return CARRIERS.find(c => c.id === state.carrier) || CARRIERS[0];
+}
+
+function getShipTime(tier) {
+  const carrier = getCurrentCarrier();
+  return Math.max(1, Math.round(tier.baseTime / carrier.mult));
+}
+
+function rollItem(rareboost) {
+  const totalBoost = (rareboost || 0) + (state.prestigeRareBonus || 0);
+  let rates = { ...BASE_RATES };
+  rates.common   = Math.max(0.10, rates.common   - totalBoost * 0.75);
+  rates.uncommon = Math.max(0.10, rates.uncommon - totalBoost * 0.15);
+  rates.rare    += totalBoost * 0.70;
+  rates.ultra   += totalBoost * 0.10;
+  // Normalise
+  const total = rates.common + rates.uncommon + rates.rare + rates.ultra;
+  for (const k in rates) rates[k] /= total;
+
+  const r = Math.random();
+  let rarity;
+  if      (r < rates.ultra)                              rarity = 'ultra';
+  else if (r < rates.ultra + rates.rare)                 rarity = 'rare';
+  else if (r < rates.ultra + rates.rare + rates.uncommon) rarity = 'uncommon';
+  else                                                    rarity = 'common';
+
+  const pool = COLLECTIBLES.filter(c => c.rarity === rarity);
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function rarityColor(r) {
+  return { common:'var(--common)', uncommon:'var(--uncommon)', rare:'var(--rare)', ultra:'var(--ultra)' }[r] || 'var(--text)';
+}
+
+function rarityLabel(r) {
+  return { common:'COMMON', uncommon:'UNCOMMON', rare:'RARE', ultra:'ULTRA RARE' }[r] || r;
+}
+
+function badgeClass(r) {
+  return { common:'badge-common', uncommon:'badge-uncommon', rare:'badge-rare', ultra:'badge-ultra' }[r] || '';
+}
+
+// Returns "MM:SS" format for all durations
+function formatTime(seconds) {
+  if (seconds <= 0) return '00:00';
+  const s = Math.max(0, Math.ceil(seconds));
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+}
