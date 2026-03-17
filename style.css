@@ -47,7 +47,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--bg);
+  background: var(--bg) url('bg.jpg') center center / cover fixed;
   color: var(--text);
   font-family: 'Press Start 2P', monospace;
   font-size: var(--fs-sm);
@@ -58,7 +58,9 @@ body {
 
 /* ── TOP BAR ────────────────────────────────────────────── */
 #topbar {
-  background: var(--bg);
+  background: rgba(237, 232, 223, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border-bottom: 2px solid var(--border-hi);
   padding: var(--sp-1) var(--sp-4) var(--sp-2);
   display: flex;
