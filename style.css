@@ -673,7 +673,7 @@ body {
   z-index: 9000;
 }
 #item-detail-box {
-  background: var(--panel-bg);
+  background: var(--bg2);
   border: 2px solid var(--border);
   border-radius: 10px;
   padding: 28px 32px 24px;
