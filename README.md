@@ -1,0 +1,2 @@
+# ridgemysterypackage
+Ridge Idle Game
