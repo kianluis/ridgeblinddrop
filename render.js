@@ -44,21 +44,24 @@ function renderTopBar() {
 
 // ── Inline Order Panel ────────────────────────────────────
 
+const TIER_ICONS    = { standard:'📦', express:'🚚', priority:'✈️', overnight:'🚀' };
+const CARRIER_ICONS = { budget:'📦', ridgepost:'🚚', express:'✈️', sonic:'🚀' };
+
 function renderOrderPanel() {
   // Tier cards
   const cardsEl = document.getElementById('inline-tier-cards');
   if (!cardsEl) return;
   cardsEl.innerHTML = '';
   PACKAGE_TIERS.forEach(tier => {
-    const shipTime = getShipTime(tier);
+    const shipTime  = getShipTime(tier);
     const canAfford = state.credits >= tier.cost;
-    const carrier = getCurrentCarrier();
+    const carrier   = getCurrentCarrier();
     const div = document.createElement('div');
     div.className = 'tier-card ' + tier.cls + (canAfford ? '' : ' cant-afford');
     div.innerHTML = `
       <div class="tier-card-name">${tier.name.toUpperCase()}</div>
-      <div class="tier-card-cost">${tier.cost} cr</div>
-      <div class="tier-card-time">⏱ ${formatTime(shipTime)}<br>via ${carrier.name}</div>
+      <div class="tier-card-icon">${TIER_ICONS[tier.id] || '📦'}</div>
+      <div class="tier-card-time">○ ${formatTime(shipTime)}<br>via ${carrier.name}</div>
       ${tier.rareboost > 0
         ? `<div class="tier-card-boost badge-${tier.id === 'express' ? 'uncommon' : tier.id === 'priority' ? 'rare' : 'ultra'}">
              +${Math.round(tier.rareboost * 100)}% RARE BOOST
@@ -72,7 +75,7 @@ function renderOrderPanel() {
     cardsEl.appendChild(div);
   });
 
-  // Carrier shop
+  // Carrier tiles
   const shopEl = document.getElementById('inline-carrier-shop');
   if (!shopEl) return;
   shopEl.innerHTML = '';
@@ -81,18 +84,17 @@ function renderOrderPanel() {
     const isActive  = state.carrier === carrier.id;
     const canAfford = state.credits >= carrier.cost;
     const div = document.createElement('div');
-    div.className = 'shop-item' + (isActive ? ' owned' : '') + (!canAfford && !owned ? ' cant-afford' : '');
+    div.className = 'carrier-tile' + (isActive ? ' active' : '') + (!canAfford && !owned ? ' cant-afford' : '');
+    if (!isActive) {
+      if (owned)            div.onclick = () => activateCarrier(carrier.id);
+      else if (canAfford)   div.onclick = () => buyCarrier(carrier.id);
+    }
     div.innerHTML = `
-      <div class="shop-item-info">
-        <div class="shop-item-name">${carrier.name} <span style="color:var(--amber)">${carrier.mult}×</span></div>
-        <div class="shop-item-desc">${carrier.desc}</div>
-      </div>
-      ${isActive
-        ? `<button class="btn-buy owned" disabled>ACTIVE</button>`
-        : owned
-          ? `<button class="btn-buy" onclick="activateCarrier('${carrier.id}')">USE</button>`
-          : `<button class="btn-buy" ${canAfford ? '' : 'disabled'} onclick="buyCarrier('${carrier.id}')">${carrier.cost} cr</button>`
-      }
+      ${isActive ? '<span class="carrier-active-badge">ACTIVE</span>' : ''}
+      <div class="carrier-tile-icon">${CARRIER_ICONS[carrier.id] || '📦'}</div>
+      <div class="carrier-speed">${carrier.mult}×</div>
+      ${!isActive && !owned ? `<div class="carrier-price-tag">${carrier.cost} cr</div>` : ''}
+      ${owned && !isActive  ? `<div class="carrier-price-tag use-tag">USE</div>` : ''}
     `;
     shopEl.appendChild(div);
   });
@@ -151,9 +153,9 @@ function renderPullHistory() {
   recent.forEach(entry => {
     const div = document.createElement('div');
     div.className = 'pull-entry rarity-' + entry.rarity;
-    div.innerHTML = `<div class="rarity-dot"></div>
-      <span style="color:${rarityColor(entry.rarity)}">${rarityLabel(entry.rarity)}</span>
-      &nbsp;${entry.name.replace('\n', ' ')}`;
+    div.innerHTML = `
+      <div class="rarity-dot"></div>
+      <div class="pull-name">${entry.name.replace('\n', ' ')}</div>`;
     el.appendChild(div);
   });
 }

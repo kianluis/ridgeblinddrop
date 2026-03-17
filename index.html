@@ -49,33 +49,40 @@
 <main id="game-tab">
   <div id="main">
 
-    <!-- LEFT column: warehouse + order button + stats -->
+    <!-- LEFT column: TV-framed warehouse + stats -->
     <div id="col-left">
 
-      <div id="warehouse-scene">
-        <div class="wh-light" style="left:8%"></div>
-        <div class="wh-light" style="left:42%"></div>
-        <div class="wh-light" style="left:76%"></div>
-        <div class="shelf" style="width:28%;right:2%;bottom:44%"></div>
-        <div class="shelf" style="width:28%;right:2%;bottom:61%"></div>
-        <!-- Shelf boxes -->
-        <div class="stack-box" style="width:14px;height:12px;bottom:46%;right:3%;border-color:#b05e14;background:#d4a060;"></div>
-        <div class="stack-box" style="width:14px;height:12px;bottom:46%;right:10%;border-color:#2e7a3a;background:#a0c890;"></div>
-        <div class="stack-box" style="width:14px;height:12px;bottom:63%;right:3%;border-color:#2a5fa8;background:#90b4d8;"></div>
-        <div id="conveyor"><div id="conveyor-belt"></div></div>
-        <div class="conv-box" style="animation-delay:0s"></div>
-        <div class="conv-box" style="animation-delay:1.4s"></div>
-        <div class="conv-box" style="animation-delay:2.8s"></div>
-        <div id="worker">
-          <div class="worker-head"></div>
-          <div class="worker-body">
-            <div class="worker-arm-l"></div>
-            <div class="worker-arm-r"></div>
+      <div class="tv-frame">
+        <div id="warehouse-scene">
+          <div class="wh-light" style="left:8%"></div>
+          <div class="wh-light" style="left:42%"></div>
+          <div class="wh-light" style="left:76%"></div>
+          <div class="shelf" style="width:28%;right:2%;bottom:44%"></div>
+          <div class="shelf" style="width:28%;right:2%;bottom:61%"></div>
+          <!-- Shelf boxes -->
+          <div class="stack-box" style="width:14px;height:12px;bottom:46%;right:3%;border-color:#b05e14;background:#d4a060;"></div>
+          <div class="stack-box" style="width:14px;height:12px;bottom:46%;right:10%;border-color:#2e7a3a;background:#a0c890;"></div>
+          <div class="stack-box" style="width:14px;height:12px;bottom:63%;right:3%;border-color:#2a5fa8;background:#90b4d8;"></div>
+          <div id="conveyor"><div id="conveyor-belt"></div></div>
+          <div class="conv-box" style="animation-delay:0s"></div>
+          <div class="conv-box" style="animation-delay:1.4s"></div>
+          <div class="conv-box" style="animation-delay:2.8s"></div>
+          <div id="worker">
+            <div class="worker-head"></div>
+            <div class="worker-body">
+              <div class="worker-arm-l"></div>
+              <div class="worker-arm-r"></div>
+            </div>
+            <div class="worker-legs"></div>
           </div>
-          <div class="worker-legs"></div>
+          <div class="wh-sign">RIDGE WAREHOUSE</div>
+          <div id="wh-stars"></div>
         </div>
-        <div class="wh-sign">RIDGE WAREHOUSE</div>
-        <div id="wh-stars"></div>
+        <div class="tv-controls">
+          <span class="tv-dot"></span>
+          <span class="tv-dot"></span>
+          <span class="tv-dot"></span>
+        </div>
       </div>
 
       <div class="panel" id="status-panel">
@@ -111,29 +118,33 @@
       </div>
     </div>
 
-    <!-- CENTER column: in-transit + inline order panel -->
+    <!-- CENTER column: open-book spread -->
     <div id="col-center">
+      <div class="book-spread">
 
-      <div class="panel" id="transit-panel">
-        <div class="panel-title transit-header">
-          <span>IN TRANSIT</span>
-          <span id="transit-count" class="transit-count"></span>
+        <div class="book-page book-left" id="transit-panel">
+          <div class="panel-title transit-header">
+            <span>IN TRANSIT</span>
+            <span id="transit-count" class="transit-count"></span>
+          </div>
+          <div id="order-queue"></div>
         </div>
-        <div id="order-queue"></div>
-      </div>
 
-      <div class="panel" id="order-panel">
-        <div class="panel-title">PLACE ORDER</div>
-        <p class="order-panel-hint">Higher tiers = faster shipping &amp; better rare odds.</p>
-        <div id="inline-tier-cards" class="tier-cards-grid"></div>
-        <div class="order-panel-divider">▸ CARRIER UPGRADES</div>
-        <div id="inline-carrier-shop"></div>
-      </div>
+        <div class="book-spine"></div>
 
+        <div class="book-page book-right" id="order-panel">
+          <div class="panel-title">PLACE ORDER</div>
+          <p class="order-panel-hint">Higher tiers = faster shipping &amp; better rare odds.</p>
+          <div id="inline-tier-cards" class="tier-cards-grid"></div>
+          <div class="order-panel-divider">▸ CARRIER UPGRADES</div>
+          <div id="inline-carrier-shop"></div>
+        </div>
+
+      </div>
     </div>
 
-    <!-- RIGHT column: recent pulls -->
-    <div id="col-right" class="panel">
+    <!-- RIGHT column: cork board recent pulls -->
+    <div id="col-right">
       <div class="panel-title">RECENT PULLS</div>
       <div class="pull-history" id="pull-history"></div>
     </div>
