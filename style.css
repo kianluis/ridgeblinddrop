@@ -582,20 +582,18 @@ body {
 
 /* ── CORK BOARD (recent pulls) ───────────────────────────── */
 #col-right {
-  background: #c09648;
-  background-image:
-    radial-gradient(ellipse 55% 45% at 30% 40%, rgba(155,95,25,0.38) 0%, transparent 65%),
-    radial-gradient(ellipse 45% 55% at 72% 65%, rgba(180,120,40,0.28) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 58% 20%, rgba(135,80,18,0.32) 0%, transparent 55%);
+  background: #c09648 url('cork_bg.png') top center / cover no-repeat;
   border: 3px solid #8a6028;
   padding: var(--sp-3);
   box-shadow: inset 0 0 30px rgba(100,60,10,0.18);
 }
 #col-right .panel-title {
-  background: rgba(253,248,235,0.88);
+  background: rgba(253,248,235,0.0);
   padding: var(--sp-1) var(--sp-2);
-  border-bottom: 2px solid #8a6028;
+  border-bottom: none;
   border-radius: 0;
+  color: #3a2008;
+  text-shadow: 0 1px 2px rgba(255,230,180,0.6);
 }
 /* no ::before bar on cork panel-title */
 #col-right .panel-title::before { display: none; }
@@ -609,17 +607,19 @@ body {
   padding-top: var(--sp-1);
 }
 .pull-entry {
-  background: #fef8e6;
-  border: 1px solid rgba(180,145,90,0.35);
+  background: rgba(254,248,230,0.55);
+  border: 1px solid rgba(180,145,90,0.22);
   padding: var(--sp-3) var(--sp-2) var(--sp-2);
   position: relative;
   text-align: center;
-  box-shadow: 2px 3px 8px rgba(80,40,10,0.22);
+  box-shadow: 1px 2px 5px rgba(80,40,10,0.15);
   line-height: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 3px;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
 }
 .pull-entry:nth-child(odd)  { transform: rotate(-0.5deg); }
 .pull-entry:nth-child(even) { transform: rotate(0.5deg); }
