@@ -10,53 +10,61 @@
 <body>
 
 <!-- ══ TOP BAR ══════════════════════════════════════════════ -->
-<div id="topbar">
+<header id="topbar">
   <h1>RIDGE MYSTERY DROP</h1>
   <div class="topbar-right">
     <div class="stat-chip">
       <span class="coin-icon"></span>
-      <span>CREDITS:</span>
-      <span class="val" id="hud-credits">0</span>
+      <span class="chip-label">CREDITS</span>
+      <span class="chip-val" id="hud-credits">0</span>
     </div>
     <div class="stat-chip">
       <span class="pkg-icon"></span>
-      <span>OPENED:</span>
-      <span class="val" id="hud-opened">0</span>
+      <span class="chip-label">OPENED</span>
+      <span class="chip-val" id="hud-opened">0</span>
     </div>
     <div class="stat-chip">
-      <span>COLLECTION:</span>
-      <span class="val" id="hud-collection">0/18</span>
+      <span class="chip-label">COLLECTION</span>
+      <span class="chip-val" id="hud-collection">0/18</span>
     </div>
     <button id="mute-btn" class="icon-btn" onclick="toggleSound()" title="Toggle Sound">🔊</button>
   </div>
-</div>
+</header>
 
 <!-- ══ TAB BAR ══════════════════════════════════════════════ -->
-<div id="tabbar">
-  <button class="tab-btn active"  onclick="switchTab('game')">WAREHOUSE</button>
-  <button class="tab-btn"         onclick="switchTab('booklet')">BOOKLET</button>
-  <button class="tab-btn"         onclick="switchTab('milestones')">MISSIONS</button>
-</div>
+<nav id="tabbar">
+  <button class="tab-btn active"  onclick="switchTab('game')">
+    <span class="tab-icon">▦</span> WAREHOUSE
+  </button>
+  <button class="tab-btn"         onclick="switchTab('booklet')">
+    <span class="tab-icon">◈</span> BOOKLET
+  </button>
+  <button class="tab-btn"         onclick="switchTab('milestones')">
+    <span class="tab-icon">◆</span> MISSIONS
+  </button>
+</nav>
 
 <!-- ══ GAME TAB ═════════════════════════════════════════════ -->
-<div id="game-tab">
+<main id="game-tab">
   <div id="main">
 
-    <!-- LEFT: warehouse scene + place-order button + stats -->
-    <div style="display:flex;flex-direction:column;gap:12px;">
+    <!-- LEFT column: warehouse + order button + stats -->
+    <div id="col-left">
+
       <div id="warehouse-scene">
-        <div class="wh-light" style="left:30px"></div>
-        <div class="wh-light" style="left:90px"></div>
-        <div class="wh-light" style="left:150px"></div>
-        <div class="shelf" style="width:60px;left:140px;bottom:80px;"></div>
-        <div class="shelf" style="width:60px;left:140px;bottom:110px;"></div>
-        <div class="stack-box" style="width:14px;height:12px;bottom:92px; left:148px;border-color:#f0a500;background:#2a1a0a;"></div>
-        <div class="stack-box" style="width:14px;height:12px;bottom:92px; left:166px;border-color:#3fb950;background:#0a1a0a;"></div>
-        <div class="stack-box" style="width:14px;height:12px;bottom:122px;left:148px;border-color:#58a6ff;background:#0a0a1a;"></div>
+        <div class="wh-light" style="left:8%"></div>
+        <div class="wh-light" style="left:42%"></div>
+        <div class="wh-light" style="left:76%"></div>
+        <div class="shelf" style="width:28%;right:2%;bottom:44%"></div>
+        <div class="shelf" style="width:28%;right:2%;bottom:61%"></div>
+        <!-- Shelf boxes -->
+        <div class="stack-box" style="width:14px;height:12px;bottom:46%;right:3%;border-color:#f0a500;background:#2a1a0a;"></div>
+        <div class="stack-box" style="width:14px;height:12px;bottom:46%;right:10%;border-color:#3fb950;background:#0a1a0a;"></div>
+        <div class="stack-box" style="width:14px;height:12px;bottom:63%;right:3%;border-color:#58a6ff;background:#0a0a1a;"></div>
         <div id="conveyor"><div id="conveyor-belt"></div></div>
         <div class="conv-box" style="animation-delay:0s"></div>
-        <div class="conv-box" style="animation-delay:1.3s"></div>
-        <div class="conv-box" style="animation-delay:2.6s"></div>
+        <div class="conv-box" style="animation-delay:1.4s"></div>
+        <div class="conv-box" style="animation-delay:2.8s"></div>
         <div id="worker">
           <div class="worker-head"></div>
           <div class="worker-body">
@@ -69,56 +77,79 @@
         <div id="wh-stars"></div>
       </div>
 
-      <button id="place-order-btn" onclick="openOrderModal()">+ PLACE ORDER</button>
+      <button id="place-order-btn" onclick="openOrderModal()">
+        <span class="btn-icon">+</span> PLACE ORDER
+      </button>
 
-      <div class="panel">
+      <div class="panel" id="status-panel">
         <div class="panel-title">STATUS</div>
-        <div class="stat-row"><span class="stat-label">CREDITS</span>    <span class="stat-val" id="stat-credits">0</span></div>
-        <div class="stat-row"><span class="stat-label">PKGS OPENED</span><span class="stat-val" id="stat-opened">0</span></div>
-        <div class="stat-row"><span class="stat-label">UNIQUE ITEMS</span><span class="stat-val" id="stat-unique">0/18</span></div>
-        <div class="stat-row"><span class="stat-label">CARRIER</span>    <span class="stat-val" id="stat-carrier">Budget</span></div>
-        <div class="stat-row"><span class="stat-label">SPEED</span>      <span class="stat-val" id="stat-speed">1x</span></div>
+        <div class="stat-row">
+          <span class="stat-label">CREDITS</span>
+          <span class="stat-val" id="stat-credits">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">PKGS OPENED</span>
+          <span class="stat-val" id="stat-opened">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">COLLECTION</span>
+          <span class="stat-val" id="stat-unique">0/18</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">CARRIER</span>
+          <span class="stat-val" id="stat-carrier">Budget</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">SPEED</span>
+          <span class="stat-val" id="stat-speed">1×</span>
+        </div>
         <div class="stat-row" id="prestige-stat-row" style="display:none;">
           <span class="stat-label">PRESTIGE</span>
-          <span class="stat-val" id="stat-prestige" style="color:var(--ultra)">✦0</span>
+          <span class="stat-val prestige-val" id="stat-prestige">✦0</span>
         </div>
-        <div class="stat-row"><span class="stat-label">IDLE RATE</span><span class="stat-val" style="color:var(--text-dim)">1cr/30s</span></div>
+        <div class="stat-row">
+          <span class="stat-label">IDLE RATE</span>
+          <span class="stat-val dim">1 cr / 30s</span>
+        </div>
       </div>
     </div>
 
-    <!-- CENTER: in-transit orders -->
-    <div class="panel">
-      <div class="panel-title" style="display:flex;justify-content:space-between;align-items:center;">
+    <!-- CENTER column: in-transit orders -->
+    <div id="col-center" class="panel">
+      <div class="panel-title transit-header">
         <span>IN TRANSIT</span>
-        <span id="transit-count" style="font-size:6px;color:var(--text-dim)"></span>
+        <span id="transit-count" class="transit-count"></span>
       </div>
       <div id="order-queue"></div>
     </div>
 
-    <!-- RIGHT: recent pulls -->
-    <div class="right-panel">
-      <div class="panel">
-        <div class="panel-title">RECENT PULLS</div>
-        <div class="pull-history" id="pull-history"></div>
-      </div>
+    <!-- RIGHT column: recent pulls -->
+    <div id="col-right" class="panel">
+      <div class="panel-title">RECENT PULLS</div>
+      <div class="pull-history" id="pull-history"></div>
     </div>
 
   </div>
-</div>
+</main>
 
 <!-- ══ BOOKLET TAB ══════════════════════════════════════════ -->
 <div id="booklet-panel" style="display:none;">
-  <div style="padding:12px;max-width:1100px;margin:0 auto;">
+  <div class="tab-content">
     <div class="panel">
       <div class="booklet-header">
-        <span class="panel-title" style="margin-bottom:0">COLLECTOR'S BOOKLET</span>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <span id="booklet-pct" style="font-size:7px;color:var(--amber)">0%</span>
-          <div class="booklet-progress-bar">
-            <div class="booklet-progress-fill" id="booklet-progress-fill" style="width:0%"></div>
+        <div class="booklet-header-left">
+          <span class="panel-title" style="margin-bottom:0;border:none;padding:0">
+            COLLECTOR'S BOOKLET
+          </span>
+          <div class="completion-row">
+            <div class="booklet-progress-bar">
+              <div class="booklet-progress-fill" id="booklet-progress-fill" style="width:0%"></div>
+            </div>
+            <span id="booklet-pct" class="booklet-pct">0%</span>
           </div>
         </div>
       </div>
+
       <div class="booklet-filters" id="booklet-filters">
         <button class="filter-btn active"  onclick="setBookletFilter('all')">ALL</button>
         <button class="filter-btn"         onclick="setBookletFilter('common')">COMMON</button>
@@ -126,27 +157,27 @@
         <button class="filter-btn"         onclick="setBookletFilter('rare')">RARE</button>
         <button class="filter-btn"         onclick="setBookletFilter('ultra')">ULTRA RARE</button>
       </div>
+
       <div id="booklet-content"></div>
     </div>
 
-    <!-- Prestige section (shown only when collection is complete) -->
-    <div id="prestige-area" class="panel" style="margin-top:12px;text-align:center;padding:24px;display:none;">
-      <div style="font-size:8px;color:var(--ultra);margin-bottom:10px;text-shadow:0 0 8px var(--ultra);">
-        ✦ COLLECTION COMPLETE! ✦
-      </div>
-      <div style="font-size:6px;color:var(--text-dim);margin-bottom:16px;line-height:2.2;">
+    <!-- Prestige panel (appears on collection completion) -->
+    <div id="prestige-area" class="panel prestige-panel" style="display:none;">
+      <div class="prestige-star">✦</div>
+      <div class="prestige-title">COLLECTION COMPLETE!</div>
+      <p class="prestige-desc">
         Reset your collection for a permanent +10% rare rate bonus.<br>
         Credits and carriers are always kept.
-      </div>
+      </p>
       <button id="prestige-btn" onclick="prestige()">✦ PRESTIGE ✦</button>
-      <div id="prestige-info" style="margin-top:10px;font-size:5px;color:var(--text-dim);"></div>
+      <div id="prestige-info" class="prestige-info"></div>
     </div>
   </div>
 </div>
 
 <!-- ══ MILESTONES TAB ═══════════════════════════════════════ -->
 <div id="milestones-panel" style="display:none;">
-  <div style="padding:12px;max-width:1100px;margin:0 auto;">
+  <div class="tab-content">
     <div class="panel">
       <div class="panel-title">MISSIONS &amp; MILESTONES</div>
       <div id="milestones-list"></div>
@@ -161,6 +192,7 @@
       <span class="modal-title">PLACE ORDER</span>
       <button class="modal-close" onclick="closeOrderModal()">✕</button>
     </div>
+    <p class="modal-hint">Higher tiers = faster shipping &amp; better rare odds.</p>
     <div id="modal-tier-cards" class="tier-cards-grid"></div>
     <div class="modal-divider">▸ CARRIER UPGRADES</div>
     <div id="modal-carrier-shop"></div>
@@ -169,8 +201,6 @@
 
 <!-- ══ OPEN OVERLAY ═════════════════════════════════════════ -->
 <div id="open-overlay">
-
-  <!-- Phase 1 + 2: box animation -->
   <div id="box-stage">
     <div id="opening-box-wrap">
       <div id="opening-box">
@@ -185,7 +215,6 @@
     <div id="box-stage-label">INCOMING...</div>
   </div>
 
-  <!-- Phase 3+: item reveal -->
   <div id="reveal-state" style="display:none;">
     <div class="reveal-box" id="reveal-box">
       <div class="sparkle-container" id="sparkle-container"></div>
@@ -199,10 +228,7 @@
   </div>
 </div>
 
-<!-- Full-screen rarity flash (separate from overlay so it bleeds edge-to-edge) -->
 <div id="rarity-flash"></div>
-
-<!-- Toast notifications -->
 <div id="toast-container"></div>
 
 <script src="data.js"></script>
