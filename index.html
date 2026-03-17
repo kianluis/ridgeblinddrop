@@ -1,944 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ridge Mystery Drop</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0d1117;
-    --bg2: #161b22;
-    --bg3: #21262d;
-    --border: #30363d;
-    --amber: #f0a500;
-    --amber2: #ffc947;
-    --cream: #e8dcc8;
-    --text: #c9d1d9;
-    --text-dim: #8b949e;
-    --common: #8b949e;
-    --uncommon: #3fb950;
-    --rare: #58a6ff;
-    --ultra: #d2a8ff;
-    --ultra-glow: #7c3aed;
-    --danger: #f85149;
-    --success: #3fb950;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; image-rendering: pixelated; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Press Start 2P', monospace;
-    font-size: 8px;
-    min-height: 100vh;
-    overflow-x: hidden;
-    line-height: 1.6;
-  }
-
-  /* ── TOP BAR ── */
-  #topbar {
-    background: var(--bg2);
-    border-bottom: 2px solid var(--border);
-    padding: 8px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  #topbar h1 {
-    font-size: 10px;
-    color: var(--amber);
-    text-shadow: 0 0 8px var(--amber);
-    letter-spacing: 1px;
-  }
-  .topbar-right { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-  .stat-chip {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    padding: 4px 8px;
-    font-size: 7px;
-    color: var(--cream);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .stat-chip .val { color: var(--amber); }
-  .coin-icon { display:inline-block; width:8px; height:8px; background:var(--amber); border-radius:50%; box-shadow:0 0 4px var(--amber); }
-  .pkg-icon { display:inline-block; width:8px; height:8px; background:var(--cream); }
-
-  /* ── MAIN LAYOUT ── */
-  #main {
-    display: grid;
-    grid-template-columns: 220px 1fr 200px;
-    gap: 12px;
-    padding: 12px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  @media (max-width: 800px) {
-    #main { grid-template-columns: 1fr; }
-  }
-
-  .panel {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    padding: 10px;
-  }
-  .panel-title {
-    font-size: 7px;
-    color: var(--amber);
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 6px;
-    margin-bottom: 8px;
-    letter-spacing: 1px;
-  }
-
-  /* ── WAREHOUSE SCENE ── */
-  #warehouse-scene {
-    position: relative;
-    width: 100%;
-    height: 180px;
-    overflow: hidden;
-    background: linear-gradient(180deg, #1a1f2e 60%, #2a1f0e 100%);
-    border: 1px solid var(--border);
-  }
-  /* Floor */
-  #warehouse-scene::after {
-    content:'';
-    position:absolute;
-    bottom:0; left:0; right:0; height:24px;
-    background: repeating-linear-gradient(90deg, #3a2a1a 0px, #3a2a1a 16px, #2a1a0a 16px, #2a1a0a 32px);
-  }
-  /* Ceiling lights */
-  .wh-light {
-    position: absolute;
-    top: 4px;
-    width: 12px; height: 6px;
-    background: var(--amber);
-    box-shadow: 0 0 12px 4px rgba(240,165,0,0.3);
-  }
-  /* Shelves */
-  .shelf {
-    position: absolute;
-    height: 6px;
-    background: #5a3a1a;
-    border-top: 2px solid #8a5a2a;
-  }
-  /* Conveyor belt */
-  #conveyor {
-    position: absolute;
-    bottom: 24px;
-    left: 0; right: 0;
-    height: 14px;
-    background: repeating-linear-gradient(90deg, #3a3a3a 0px, #3a3a3a 8px, #2a2a2a 8px, #2a2a2a 16px);
-    border-top: 2px solid #555;
-    border-bottom: 2px solid #555;
-    overflow: hidden;
-  }
-  #conveyor-belt {
-    position: absolute;
-    top: 3px;
-    left: 0;
-    width: 200%;
-    height: 4px;
-    background: repeating-linear-gradient(90deg, #666 0px, #666 12px, #444 12px, #444 16px);
-    animation: beltMove 1s linear infinite;
-  }
-  @keyframes beltMove { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-  /* Boxes on conveyor */
-  .conv-box {
-    position: absolute;
-    bottom: 38px;
-    width: 16px; height: 16px;
-    border: 2px solid var(--amber);
-    background: #2a1a0a;
-    animation: conveyorSlide 4s linear infinite;
-  }
-  .conv-box::before {
-    content:'';
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    width:4px; height:4px;
-    background: var(--amber);
-  }
-  @keyframes conveyorSlide { from{left:100%} to{left:-20px} }
-  /* Worker sprite (pixel art CSS) */
-  #worker {
-    position: absolute;
-    bottom: 38px;
-    left: 20px;
-    width: 16px;
-    height: 32px;
-  }
-  .worker-head {
-    position: absolute;
-    top: 0; left: 4px;
-    width: 8px; height: 8px;
-    background: #c8a882;
-    box-shadow: inset -2px -2px 0 #a07850;
-  }
-  .worker-body {
-    position: absolute;
-    top: 8px; left: 2px;
-    width: 12px; height: 14px;
-    background: #2255aa;
-    box-shadow: inset -2px -2px 0 #1a3d7a;
-  }
-  .worker-legs {
-    position: absolute;
-    top: 22px; left: 2px;
-    width: 12px; height: 8px;
-    background: #334;
-  }
-  .worker-arm-l, .worker-arm-r {
-    position: absolute;
-    top: 10px;
-    width: 4px; height: 10px;
-    background: #2255aa;
-  }
-  .worker-arm-l { left: -2px; }
-  .worker-arm-r { right: -2px; }
-  /* Stacked boxes */
-  .stack-box {
-    position: absolute;
-    border: 2px solid;
-  }
-  /* Forklift hint */
-  .wh-sign {
-    position: absolute;
-    top: 8px; right: 8px;
-    font-size: 5px;
-    color: var(--amber);
-    background: var(--bg3);
-    padding: 2px 4px;
-    border: 1px solid var(--amber);
-    text-shadow: 0 0 4px var(--amber);
-  }
-
-  /* ── WORKER ANIMATION ── */
-  @keyframes workerBob {
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-2px)}
-  }
-  #worker { animation: workerBob 0.8s ease-in-out infinite; }
-
-  /* ── ORDER QUEUE ── */
-  .order-card {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    padding: 8px;
-    margin-bottom: 6px;
-    position: relative;
-  }
-  .order-card.ready { border-color: var(--success); box-shadow: 0 0 6px rgba(63,185,80,0.3); }
-  .order-tier-badge {
-    font-size: 6px;
-    padding: 2px 5px;
-    margin-bottom: 4px;
-    display: inline-block;
-  }
-  .tier-standard { background: #30363d; color: var(--text); }
-  .tier-express   { background: #1c3a1c; color: var(--uncommon); border:1px solid var(--uncommon); }
-  .tier-priority  { background: #1a2a40; color: var(--rare); border:1px solid var(--rare); }
-  .tier-overnight { background: #2a1a40; color: var(--ultra); border:1px solid var(--ultra); }
-  .order-progress-bar {
-    width: 100%;
-    height: 6px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    margin: 4px 0;
-    position: relative;
-  }
-  .order-progress-fill {
-    height: 100%;
-    background: var(--amber);
-    transition: width 0.5s linear;
-  }
-  .order-timer { font-size: 6px; color: var(--text-dim); }
-  .order-ready-label { font-size: 7px; color: var(--success); }
-  .btn-open {
-    width: 100%;
-    margin-top: 4px;
-    padding: 5px;
-    background: var(--amber);
-    color: var(--bg);
-    border: none;
-    cursor: pointer;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 7px;
-    text-transform: uppercase;
-    transition: background 0.15s;
-  }
-  .btn-open:hover { background: var(--amber2); }
-  .no-orders { font-size: 6px; color: var(--text-dim); text-align: center; padding: 20px 0; }
-
-  /* ── SHOP ── */
-  .shop-section { margin-bottom: 10px; }
-  .shop-section-title { font-size: 6px; color: var(--text-dim); margin-bottom: 6px; border-bottom: 1px solid var(--border); padding-bottom: 3px; }
-  .shop-item {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    padding: 6px 8px;
-    margin-bottom: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 6px;
-  }
-  .shop-item.owned { border-color: var(--success); opacity: 0.6; }
-  .shop-item.cant-afford { opacity: 0.5; }
-  .shop-item-info { flex: 1; }
-  .shop-item-name { font-size: 6px; color: var(--cream); margin-bottom: 2px; }
-  .shop-item-desc { font-size: 5px; color: var(--text-dim); }
-  .btn-buy {
-    background: var(--bg2);
-    border: 1px solid var(--amber);
-    color: var(--amber);
-    font-family: 'Press Start 2P', monospace;
-    font-size: 6px;
-    padding: 4px 6px;
-    cursor: pointer;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .btn-buy:hover:not(:disabled) { background: var(--amber); color: var(--bg); }
-  .btn-buy:disabled { opacity: 0.5; cursor: not-allowed; border-color: var(--border); color: var(--text-dim); }
-  .btn-buy.owned { border-color: var(--success); color: var(--success); cursor: default; }
-
-  /* Package order buttons */
-  .pkg-btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
-  .btn-order-pkg {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    color: var(--cream);
-    font-family: 'Press Start 2P', monospace;
-    font-size: 6px;
-    padding: 6px 4px;
-    cursor: pointer;
-    text-align: center;
-    line-height: 1.8;
-  }
-  .btn-order-pkg:hover:not(:disabled) { border-color: var(--amber); color: var(--amber); }
-  .btn-order-pkg:disabled { opacity: 0.4; cursor: not-allowed; }
-  .btn-order-pkg .pkg-cost { color: var(--amber); font-size: 6px; }
-  .btn-order-pkg .pkg-time { color: var(--text-dim); font-size: 5px; }
-
-  /* ── RIGHT PANEL ── */
-  .right-panel { display: flex; flex-direction: column; gap: 10px; }
-  .stat-row { display:flex; justify-content:space-between; align-items:center; padding: 3px 0; border-bottom:1px solid var(--border); }
-  .stat-row:last-child { border-bottom:none; }
-  .stat-label { font-size:6px; color:var(--text-dim); }
-  .stat-val { font-size:7px; color:var(--cream); }
-
-  /* Carrier display */
-  .carrier-display {
-    background: var(--bg3);
-    border: 1px solid var(--amber);
-    padding: 6px;
-    text-align: center;
-    font-size: 6px;
-    color: var(--amber);
-  }
-  .carrier-display .carrier-speed { font-size: 5px; color: var(--text-dim); margin-top: 2px; }
-
-  /* Recent pulls */
-  .pull-history { max-height: 100px; overflow-y: auto; }
-  .pull-entry {
-    font-size: 5px;
-    padding: 2px 0;
-    border-bottom: 1px solid #1f1f1f;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .rarity-dot {
-    width: 6px; height: 6px; border-radius: 50%; flex-shrink:0;
-  }
-  .rarity-common   .rarity-dot { background: var(--common); }
-  .rarity-uncommon .rarity-dot { background: var(--uncommon); }
-  .rarity-rare     .rarity-dot { background: var(--rare); }
-  .rarity-ultra    .rarity-dot { background: var(--ultra); box-shadow:0 0 4px var(--ultra); }
-
-  /* ── TAB BAR ── */
-  #tabbar {
-    display: flex;
-    gap: 4px;
-    padding: 8px 12px 0;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  .tab-btn {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-bottom: none;
-    color: var(--text-dim);
-    font-family: 'Press Start 2P', monospace;
-    font-size: 7px;
-    padding: 6px 10px;
-    cursor: pointer;
-  }
-  .tab-btn.active { background: var(--bg3); color: var(--amber); border-color: var(--amber); border-bottom:1px solid var(--bg3); }
-  .tab-btn:hover:not(.active) { color: var(--text); }
-
-  /* ── BOOKLET ── */
-  #booklet-panel { display:none; padding:12px; max-width:1100px; margin:0 auto; }
-  #booklet-panel.active { display:block; }
-  .booklet-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
-  .booklet-progress-bar {
-    width:200px; height:8px;
-    background:var(--bg2);
-    border:1px solid var(--border);
-    margin-left:10px;
-  }
-  .booklet-progress-fill { height:100%; background:var(--amber); transition:width 0.5s; }
-  .booklet-section-title { font-size:7px; color:var(--text-dim); margin:10px 0 6px; border-bottom:1px solid var(--border); padding-bottom:4px; }
-  .booklet-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(120px, 1fr)); gap:8px; }
-  .booklet-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    padding: 8px;
-    text-align: center;
-    transition: border-color 0.2s;
-  }
-  .booklet-card.collected { border-color: var(--border); }
-  .booklet-card.collected:hover { border-color: var(--amber); }
-  .booklet-card.uncollected { opacity: 0.5; filter: grayscale(1); }
-  .item-icon {
-    width: 32px; height: 32px;
-    margin: 0 auto 6px;
-    position: relative;
-  }
-  .item-name { font-size: 5px; color: var(--cream); margin-bottom: 3px; line-height:1.6; min-height:16px; }
-  .rarity-badge {
-    font-size: 5px;
-    padding: 1px 4px;
-    display: inline-block;
-  }
-  .badge-common   { background:#30363d; color:var(--common); }
-  .badge-uncommon { background:#1c3a1c; color:var(--uncommon); }
-  .badge-rare     { background:#1a2a40; color:var(--rare); }
-  .badge-ultra    { background:#2a1a40; color:var(--ultra); }
-  .pull-count { font-size: 5px; color: var(--text-dim); margin-top: 3px; }
-
-  /* ── OPEN ANIMATION OVERLAY ── */
-  #open-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    z-index: 999;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  #open-overlay.active { display: flex; }
-  #open-overlay .reveal-box {
-    width: 200px; height: 200px;
-    border: 4px solid var(--amber);
-    background: var(--bg2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    position: relative;
-    animation: revealPop 0.3s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  @keyframes revealPop {
-    from{transform:scale(0.5);opacity:0}
-    to{transform:scale(1);opacity:1}
-  }
-  .reveal-item-icon { width:64px; height:64px; position:relative; }
-  .reveal-item-name { font-size:8px; color:var(--cream); text-align:center; padding:0 10px; }
-  .reveal-rarity { font-size:7px; }
-  .reveal-credits { font-size:7px; color:var(--amber); }
-  .reveal-close {
-    margin-top: 12px;
-    background: var(--amber);
-    color: var(--bg);
-    border: none;
-    font-family: 'Press Start 2P', monospace;
-    font-size: 8px;
-    padding: 8px 20px;
-    cursor: pointer;
-  }
-  .reveal-close:hover { background: var(--amber2); }
-  .reveal-new-badge {
-    position: absolute;
-    top: -10px; right: -10px;
-    background: var(--success);
-    color: var(--bg);
-    font-size: 6px;
-    padding: 3px 5px;
-    animation: flashNew 0.5s ease-in-out infinite alternate;
-  }
-  @keyframes flashNew { from{opacity:1} to{opacity:0.5} }
-  /* Sparkle effect for ultra rare */
-  .sparkle-container { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
-  .sparkle {
-    position:absolute;
-    width:4px; height:4px;
-    background: var(--ultra);
-    box-shadow: 0 0 6px var(--ultra);
-    animation: sparkleFly 1s ease-out forwards;
-  }
-  @keyframes sparkleFly {
-    from{transform:scale(0);opacity:1}
-    to{transform:scale(1) translate(var(--tx),var(--ty));opacity:0}
-  }
-
-  /* ── TOAST ── */
-  #toast-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    align-items: flex-end;
-  }
-  .toast {
-    background: var(--bg2);
-    border: 1px solid var(--amber);
-    padding: 8px 12px;
-    font-size: 7px;
-    color: var(--amber);
-    box-shadow: 0 0 10px rgba(240,165,0,0.3);
-    animation: toastIn 0.3s ease, toastOut 0.3s ease 2.7s forwards;
-    max-width: 240px;
-  }
-  .toast .toast-title { color: var(--amber); margin-bottom: 2px; }
-  .toast .toast-body { color: var(--cream); font-size: 6px; }
-  @keyframes toastIn { from{transform:translateX(100px);opacity:0} to{transform:translateX(0);opacity:1} }
-  @keyframes toastOut { to{transform:translateX(100px);opacity:0} }
-
-  /* ── MILESTONES ── */
-  #milestones-panel { display:none; padding:12px; max-width:1100px; margin:0 auto; }
-  #milestones-panel.active { display:block; }
-  .milestone-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    padding: 10px;
-    margin-bottom: 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-  }
-  .milestone-card.done { border-color: var(--success); }
-  .milestone-card.done .ms-status { color: var(--success); }
-  .milestone-card:not(.done) .ms-status { color: var(--text-dim); }
-  .ms-name { font-size: 7px; color: var(--cream); margin-bottom: 3px; }
-  .ms-desc { font-size: 5px; color: var(--text-dim); }
-  .ms-reward { font-size: 6px; color: var(--amber); white-space:nowrap; }
-  .ms-status { font-size: 6px; white-space:nowrap; }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { width:4px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border); }
-
-  /* ── PIXEL ITEM ICONS ── */
-  /* Wallet icon */
-  .icon-wallet {
-    width:32px; height:32px;
-    background: #444;
-    border: 2px solid #666;
-    position:relative;
-  }
-  .icon-wallet::before {
-    content:'';
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    width:20px; height:4px;
-    background: #888;
-    box-shadow: 0 6px 0 #888, 0 -6px 0 #888;
-  }
-  .icon-wallet::after {
-    content:'';
-    position:absolute;
-    right:2px; top:50%;
-    transform:translateY(-50%);
-    width:6px; height:10px;
-    background:#555;
-    border:1px solid #777;
-    border-radius:1px;
-  }
-  /* Keycase */
-  .icon-keycase {
-    width:32px; height:32px;
-    background:#333;
-    border:2px solid #555;
-    position:relative;
-  }
-  .icon-keycase::before {
-    content:'';
-    position:absolute;
-    top:4px; left:4px; right:4px;
-    height:8px;
-    background:repeating-linear-gradient(90deg, #666 0,#666 4px,#333 4px,#333 6px);
-  }
-  .icon-keycase::after {
-    content:'';
-    position:absolute;
-    bottom:4px; left:50%;
-    transform:translateX(-50%);
-    width:4px; height:12px;
-    background:#777;
-    box-shadow: 6px 0 0 #777, -6px 0 0 #777;
-  }
-  /* Phone case */
-  .icon-phone {
-    width:32px; height:32px;
-    background:#222;
-    border:2px solid #555;
-    position:relative;
-  }
-  .icon-phone::before {
-    content:'';
-    position:absolute;
-    inset:3px;
-    background:#1a3a5a;
-    border:1px solid #2a5a8a;
-  }
-  .icon-phone::after {
-    content:'';
-    position:absolute;
-    bottom:4px; left:50%;
-    transform:translateX(-50%);
-    width:6px; height:6px;
-    background:#444;
-    border-radius:50%;
-  }
-  /* Pen */
-  .icon-pen {
-    width:32px; height:32px;
-    position:relative;
-  }
-  .icon-pen::before {
-    content:'';
-    position:absolute;
-    top:4px; left:14px;
-    width:4px; height:24px;
-    background:#888;
-  }
-  .icon-pen::after {
-    content:'';
-    position:absolute;
-    bottom:4px; left:12px;
-    width:8px; height:0;
-    border-left:4px solid transparent;
-    border-right:4px solid transparent;
-    border-top:8px solid #888;
-  }
-  /* Power bank */
-  .icon-powerbank {
-    width:32px; height:32px;
-    background:#2a2a2a;
-    border:2px solid #555;
-    position:relative;
-  }
-  .icon-powerbank::before {
-    content:'';
-    position:absolute;
-    top:8px; left:4px;
-    width:6px; height:16px;
-    background:repeating-linear-gradient(0deg,#3f3 0,#3f3 3px,#2a2a2a 3px,#2a2a2a 5px);
-  }
-  .icon-powerbank::after {
-    content:'';
-    position:absolute;
-    top:4px; right:4px;
-    width:6px; height:4px;
-    background:#555;
-  }
-  /* Bag */
-  .icon-bag {
-    width:32px; height:32px;
-    background:#3a2a2a;
-    border:2px solid #664444;
-    position:relative;
-  }
-  .icon-bag::before {
-    content:'';
-    position:absolute;
-    top:-4px; left:10px;
-    width:12px; height:6px;
-    border:2px solid #664444;
-    border-bottom:none;
-    background:transparent;
-  }
-  .icon-bag::after {
-    content:'';
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    width:16px; height:2px;
-    background:#664444;
-  }
-  /* Travel wallet */
-  .icon-travel {
-    width:32px; height:32px;
-    background:#2a3a2a;
-    border:2px solid #446644;
-    position:relative;
-  }
-  .icon-travel::before {
-    content:'';
-    position:absolute;
-    top:4px; left:4px; right:4px;
-    height:10px;
-    background:#446644;
-  }
-  .icon-travel::after {
-    content:'';
-    position:absolute;
-    bottom:4px; left:4px;
-    right:4px; height:8px;
-    background:repeating-linear-gradient(0deg,#446644 0,#446644 2px,transparent 2px,transparent 4px);
-  }
-  /* Backpack */
-  .icon-backpack {
-    width:32px; height:32px;
-    background:#1a2a3a;
-    border:2px solid #2a4a6a;
-    position:relative;
-  }
-  .icon-backpack::before {
-    content:'';
-    position:absolute;
-    top:4px; left:8px;
-    width:6px; height:10px;
-    background:#2a4a6a;
-    border-radius:2px 2px 0 0;
-  }
-  .icon-backpack::after {
-    content:'';
-    position:absolute;
-    bottom:4px; left:4px; right:4px;
-    height:12px;
-    background:#2a4a6a;
-  }
-  /* Sling */
-  .icon-sling {
-    width:32px; height:32px;
-    background:#1a3a2a;
-    border:2px solid #2a6a4a;
-    position:relative;
-  }
-  .icon-sling::before {
-    content:'';
-    position:absolute;
-    top:2px; left:14px;
-    width:4px; height:28px;
-    background:#2a6a4a;
-    transform:rotate(-15deg);
-    transform-origin:top center;
-  }
-  .icon-sling::after {
-    content:'';
-    position:absolute;
-    top:12px; left:6px;
-    width:16px; height:14px;
-    background:#2a6a4a;
-    border-radius:1px;
-  }
-  /* Mystery box */
-  .icon-mystery {
-    width:32px; height:32px;
-    background:#2a1a3a;
-    border:2px solid #7c3aed;
-    position:relative;
-    box-shadow: 0 0 8px rgba(124,58,237,0.5);
-  }
-  .icon-mystery::before {
-    content:'?';
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    font-size:16px;
-    color:#d2a8ff;
-    font-family:'Press Start 2P',monospace;
-    text-shadow:0 0 8px #d2a8ff;
-  }
-  /* Damascus wallet */
-  .icon-damascus {
-    width:32px; height:32px;
-    background: repeating-linear-gradient(45deg,#333 0,#333 2px,#555 2px,#555 4px);
-    border:2px solid #999;
-    position:relative;
-  }
-  .icon-damascus::after {
-    content:'';
-    position:absolute;
-    right:2px; top:50%;
-    transform:translateY(-50%);
-    width:6px; height:10px;
-    background:#888;
-    border:1px solid #bbb;
-  }
-  /* Stealth wallet */
-  .icon-stealth {
-    width:32px; height:32px;
-    background:#111;
-    border:2px solid #333;
-    position:relative;
-    box-shadow:inset 0 0 8px rgba(200,200,255,0.1);
-  }
-  .icon-stealth::after {
-    content:'';
-    position:absolute;
-    right:2px; top:50%;
-    transform:translateY(-50%);
-    width:6px; height:10px;
-    background:#222;
-    border:1px solid #444;
-  }
-  /* Collab wallet */
-  .icon-collab {
-    width:32px; height:32px;
-    background: linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);
-    border:2px solid var(--ultra);
-    position:relative;
-    box-shadow:0 0 8px rgba(210,168,255,0.4);
-  }
-  .icon-collab::before {
-    content:'★';
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    font-size:14px;
-    color:var(--ultra);
-    text-shadow:0 0 8px var(--ultra);
-  }
-  /* Gold wallet */
-  .icon-gold {
-    width:32px; height:32px;
-    background:#3a2a00;
-    border:2px solid var(--amber);
-    position:relative;
-    box-shadow:0 0 6px rgba(240,165,0,0.4);
-  }
-  .icon-gold::after {
-    content:'';
-    position:absolute;
-    right:2px; top:50%;
-    transform:translateY(-50%);
-    width:6px; height:10px;
-    background:var(--amber);
-    border:1px solid var(--amber2);
-  }
-  /* Carbon fiber */
-  .icon-carbon {
-    width:32px; height:32px;
-    background: repeating-linear-gradient(45deg,#1a1a1a 0,#1a1a1a 2px,#2a2a2a 2px,#2a2a2a 4px);
-    border:2px solid #555;
-    position:relative;
-  }
-  .icon-carbon::after {
-    content:'';
-    position:absolute;
-    right:2px; top:50%;
-    transform:translateY(-50%);
-    width:6px; height:10px;
-    background:#333;
-    border:1px solid #666;
-  }
-  /* Commuter bag */
-  .icon-commuter {
-    width:32px; height:32px;
-    background:#2a2a1a;
-    border:2px solid #555533;
-    position:relative;
-  }
-  .icon-commuter::before {
-    content:'';
-    position:absolute;
-    top:4px; left:50%;
-    transform:translateX(-50%);
-    width:12px; height:4px;
-    background:#555533;
-    border-radius:2px;
-  }
-  .icon-commuter::after {
-    content:'';
-    position:absolute;
-    top:10px; left:4px; right:4px; bottom:4px;
-    background:#444433;
-    border:1px solid #555533;
-  }
-
-  /* ── LARGE ICON SCALE FOR REVEAL ── */
-  .reveal-item-icon .icon-wallet,
-  .reveal-item-icon .icon-keycase,
-  .reveal-item-icon .icon-phone,
-  .reveal-item-icon .icon-pen,
-  .reveal-item-icon .icon-powerbank,
-  .reveal-item-icon .icon-bag,
-  .reveal-item-icon .icon-travel,
-  .reveal-item-icon .icon-backpack,
-  .reveal-item-icon .icon-sling,
-  .reveal-item-icon .icon-mystery,
-  .reveal-item-icon .icon-damascus,
-  .reveal-item-icon .icon-stealth,
-  .reveal-item-icon .icon-collab,
-  .reveal-item-icon .icon-gold,
-  .reveal-item-icon .icon-carbon,
-  .reveal-item-icon .icon-commuter {
-    width:64px; height:64px;
-    transform: scale(1);
-  }
-
-  /* ── GLOW ANIMATIONS ── */
-  @keyframes ultraGlow {
-    0%,100%{ box-shadow:0 0 8px var(--ultra), 0 0 16px var(--ultra-glow); }
-    50%{ box-shadow:0 0 16px var(--ultra), 0 0 32px var(--ultra-glow); }
-  }
-  .booklet-card.rarity-ultra.collected { animation: ultraGlow 2s ease-in-out infinite; }
-
-  /* ── OPENING STATE ── */
-  #opening-anim {
-    width:80px; height:80px;
-    border:4px solid var(--amber);
-    background: var(--bg3);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-bottom:12px;
-    position:relative;
-    overflow:hidden;
-  }
-  #opening-anim::before {
-    content:'';
-    position:absolute;
-    inset:0;
-    background: conic-gradient(from 0deg, transparent, var(--amber), transparent);
-    animation: spinLoader 0.6s linear infinite;
-  }
-  @keyframes spinLoader { to{transform:rotate(360deg)} }
-  #opening-anim .open-box-inner {
-    position:relative;
-    z-index:1;
-    width:32px; height:32px;
-    background: var(--bg2);
-    border:2px solid var(--amber);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-  #opening-anim-label { font-size:7px; color:var(--amber); }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ridge Mystery Drop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- TOP BAR -->
+<!-- ══ TOP BAR ══════════════════════════════════════════════ -->
 <div id="topbar">
   <h1>RIDGE MYSTERY DROP</h1>
   <div class="topbar-right">
@@ -954,41 +25,38 @@
     </div>
     <div class="stat-chip">
       <span>COLLECTION:</span>
-      <span class="val" id="hud-collection">0/20</span>
+      <span class="val" id="hud-collection">0/18</span>
     </div>
+    <button id="mute-btn" class="icon-btn" onclick="toggleSound()" title="Toggle Sound">🔊</button>
   </div>
 </div>
 
-<!-- TAB BAR -->
+<!-- ══ TAB BAR ══════════════════════════════════════════════ -->
 <div id="tabbar">
-  <button class="tab-btn active" onclick="switchTab('game')">WAREHOUSE</button>
-  <button class="tab-btn" onclick="switchTab('booklet')">BOOKLET</button>
-  <button class="tab-btn" onclick="switchTab('milestones')">MISSIONS</button>
+  <button class="tab-btn active"  onclick="switchTab('game')">WAREHOUSE</button>
+  <button class="tab-btn"         onclick="switchTab('booklet')">BOOKLET</button>
+  <button class="tab-btn"         onclick="switchTab('milestones')">MISSIONS</button>
 </div>
 
-<!-- GAME TAB -->
+<!-- ══ GAME TAB ═════════════════════════════════════════════ -->
 <div id="game-tab">
   <div id="main">
-    <!-- LEFT: WAREHOUSE SCENE + SHOP -->
+
+    <!-- LEFT: warehouse scene + place-order button + stats -->
     <div style="display:flex;flex-direction:column;gap:12px;">
-      <!-- Warehouse Scene -->
       <div id="warehouse-scene">
         <div class="wh-light" style="left:30px"></div>
         <div class="wh-light" style="left:90px"></div>
         <div class="wh-light" style="left:150px"></div>
         <div class="shelf" style="width:60px;left:140px;bottom:80px;"></div>
         <div class="shelf" style="width:60px;left:140px;bottom:110px;"></div>
-        <!-- Stacked boxes on shelf -->
-        <div class="stack-box" style="width:14px;height:12px;bottom:92px;left:148px;border-color:#f0a500;background:#2a1a0a;"></div>
-        <div class="stack-box" style="width:14px;height:12px;bottom:92px;left:166px;border-color:#3fb950;background:#0a1a0a;"></div>
+        <div class="stack-box" style="width:14px;height:12px;bottom:92px; left:148px;border-color:#f0a500;background:#2a1a0a;"></div>
+        <div class="stack-box" style="width:14px;height:12px;bottom:92px; left:166px;border-color:#3fb950;background:#0a1a0a;"></div>
         <div class="stack-box" style="width:14px;height:12px;bottom:122px;left:148px;border-color:#58a6ff;background:#0a0a1a;"></div>
-        <div id="conveyor">
-          <div id="conveyor-belt"></div>
-        </div>
+        <div id="conveyor"><div id="conveyor-belt"></div></div>
         <div class="conv-box" style="animation-delay:0s"></div>
         <div class="conv-box" style="animation-delay:1.3s"></div>
         <div class="conv-box" style="animation-delay:2.6s"></div>
-        <!-- Worker -->
         <div id="worker">
           <div class="worker-head"></div>
           <div class="worker-body">
@@ -998,648 +66,151 @@
           <div class="worker-legs"></div>
         </div>
         <div class="wh-sign">RIDGE WAREHOUSE</div>
+        <div id="wh-stars"></div>
       </div>
 
-      <!-- SHOP -->
+      <button id="place-order-btn" onclick="openOrderModal()">+ PLACE ORDER</button>
+
       <div class="panel">
-        <div class="panel-title">ORDER PACKAGES</div>
-        <div class="shop-section">
-          <div class="pkg-btn-grid" id="pkg-buttons"></div>
+        <div class="panel-title">STATUS</div>
+        <div class="stat-row"><span class="stat-label">CREDITS</span>    <span class="stat-val" id="stat-credits">0</span></div>
+        <div class="stat-row"><span class="stat-label">PKGS OPENED</span><span class="stat-val" id="stat-opened">0</span></div>
+        <div class="stat-row"><span class="stat-label">UNIQUE ITEMS</span><span class="stat-val" id="stat-unique">0/18</span></div>
+        <div class="stat-row"><span class="stat-label">CARRIER</span>    <span class="stat-val" id="stat-carrier">Budget</span></div>
+        <div class="stat-row"><span class="stat-label">SPEED</span>      <span class="stat-val" id="stat-speed">1x</span></div>
+        <div class="stat-row" id="prestige-stat-row" style="display:none;">
+          <span class="stat-label">PRESTIGE</span>
+          <span class="stat-val" id="stat-prestige" style="color:var(--ultra)">✦0</span>
         </div>
-        <div class="panel-title" style="margin-top:10px;">CARRIER UPGRADES</div>
-        <div class="shop-section" id="carrier-shop"></div>
+        <div class="stat-row"><span class="stat-label">IDLE RATE</span><span class="stat-val" style="color:var(--text-dim)">1cr/30s</span></div>
       </div>
     </div>
 
-    <!-- CENTER: ORDER QUEUE -->
+    <!-- CENTER: in-transit orders -->
     <div class="panel">
-      <div class="panel-title">IN TRANSIT</div>
+      <div class="panel-title" style="display:flex;justify-content:space-between;align-items:center;">
+        <span>IN TRANSIT</span>
+        <span id="transit-count" style="font-size:6px;color:var(--text-dim)"></span>
+      </div>
       <div id="order-queue"></div>
     </div>
 
-    <!-- RIGHT: STATS + HISTORY -->
+    <!-- RIGHT: recent pulls -->
     <div class="right-panel">
-      <div class="panel">
-        <div class="panel-title">STATUS</div>
-        <div class="stat-row"><span class="stat-label">CREDITS</span><span class="stat-val" id="stat-credits">0</span></div>
-        <div class="stat-row"><span class="stat-label">PKGS OPENED</span><span class="stat-val" id="stat-opened">0</span></div>
-        <div class="stat-row"><span class="stat-label">UNIQUE ITEMS</span><span class="stat-val" id="stat-unique">0/20</span></div>
-        <div class="stat-row"><span class="stat-label">CARRIER</span><span class="stat-val" id="stat-carrier">Budget</span></div>
-        <div class="stat-row"><span class="stat-label">SPEED</span><span class="stat-val" id="stat-speed">1x</span></div>
-      </div>
-
       <div class="panel">
         <div class="panel-title">RECENT PULLS</div>
         <div class="pull-history" id="pull-history"></div>
       </div>
     </div>
+
   </div>
 </div>
 
-<!-- BOOKLET TAB -->
-<div id="booklet-panel">
-  <div class="panel" style="padding:12px;">
-    <div class="booklet-header">
-      <span class="panel-title" style="margin-bottom:0">COLLECTOR'S BOOKLET</span>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span id="booklet-pct" style="font-size:7px;color:var(--amber)">0%</span>
-        <div class="booklet-progress-bar">
-          <div class="booklet-progress-fill" id="booklet-progress-fill" style="width:0%"></div>
+<!-- ══ BOOKLET TAB ══════════════════════════════════════════ -->
+<div id="booklet-panel" style="display:none;">
+  <div style="padding:12px;max-width:1100px;margin:0 auto;">
+    <div class="panel">
+      <div class="booklet-header">
+        <span class="panel-title" style="margin-bottom:0">COLLECTOR'S BOOKLET</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span id="booklet-pct" style="font-size:7px;color:var(--amber)">0%</span>
+          <div class="booklet-progress-bar">
+            <div class="booklet-progress-fill" id="booklet-progress-fill" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="booklet-filters" id="booklet-filters">
+        <button class="filter-btn active"  onclick="setBookletFilter('all')">ALL</button>
+        <button class="filter-btn"         onclick="setBookletFilter('common')">COMMON</button>
+        <button class="filter-btn"         onclick="setBookletFilter('uncommon')">UNCOMMON</button>
+        <button class="filter-btn"         onclick="setBookletFilter('rare')">RARE</button>
+        <button class="filter-btn"         onclick="setBookletFilter('ultra')">ULTRA RARE</button>
+      </div>
+      <div id="booklet-content"></div>
+    </div>
+
+    <!-- Prestige section (shown only when collection is complete) -->
+    <div id="prestige-area" class="panel" style="margin-top:12px;text-align:center;padding:24px;display:none;">
+      <div style="font-size:8px;color:var(--ultra);margin-bottom:10px;text-shadow:0 0 8px var(--ultra);">
+        ✦ COLLECTION COMPLETE! ✦
+      </div>
+      <div style="font-size:6px;color:var(--text-dim);margin-bottom:16px;line-height:2.2;">
+        Reset your collection for a permanent +10% rare rate bonus.<br>
+        Credits and carriers are always kept.
+      </div>
+      <button id="prestige-btn" onclick="prestige()">✦ PRESTIGE ✦</button>
+      <div id="prestige-info" style="margin-top:10px;font-size:5px;color:var(--text-dim);"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MILESTONES TAB ═══════════════════════════════════════ -->
+<div id="milestones-panel" style="display:none;">
+  <div style="padding:12px;max-width:1100px;margin:0 auto;">
+    <div class="panel">
+      <div class="panel-title">MISSIONS &amp; MILESTONES</div>
+      <div id="milestones-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ORDER MODAL ══════════════════════════════════════════ -->
+<div id="order-modal" class="modal-overlay" onclick="handleModalBackdrop(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title">PLACE ORDER</span>
+      <button class="modal-close" onclick="closeOrderModal()">✕</button>
+    </div>
+    <div id="modal-tier-cards" class="tier-cards-grid"></div>
+    <div class="modal-divider">▸ CARRIER UPGRADES</div>
+    <div id="modal-carrier-shop"></div>
+  </div>
+</div>
+
+<!-- ══ OPEN OVERLAY ═════════════════════════════════════════ -->
+<div id="open-overlay">
+
+  <!-- Phase 1 + 2: box animation -->
+  <div id="box-stage">
+    <div id="opening-box-wrap">
+      <div id="opening-box">
+        <div id="box-lid"></div>
+        <div id="box-body">
+          <div class="box-tape-h"></div>
+          <div class="box-tape-v"></div>
+          <span class="box-r-label">R</span>
         </div>
       </div>
     </div>
-    <div id="booklet-content"></div>
+    <div id="box-stage-label">INCOMING...</div>
   </div>
-</div>
 
-<!-- MILESTONES TAB -->
-<div id="milestones-panel">
-  <div class="panel" style="padding:12px;">
-    <div class="panel-title">MISSIONS & MILESTONES</div>
-    <div id="milestones-list"></div>
-  </div>
-</div>
-
-<!-- OPEN OVERLAY -->
-<div id="open-overlay">
-  <div id="opening-state" style="display:flex;flex-direction:column;align-items:center;">
-    <div id="opening-anim">
-      <div class="open-box-inner">📦</div>
-    </div>
-    <div id="opening-anim-label">OPENING...</div>
-  </div>
+  <!-- Phase 3+: item reveal -->
   <div id="reveal-state" style="display:none;">
     <div class="reveal-box" id="reveal-box">
       <div class="sparkle-container" id="sparkle-container"></div>
       <div class="reveal-item-icon" id="reveal-icon"></div>
       <div class="reveal-item-name" id="reveal-name"></div>
-      <div class="reveal-rarity" id="reveal-rarity"></div>
-      <div class="reveal-credits" id="reveal-credits"></div>
+      <div class="reveal-rarity"    id="reveal-rarity"></div>
+      <div class="reveal-dupe"      id="reveal-dupe-msg" style="display:none;"></div>
+      <div class="reveal-credits"   id="reveal-credits"></div>
     </div>
-    <button class="reveal-close" onclick="closeReveal()">COLLECT!</button>
+    <button class="reveal-close" id="reveal-close-btn" onclick="closeReveal()">ADD TO COLLECTION</button>
   </div>
 </div>
 
-<!-- TOAST CONTAINER -->
+<!-- Full-screen rarity flash (separate from overlay so it bleeds edge-to-edge) -->
+<div id="rarity-flash"></div>
+
+<!-- Toast notifications -->
 <div id="toast-container"></div>
 
-<script>
-// ═══════════════════════════════════════════════════════
-// DATA DEFINITIONS
-// ═══════════════════════════════════════════════════════
+<script src="data.js"></script>
+<script src="state.js"></script>
+<script src="audio.js"></script>
+<script src="render.js"></script>
+<script src="game.js"></script>
+<script src="main.js"></script>
 
-const PACKAGE_TIERS = [
-  { id:'standard',  name:'Standard',  cost:20,  baseTime:60,  rareboost:0,   cls:'tier-standard'  },
-  { id:'express',   name:'Express',   cost:50,  baseTime:30,  rareboost:0.10, cls:'tier-express'   },
-  { id:'priority',  name:'Priority',  cost:100, baseTime:15,  rareboost:0.25, cls:'tier-priority'  },
-  { id:'overnight', name:'Overnight', cost:200, baseTime:5,   rareboost:0.50, cls:'tier-overnight' },
-];
-
-const CARRIERS = [
-  { id:'budget',   name:'Budget Courier', cost:0,    mult:1.0, desc:'Default carrier' },
-  { id:'ridgepost',name:'RidgePost',      cost:150,  mult:1.5, desc:'1.5x speed boost' },
-  { id:'express',  name:'ExpressRidge',   cost:400,  mult:2.5, desc:'2.5x speed boost' },
-  { id:'sonic',    name:'SonicRidge',     cost:1000, mult:5.0, desc:'5x speed boost' },
-];
-
-// Item icon CSS class lookup
-const ICON_MAP = {
-  'wallet-black':    'icon-wallet',
-  'wallet-gunmetal': 'icon-wallet',
-  'wallet-titanium': 'icon-wallet',
-  'keycase-black':   'icon-keycase',
-  'phone-case':      'icon-phone',
-  'wallet-carbon':   'icon-carbon',
-  'wallet-gold':     'icon-gold',
-  'travel-wallet':   'icon-travel',
-  'keycase-titanium':'icon-keycase',
-  'ridge-pen':       'icon-pen',
-  'power-bank':      'icon-powerbank',
-  'wallet-damascus': 'icon-damascus',
-  'ridge-backpack':  'icon-backpack',
-  'ridge-sling':     'icon-sling',
-  'commuter-bag':    'icon-commuter',
-  'wallet-stealth':  'icon-stealth',
-  'collab-wallet':   'icon-collab',
-  'mystery-box-meta':'icon-mystery',
-};
-
-const COLLECTIBLES = [
-  // COMMON
-  { id:'wallet-black',    name:'Ridge Wallet\n(Black)',     rarity:'common',   credits:5,   icon:'icon-wallet'   },
-  { id:'wallet-gunmetal', name:'Ridge Wallet\n(Gunmetal)',  rarity:'common',   credits:5,   icon:'icon-wallet'   },
-  { id:'wallet-titanium', name:'Ridge Wallet\n(Titanium)',  rarity:'common',   credits:5,   icon:'icon-wallet'   },
-  { id:'keycase-black',   name:'Ridge Keycase\n(Black)',    rarity:'common',   credits:5,   icon:'icon-keycase'  },
-  { id:'phone-case',      name:'Ridge Phone\nCase',         rarity:'common',   credits:5,   icon:'icon-phone'    },
-  // UNCOMMON
-  { id:'wallet-carbon',   name:'Ridge Wallet\n(Carbon)',    rarity:'uncommon', credits:15,  icon:'icon-carbon'   },
-  { id:'wallet-gold',     name:'Ridge Wallet\n(Gold)',      rarity:'uncommon', credits:15,  icon:'icon-gold'     },
-  { id:'travel-wallet',   name:'Ridge Travel\nWallet',      rarity:'uncommon', credits:15,  icon:'icon-travel'   },
-  { id:'keycase-titanium',name:'Ridge Keycase\n(Titanium)', rarity:'uncommon', credits:15,  icon:'icon-keycase'  },
-  { id:'ridge-pen',       name:'Ridge Pen',                 rarity:'uncommon', credits:15,  icon:'icon-pen'      },
-  { id:'power-bank',      name:'Ridge Power\nBank',         rarity:'uncommon', credits:15,  icon:'icon-powerbank'},
-  // RARE
-  { id:'wallet-damascus', name:'Ridge Wallet\n(Damascus)',  rarity:'rare',     credits:40,  icon:'icon-damascus' },
-  { id:'ridge-backpack',  name:'Ridge Backpack',            rarity:'rare',     credits:40,  icon:'icon-backpack' },
-  { id:'ridge-sling',     name:'Ridge Sling Bag',           rarity:'rare',     credits:40,  icon:'icon-sling'    },
-  { id:'commuter-bag',    name:'Ridge Commuter\nBag',       rarity:'rare',     credits:40,  icon:'icon-commuter' },
-  // ULTRA RARE
-  { id:'wallet-stealth',  name:'Ridge Wallet\n(Stealth)',   rarity:'ultra',    credits:150, icon:'icon-stealth'  },
-  { id:'collab-wallet',   name:'Limited Edition\nCollab',   rarity:'ultra',    credits:150, icon:'icon-collab'   },
-  { id:'mystery-box-meta',name:'Ridge Mystery\nBox',        rarity:'ultra',    credits:300, icon:'icon-mystery', special:'2xcredits' },
-];
-
-const BASE_RATES = { common:0.60, uncommon:0.25, rare:0.12, ultra:0.03 };
-
-const MILESTONES = [
-  { id:'first-drop',   name:'First Drop!',   desc:'Open your first package',        req:s=>s.packagesOpened>=1,       reward:25  },
-  { id:'collector',    name:'Collector',      desc:'Collect 5 unique items',          req:s=>uniqueCount()>=5,          reward:50  },
-  { id:'dedicated',    name:'Dedicated',      desc:'Open 10 packages',                req:s=>s.packagesOpened>=10,      reward:75  },
-  { id:'rare-hunter',  name:'Rare Hunter',    desc:'Pull your first Rare item',       req:s=>s.firstRare,               reward:100 },
-  { id:'ultra-lucky',  name:'Ultra Lucky',    desc:'Pull your first Ultra Rare item', req:s=>s.firstUltra,              reward:250 },
-  { id:'completionist',name:'Completionist',  desc:'Collect all 18 base items',       req:s=>uniqueCount()>=18,         reward:500 },
-  { id:'high-roller',  name:'High Roller',    desc:'Open 50 packages',                req:s=>s.packagesOpened>=50,      reward:200 },
-  { id:'rich',         name:'Loaded',         desc:'Accumulate 1000 credits',         req:s=>s.totalCreditsEarned>=1000,reward:150 },
-];
-
-// ═══════════════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════════════
-
-let state = {
-  credits: 100,
-  packagesOpened: 0,
-  totalCreditsEarned: 100,
-  carrier: 'budget',
-  carriersOwned: ['budget'],
-  collection: {}, // id -> count
-  orders: [],     // {id, tier, startTime, duration, ready}
-  pullHistory: [],
-  milestonesCompleted: [],
-  firstRare: false,
-  firstUltra: false,
-  nextOrderId: 1,
-};
-
-function saveState() {
-  try { localStorage.setItem('ridgemysterydrop_v1', JSON.stringify(state)); } catch(e){}
-}
-
-function loadState() {
-  try {
-    const raw = localStorage.getItem('ridgemysterydrop_v1');
-    if (raw) {
-      const loaded = JSON.parse(raw);
-      state = Object.assign(state, loaded);
-      // Recalculate order readiness on load
-      const now = Date.now();
-      state.orders = (state.orders||[]).map(o => {
-        if (!o.ready && now >= o.startTime + o.duration * 1000) o.ready = true;
-        return o;
-      });
-    }
-  } catch(e) { console.warn('Save load failed', e); }
-}
-
-// ═══════════════════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════════════════
-
-function uniqueCount() {
-  return Object.values(state.collection).filter(c=>c>0).length;
-}
-
-function getTotalItems() { return COLLECTIBLES.length; }
-
-function getCurrentCarrier() {
-  return CARRIERS.find(c=>c.id===state.carrier) || CARRIERS[0];
-}
-
-function getShipTime(tier) {
-  const carrier = getCurrentCarrier();
-  return Math.max(1, Math.round(tier.baseTime / carrier.mult));
-}
-
-function rollItem(rareboost) {
-  // Adjust rates with boost
-  let rates = { ...BASE_RATES };
-  const extraRare = rates.common * rareboost;
-  rates.common = Math.max(0.10, rates.common - rareboost * 0.75);
-  rates.uncommon = Math.max(0.15, rates.uncommon - rareboost * 0.15);
-  rates.rare += rareboost * 0.70;
-  rates.ultra += rareboost * 0.10;
-
-  // Normalize
-  const total = rates.common + rates.uncommon + rates.rare + rates.ultra;
-  for (const k in rates) rates[k] /= total;
-
-  const r = Math.random();
-  let rarity;
-  if (r < rates.ultra) rarity = 'ultra';
-  else if (r < rates.ultra + rates.rare) rarity = 'rare';
-  else if (r < rates.ultra + rates.rare + rates.uncommon) rarity = 'uncommon';
-  else rarity = 'common';
-
-  const pool = COLLECTIBLES.filter(c=>c.rarity===rarity);
-  return pool[Math.floor(Math.random()*pool.length)];
-}
-
-function rarityColor(r) {
-  return { common:'var(--common)', uncommon:'var(--uncommon)', rare:'var(--rare)', ultra:'var(--ultra)' }[r];
-}
-
-function rarityLabel(r) {
-  return { common:'COMMON', uncommon:'UNCOMMON', rare:'RARE', ultra:'ULTRA RARE' }[r];
-}
-
-function badgeClass(r) {
-  return { common:'badge-common', uncommon:'badge-uncommon', rare:'badge-rare', ultra:'badge-ultra' }[r];
-}
-
-function formatTime(seconds) {
-  if (seconds <= 0) return '0s';
-  if (seconds < 60) return seconds + 's';
-  const m = Math.floor(seconds/60), s = seconds%60;
-  return m+'m ' + (s>0?s+'s':'');
-}
-
-// ═══════════════════════════════════════════════════════
-// UI RENDERING
-// ═══════════════════════════════════════════════════════
-
-function renderTopBar() {
-  document.getElementById('hud-credits').textContent = state.credits;
-  document.getElementById('hud-opened').textContent = state.packagesOpened;
-  document.getElementById('hud-collection').textContent = uniqueCount()+'/'+getTotalItems();
-  document.getElementById('stat-credits').textContent = state.credits;
-  document.getElementById('stat-opened').textContent = state.packagesOpened;
-  document.getElementById('stat-unique').textContent = uniqueCount()+'/'+getTotalItems();
-  const carrier = getCurrentCarrier();
-  document.getElementById('stat-carrier').textContent = carrier.name;
-  document.getElementById('stat-speed').textContent = carrier.mult+'x';
-}
-
-function renderPackageButtons() {
-  const el = document.getElementById('pkg-buttons');
-  el.innerHTML = '';
-  PACKAGE_TIERS.forEach(tier => {
-    const shipTime = getShipTime(tier);
-    const btn = document.createElement('button');
-    btn.className = 'btn-order-pkg';
-    btn.disabled = state.credits < tier.cost;
-    btn.innerHTML = `<div>${tier.name.toUpperCase()}</div><div class="pkg-cost">${tier.cost}cr</div><div class="pkg-time">${formatTime(shipTime)}</div>`;
-    btn.onclick = () => placeOrder(tier);
-    el.appendChild(btn);
-  });
-}
-
-function renderCarrierShop() {
-  const el = document.getElementById('carrier-shop');
-  el.innerHTML = '';
-  CARRIERS.forEach(carrier => {
-    const owned = state.carriersOwned.includes(carrier.id);
-    const isActive = state.carrier === carrier.id;
-    const canAfford = state.credits >= carrier.cost;
-    const div = document.createElement('div');
-    div.className = 'shop-item' + (isActive?' owned':'') + (!canAfford&&!owned?' cant-afford':'');
-    div.innerHTML = `
-      <div class="shop-item-info">
-        <div class="shop-item-name">${carrier.name}</div>
-        <div class="shop-item-desc">${carrier.desc}</div>
-      </div>
-      ${isActive
-        ? `<button class="btn-buy owned" disabled>ACTIVE</button>`
-        : owned
-          ? `<button class="btn-buy" onclick="activateCarrier('${carrier.id}')">USE</button>`
-          : `<button class="btn-buy" ${!canAfford?'disabled':''} onclick="buyCarrier('${carrier.id}')">${carrier.cost}cr</button>`
-      }
-    `;
-    el.appendChild(div);
-  });
-}
-
-function renderOrderQueue() {
-  const el = document.getElementById('order-queue');
-  if (state.orders.length === 0) {
-    el.innerHTML = '<div class="no-orders">No packages in transit.<br><br>Place an order to begin!</div>';
-    return;
-  }
-  el.innerHTML = '';
-  const now = Date.now();
-  state.orders.forEach(order => {
-    const tier = PACKAGE_TIERS.find(t=>t.id===order.tier);
-    const elapsed = (now - order.startTime) / 1000;
-    const pct = order.ready ? 100 : Math.min(100, (elapsed / order.duration) * 100);
-    const remaining = order.ready ? 0 : Math.max(0, Math.ceil(order.duration - elapsed));
-    const div = document.createElement('div');
-    div.className = 'order-card' + (order.ready?' ready':'');
-    div.innerHTML = `
-      <span class="order-tier-badge ${tier.cls}">${tier.name.toUpperCase()}</span>
-      <div class="order-progress-bar">
-        <div class="order-progress-fill" style="width:${pct}%"></div>
-      </div>
-      ${order.ready
-        ? `<div class="order-ready-label">► READY TO OPEN ◄</div>
-           <button class="btn-open" onclick="openPackage(${order.id})">OPEN PACKAGE</button>`
-        : `<div class="order-timer">ETA: ${formatTime(remaining)}</div>`
-      }
-    `;
-    el.appendChild(div);
-  });
-}
-
-function renderPullHistory() {
-  const el = document.getElementById('pull-history');
-  el.innerHTML = '';
-  const recent = state.pullHistory.slice(-15).reverse();
-  recent.forEach(entry => {
-    const div = document.createElement('div');
-    div.className = `pull-entry rarity-${entry.rarity}`;
-    div.innerHTML = `<div class="rarity-dot"></div><span style="color:${rarityColor(entry.rarity)}">${rarityLabel(entry.rarity)}</span>&nbsp;${entry.name.replace('\n',' ')}`;
-    el.appendChild(div);
-  });
-}
-
-function renderBooklet() {
-  const el = document.getElementById('booklet-content');
-  const uniqueC = uniqueCount();
-  const total = getTotalItems();
-  const pct = Math.round((uniqueC/total)*100);
-  document.getElementById('booklet-pct').textContent = pct+'%';
-  document.getElementById('booklet-progress-fill').style.width = pct+'%';
-  el.innerHTML = '';
-  const rarities = ['common','uncommon','rare','ultra'];
-  const labels = { common:'COMMON', uncommon:'UNCOMMON', rare:'RARE', ultra:'ULTRA RARE' };
-  rarities.forEach(rarity => {
-    const items = COLLECTIBLES.filter(c=>c.rarity===rarity);
-    const title = document.createElement('div');
-    title.className = 'booklet-section-title';
-    title.style.color = rarityColor(rarity);
-    title.textContent = `▸ ${labels[rarity]}`;
-    el.appendChild(title);
-    const grid = document.createElement('div');
-    grid.className = 'booklet-grid';
-    items.forEach(item => {
-      const count = state.collection[item.id] || 0;
-      const collected = count > 0;
-      const card = document.createElement('div');
-      card.className = `booklet-card rarity-${rarity} ${collected?'collected':'uncollected'}`;
-      const iconDiv = document.createElement('div');
-      iconDiv.className = 'item-icon';
-      const iconEl = document.createElement('div');
-      iconEl.className = item.icon;
-      iconEl.style.width='32px'; iconEl.style.height='32px';
-      iconDiv.appendChild(iconEl);
-      card.innerHTML = `
-        <div class="item-icon" style="display:flex;align-items:center;justify-content:center;"></div>
-        <div class="item-name">${collected ? item.name.replace('\n','<br>') : '???'}</div>
-        <span class="rarity-badge ${badgeClass(rarity)}">${labels[rarity]}</span>
-        ${collected ? `<div class="pull-count">×${count}</div>` : ''}
-      `;
-      card.querySelector('.item-icon').appendChild(iconEl);
-      el.appendChild(card); // will be inside grid below
-      grid.appendChild(card);
-    });
-    el.appendChild(grid);
-  });
-}
-
-function renderMilestones() {
-  const el = document.getElementById('milestones-list');
-  el.innerHTML = '';
-  MILESTONES.forEach(ms => {
-    const done = state.milestonesCompleted.includes(ms.id);
-    const div = document.createElement('div');
-    div.className = 'milestone-card' + (done?' done':'');
-    div.innerHTML = `
-      <div>
-        <div class="ms-name">${ms.name}</div>
-        <div class="ms-desc">${ms.desc}</div>
-      </div>
-      <div class="ms-reward">+${ms.reward} cr</div>
-      <div class="ms-status">${done?'✓ DONE':'PENDING'}</div>
-    `;
-    el.appendChild(div);
-  });
-}
-
-function renderAll() {
-  renderTopBar();
-  renderPackageButtons();
-  renderCarrierShop();
-  renderOrderQueue();
-  renderPullHistory();
-}
-
-// ═══════════════════════════════════════════════════════
-// GAME LOGIC
-// ═══════════════════════════════════════════════════════
-
-function placeOrder(tier) {
-  if (state.credits < tier.cost) return;
-  state.credits -= tier.cost;
-  const shipTime = getShipTime(tier);
-  state.orders.push({
-    id: state.nextOrderId++,
-    tier: tier.id,
-    startTime: Date.now(),
-    duration: shipTime,
-    ready: shipTime <= 0,
-  });
-  saveState();
-  renderAll();
-}
-
-function buyCarrier(carrierId) {
-  const carrier = CARRIERS.find(c=>c.id===carrierId);
-  if (!carrier || state.credits < carrier.cost) return;
-  state.credits -= carrier.cost;
-  state.carriersOwned.push(carrierId);
-  state.carrier = carrierId;
-  saveState();
-  renderAll();
-  showToast('Carrier Upgraded!', `Now using ${carrier.name} (${carrier.mult}x speed)`);
-}
-
-function activateCarrier(carrierId) {
-  state.carrier = carrierId;
-  saveState();
-  renderAll();
-}
-
-let isOpening = false;
-
-function openPackage(orderId) {
-  if (isOpening) return;
-  const orderIdx = state.orders.findIndex(o=>o.id===orderId);
-  if (orderIdx === -1) return;
-  const order = state.orders[orderIdx];
-  if (!order.ready) return;
-  isOpening = true;
-  const tier = PACKAGE_TIERS.find(t=>t.id===order.tier);
-
-  // Remove from queue
-  state.orders.splice(orderIdx, 1);
-
-  // Show opening animation
-  const overlay = document.getElementById('open-overlay');
-  const openingState = document.getElementById('opening-state');
-  const revealState = document.getElementById('reveal-state');
-  overlay.classList.add('active');
-  openingState.style.display = 'flex';
-  revealState.style.display = 'none';
-
-  // Roll the item after short delay
-  setTimeout(() => {
-    const item = rollItem(tier.rareboost);
-    const isNew = !state.collection[item.id];
-
-    // Update state
-    state.collection[item.id] = (state.collection[item.id] || 0) + 1;
-    state.packagesOpened++;
-
-    // Credits
-    let creditsGained = item.credits;
-    if (item.special === '2xcredits') creditsGained = item.credits * 2;
-    state.credits += creditsGained;
-    state.totalCreditsEarned += creditsGained;
-
-    // Rarity flags
-    if (item.rarity === 'rare') state.firstRare = true;
-    if (item.rarity === 'ultra') state.firstUltra = true;
-
-    // Pull history
-    state.pullHistory.push({ id:item.id, name:item.name, rarity:item.rarity });
-
-    saveState();
-    checkMilestones();
-
-    // Show reveal
-    openingState.style.display = 'none';
-    revealState.style.display = 'flex';
-    revealState.style.flexDirection = 'column';
-    revealState.style.alignItems = 'center';
-
-    const revealBox = document.getElementById('reveal-box');
-    revealBox.style.borderColor = rarityColor(item.rarity);
-
-    const revealIcon = document.getElementById('reveal-icon');
-    revealIcon.innerHTML = '';
-    const iconEl = document.createElement('div');
-    iconEl.className = item.icon;
-    iconEl.style.width='64px'; iconEl.style.height='64px';
-    revealIcon.appendChild(iconEl);
-
-    document.getElementById('reveal-name').textContent = item.name.replace('\n',' ');
-    document.getElementById('reveal-name').style.color = rarityColor(item.rarity);
-    document.getElementById('reveal-rarity').textContent = rarityLabel(item.rarity);
-    document.getElementById('reveal-rarity').style.color = rarityColor(item.rarity);
-    document.getElementById('reveal-credits').textContent = '+'+creditsGained+' CREDITS';
-
-    // NEW badge
-    const existingBadge = revealBox.querySelector('.reveal-new-badge');
-    if (existingBadge) existingBadge.remove();
-    if (isNew) {
-      const badge = document.createElement('div');
-      badge.className = 'reveal-new-badge';
-      badge.textContent = 'NEW!';
-      revealBox.appendChild(badge);
-    }
-
-    // Sparkles for ultra rare
-    const sparkles = document.getElementById('sparkle-container');
-    sparkles.innerHTML = '';
-    if (item.rarity === 'ultra') {
-      for (let i=0; i<20; i++) {
-        const s = document.createElement('div');
-        s.className = 'sparkle';
-        const tx = (Math.random()-0.5)*200;
-        const ty = (Math.random()-0.5)*200;
-        s.style.cssText = `left:50%;top:50%;--tx:${tx}px;--ty:${ty}px;animation-delay:${Math.random()*0.3}s`;
-        sparkles.appendChild(s);
-      }
-    }
-
-    renderAll();
-  }, 800);
-}
-
-function closeReveal() {
-  document.getElementById('open-overlay').classList.remove('active');
-  isOpening = false;
-  renderAll();
-}
-
-function checkMilestones() {
-  MILESTONES.forEach(ms => {
-    if (!state.milestonesCompleted.includes(ms.id) && ms.req(state)) {
-      state.milestonesCompleted.push(ms.id);
-      state.credits += ms.reward;
-      state.totalCreditsEarned += ms.reward;
-      saveState();
-      showToast('MILESTONE: '+ms.name, ms.desc+'\n+'+ms.reward+' credits!');
-    }
-  });
-  renderMilestones();
-}
-
-function showToast(title, body) {
-  const container = document.getElementById('toast-container');
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.innerHTML = `<div class="toast-title">${title}</div><div class="toast-body">${body.replace('\n','<br>')}</div>`;
-  container.appendChild(toast);
-  setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 3100);
-}
-
-// ═══════════════════════════════════════════════════════
-// TABS
-// ═══════════════════════════════════════════════════════
-
-function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach((b,i) => {
-    const tabs = ['game','booklet','milestones'];
-    b.classList.toggle('active', tabs[i]===tab);
-  });
-  document.getElementById('game-tab').style.display = tab==='game' ? 'block' : 'none';
-  document.getElementById('booklet-panel').classList.toggle('active', tab==='booklet');
-  document.getElementById('milestones-panel').classList.toggle('active', tab==='milestones');
-  if (tab==='booklet') renderBooklet();
-  if (tab==='milestones') renderMilestones();
-}
-
-// ═══════════════════════════════════════════════════════
-// GAME LOOP
-// ═══════════════════════════════════════════════════════
-
-function gameTick() {
-  const now = Date.now();
-  let changed = false;
-  state.orders.forEach(order => {
-    if (!order.ready && now >= order.startTime + order.duration * 1000) {
-      order.ready = true;
-      changed = true;
-    }
-  });
-  renderOrderQueue();
-  renderPackageButtons();
-  renderTopBar();
-  if (changed) saveState();
-}
-
-// ═══════════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════════
-
-function init() {
-  loadState();
-  renderAll();
-  renderBooklet();
-  renderMilestones();
-  setInterval(gameTick, 500);
-}
-
-init();
-</script>
 </body>
 </html>
