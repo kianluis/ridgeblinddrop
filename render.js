@@ -150,9 +150,10 @@ function renderPullHistory() {
     const div = document.createElement('div');
     if (i < recent.length) {
       const entry = recent[i];
-      div.className = 'pull-entry rarity-' + entry.rarity;
+      div.className = 'pull-entry pull-entry--clickable rarity-' + entry.rarity;
+      div.onclick = () => showItemDetail(entry.id);
       div.innerHTML = `
-        <div class="pull-name">${entry.name.replace('\n', ' ')}</div>
+        <div class="pull-name pull-name--link">${entry.name.replace('\n', ' ')}</div>
         <div class="pull-rarity-label">(${rarityLabel(entry.rarity).charAt(0) + rarityLabel(entry.rarity).slice(1).toLowerCase()})</div>`;
     } else {
       div.className = 'pull-entry pull-entry--empty';
@@ -333,6 +334,40 @@ function showIdleFloat(amount) {
   el.textContent = '+' + amount + ' idle';
   document.body.appendChild(el);
   setTimeout(() => el.remove(), 1700);
+}
+
+// ── Item Detail Overlay ───────────────────────────────────
+
+function showItemDetail(id) {
+  const item = COLLECTIBLES.find(c => c.id === id);
+  if (!item) return;
+  const count = state.collection[id] || 0;
+  const labels = { common:'COMMON', uncommon:'UNCOMMON', rare:'RARE', ultra:'ULTRA RARE' };
+
+  const iconWrap = document.getElementById('item-detail-icon-wrap');
+  iconWrap.innerHTML = '';
+  const iconEl = document.createElement('div');
+  iconEl.className = item.icon;
+  iconEl.style.cssText = 'width:64px;height:64px;';
+  iconWrap.appendChild(iconEl);
+
+  document.getElementById('item-detail-name').textContent = item.name.replace('\n', ' ');
+  document.getElementById('item-detail-name').style.color = rarityColor(item.rarity);
+  document.getElementById('item-detail-rarity').innerHTML =
+    `<span class="rarity-badge ${badgeClass(item.rarity)}">${labels[item.rarity]}</span>`;
+  const countEl = document.getElementById('item-detail-count');
+  countEl.textContent = count > 0 ? '×' + count + ' owned' : 'Not yet collected';
+  countEl.style.color = count > 0 ? 'var(--text-dim)' : 'var(--text-dim)';
+
+  const box = document.getElementById('item-detail-box');
+  box.style.borderColor = rarityColor(item.rarity);
+  box.style.boxShadow   = `0 0 24px ${rarityColor(item.rarity)}55`;
+
+  document.getElementById('item-detail-overlay').style.display = 'flex';
+}
+
+function closeItemDetail() {
+  document.getElementById('item-detail-overlay').style.display = 'none';
 }
 
 // ── Render All ────────────────────────────────────────────
