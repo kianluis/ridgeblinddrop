@@ -317,6 +317,17 @@
   </div>
 </div>
 
+<!-- ══ ITEM DETAIL OVERLAY ════════════════════════════════ -->
+<div id="item-detail-overlay" onclick="closeItemDetail()" style="display:none;">
+  <div id="item-detail-box" onclick="event.stopPropagation()">
+    <button class="item-detail-close" onclick="closeItemDetail()">✕</button>
+    <div id="item-detail-icon-wrap" class="item-icon"></div>
+    <div id="item-detail-name" class="reveal-item-name"></div>
+    <div id="item-detail-rarity"></div>
+    <div id="item-detail-count" class="pull-count"></div>
+  </div>
+</div>
+
 <div id="rarity-flash"></div>
 <div id="toast-container"></div>
 
