@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════
 // RIDGE MYSTERY DROP — main.js
-// Entry point: tabs, modals, game loop, init
+// Entry point: tabs, game loop, init
 // ═══════════════════════════════════════════════════════
 
 // ── Tab switching ─────────────────────────────────────────
@@ -16,23 +16,6 @@ function switchTab(tab) {
 
   if (tab === 'booklet')    renderBooklet();
   if (tab === 'milestones') renderMilestones();
-}
-
-// ── Order modal ───────────────────────────────────────────
-
-function openOrderModal() {
-  renderOrderModal();
-  document.getElementById('order-modal').classList.add('active');
-  // Resume AudioContext on first user interaction
-  getAudioCtx();
-}
-
-function closeOrderModal() {
-  document.getElementById('order-modal').classList.remove('active');
-}
-
-function handleModalBackdrop(e) {
-  if (e.target === document.getElementById('order-modal')) closeOrderModal();
 }
 
 // ── Booklet filter ────────────────────────────────────────

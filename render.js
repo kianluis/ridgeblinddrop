@@ -42,11 +42,12 @@ function renderTopBar() {
   if (muteBtn) muteBtn.textContent = state.soundEnabled ? '🔊' : '🔇';
 }
 
-// ── Order Modal ───────────────────────────────────────────
+// ── Inline Order Panel ────────────────────────────────────
 
-function renderOrderModal() {
+function renderOrderPanel() {
   // Tier cards
-  const cardsEl = document.getElementById('modal-tier-cards');
+  const cardsEl = document.getElementById('inline-tier-cards');
+  if (!cardsEl) return;
   cardsEl.innerHTML = '';
   PACKAGE_TIERS.forEach(tier => {
     const shipTime = getShipTime(tier);
@@ -71,12 +72,13 @@ function renderOrderModal() {
     cardsEl.appendChild(div);
   });
 
-  // Carrier shop inside modal
-  const shopEl = document.getElementById('modal-carrier-shop');
+  // Carrier shop
+  const shopEl = document.getElementById('inline-carrier-shop');
+  if (!shopEl) return;
   shopEl.innerHTML = '';
   CARRIERS.forEach(carrier => {
-    const owned    = state.carriersOwned.includes(carrier.id);
-    const isActive = state.carrier === carrier.id;
+    const owned     = state.carriersOwned.includes(carrier.id);
+    const isActive  = state.carrier === carrier.id;
     const canAfford = state.credits >= carrier.cost;
     const div = document.createElement('div');
     div.className = 'shop-item' + (isActive ? ' owned' : '') + (!canAfford && !owned ? ' cant-afford' : '');
@@ -335,5 +337,6 @@ function showIdleFloat(amount) {
 function renderAll() {
   renderTopBar();
   renderOrderQueue();
+  renderOrderPanel();
   renderPullHistory();
 }

@@ -177,7 +177,7 @@ body {
 }
 
 #col-left   { grid-area: left;   display: flex; flex-direction: column; gap: var(--sp-3); min-width: 0; }
-#col-center { grid-area: center; min-width: 0; }
+#col-center { grid-area: center; display: flex; flex-direction: column; gap: var(--sp-3); min-width: 0; }
 #col-right  { grid-area: right;  min-width: 0; }
 
 /* ── 2-col tablet ── */
@@ -334,35 +334,6 @@ body {
 }
 #wh-stars { position: absolute; inset: 0; display: none; pointer-events: none; z-index: 4; }
 
-/* ── PLACE ORDER BUTTON ──────────────────────────────────── */
-#place-order-btn {
-  width: 100%;
-  padding: var(--sp-3) var(--sp-2);
-  background: var(--amber);
-  color: var(--bg);
-  border: none;
-  font-family: 'Press Start 2P', monospace;
-  font-size: var(--fs-md);
-  cursor: pointer;
-  letter-spacing: 1px;
-  transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
-  box-shadow: 0 0 12px rgba(240,165,0,0.4),
-              0 3px 0 #b07800;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--sp-2);
-}
-.btn-icon { font-size: 1.4em; line-height: 1; }
-#place-order-btn:hover {
-  background: var(--amber2);
-  box-shadow: 0 0 22px rgba(240,165,0,0.65), 0 3px 0 #b07800;
-}
-#place-order-btn:active {
-  transform: translateY(2px);
-  box-shadow: 0 0 10px rgba(240,165,0,0.4), 0 1px 0 #b07800;
-}
 
 /* ── STATUS PANEL ────────────────────────────────────────── */
 .stat-row {
@@ -505,53 +476,9 @@ body {
 .rarity-rare     .rarity-dot { background:var(--rare); }
 .rarity-ultra    .rarity-dot { background:var(--ultra); box-shadow:0 0 5px var(--ultra); }
 
-/* ── ORDER MODAL ─────────────────────────────────────────── */
-.modal-overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(2px);
-  z-index: 900;
-  justify-content: center;
-  align-items: center;
-  padding: var(--sp-3);
-}
-.modal-overlay.active { display: flex; }
-
-.modal-box {
-  background: var(--bg2);
-  border: 2px solid var(--amber);
-  padding: var(--sp-4);
-  max-width: 620px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 0 40px rgba(240,165,0,0.25), 0 0 80px rgba(0,0,0,0.6);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--sp-4);
-  border-bottom: 1px solid var(--border);
-  padding-bottom: var(--sp-3);
-}
-.modal-title { font-size: var(--fs-xl); color: var(--amber); }
-.modal-hint  { font-size: var(--fs-xs); color: var(--text-dim); margin-bottom: var(--sp-4); line-height: 2; }
-
-.modal-close {
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  font-family: 'Press Start 2P', monospace;
-  font-size: var(--fs-sm);
-  padding: var(--sp-1) var(--sp-2);
-  cursor: pointer;
-  transition: border-color 0.12s, color 0.12s;
-}
-.modal-close:hover { border-color: var(--danger); color: var(--danger); }
-
-.modal-divider {
+/* ── INLINE ORDER PANEL ──────────────────────────────────── */
+.order-panel-hint  { font-size: var(--fs-xs); color: var(--text-dim); margin: 0 0 var(--sp-3); line-height: 2; }
+.order-panel-divider {
   font-size: var(--fs-xs);
   color: var(--text-dim);
   letter-spacing: 1px;

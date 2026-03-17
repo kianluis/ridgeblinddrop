@@ -22,7 +22,7 @@ function placeOrder(tierId) {
   });
   saveState();
   renderAll();
-  renderOrderModal(); // refresh affordability in modal
+  renderOrderPanel(); // refresh affordability in modal
   playSound('order');
 }
 
@@ -34,7 +34,7 @@ function buyCarrier(carrierId) {
   state.carrier = carrierId;
   saveState();
   renderAll();
-  renderOrderModal();
+  renderOrderPanel();
   playSound('carrier');
   showToast('Carrier Upgraded!', `Now using ${carrier.name} (${carrier.mult}× speed)`);
 }
@@ -43,7 +43,7 @@ function activateCarrier(carrierId) {
   state.carrier = carrierId;
   saveState();
   renderAll();
-  renderOrderModal();
+  renderOrderPanel();
 }
 
 // ── Package Opening ───────────────────────────────────────
