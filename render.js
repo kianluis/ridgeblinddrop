@@ -145,19 +145,20 @@ function renderOrderQueue() {
 function renderPullHistory() {
   const el = document.getElementById('pull-history');
   el.innerHTML = '';
-  const recent = state.pullHistory.slice(-20).reverse();
-  if (recent.length === 0) {
-    el.innerHTML = '<div style="font-size:5px;color:var(--text-dim);text-align:center;padding:12px 0;">No pulls yet.</div>';
-    return;
-  }
-  recent.forEach(entry => {
+  const recent = state.pullHistory.slice(-8).reverse();
+  for (let i = 0; i < 8; i++) {
     const div = document.createElement('div');
-    div.className = 'pull-entry rarity-' + entry.rarity;
-    div.innerHTML = `
-      <div class="rarity-dot"></div>
-      <div class="pull-name">${entry.name.replace('\n', ' ')}</div>`;
+    if (i < recent.length) {
+      const entry = recent[i];
+      div.className = 'pull-entry rarity-' + entry.rarity;
+      div.innerHTML = `
+        <div class="rarity-dot"></div>
+        <div class="pull-name">${entry.name.replace('\n', ' ')}</div>`;
+    } else {
+      div.className = 'pull-entry pull-entry--empty';
+    }
     el.appendChild(div);
-  });
+  }
 }
 
 // ── Collector's Booklet ───────────────────────────────────
