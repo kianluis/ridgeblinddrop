@@ -78,10 +78,6 @@
         <div id="wh-stars"></div>
       </div>
 
-      <button id="place-order-btn" onclick="openOrderModal()">
-        <span class="btn-icon">+</span> PLACE ORDER
-      </button>
-
       <div class="panel" id="status-panel">
         <div class="panel-title">STATUS</div>
         <div class="stat-row">
@@ -115,13 +111,25 @@
       </div>
     </div>
 
-    <!-- CENTER column: in-transit orders -->
-    <div id="col-center" class="panel">
-      <div class="panel-title transit-header">
-        <span>IN TRANSIT</span>
-        <span id="transit-count" class="transit-count"></span>
+    <!-- CENTER column: in-transit + inline order panel -->
+    <div id="col-center">
+
+      <div class="panel" id="transit-panel">
+        <div class="panel-title transit-header">
+          <span>IN TRANSIT</span>
+          <span id="transit-count" class="transit-count"></span>
+        </div>
+        <div id="order-queue"></div>
       </div>
-      <div id="order-queue"></div>
+
+      <div class="panel" id="order-panel">
+        <div class="panel-title">PLACE ORDER</div>
+        <p class="order-panel-hint">Higher tiers = faster shipping &amp; better rare odds.</p>
+        <div id="inline-tier-cards" class="tier-cards-grid"></div>
+        <div class="order-panel-divider">▸ CARRIER UPGRADES</div>
+        <div id="inline-carrier-shop"></div>
+      </div>
+
     </div>
 
     <!-- RIGHT column: recent pulls -->
@@ -183,20 +191,6 @@
       <div class="panel-title">MISSIONS &amp; MILESTONES</div>
       <div id="milestones-list"></div>
     </div>
-  </div>
-</div>
-
-<!-- ══ ORDER MODAL ══════════════════════════════════════════ -->
-<div id="order-modal" class="modal-overlay" onclick="handleModalBackdrop(event)">
-  <div class="modal-box">
-    <div class="modal-header">
-      <span class="modal-title">PLACE ORDER</span>
-      <button class="modal-close" onclick="closeOrderModal()">✕</button>
-    </div>
-    <p class="modal-hint">Higher tiers = faster shipping &amp; better rare odds.</p>
-    <div id="modal-tier-cards" class="tier-cards-grid"></div>
-    <div class="modal-divider">▸ CARRIER UPGRADES</div>
-    <div id="modal-carrier-shop"></div>
   </div>
 </div>
 
