@@ -271,11 +271,12 @@ function renderMilestones() {
   const el = document.getElementById('milestones-list');
   el.innerHTML = '';
   MILESTONES.forEach(ms => {
-    const done = state.milestonesCompleted.includes(ms.id);
-    const div  = document.createElement('div');
-    div.className = 'milestone-card' + (done ? ' done' : '');
+    const done    = state.milestonesCompleted.includes(ms.id);
+    const pending = !done && state.milestonesToClaim.includes(ms.id);
+    const div = document.createElement('div');
+    div.className = 'milestone-card' + (done ? ' done' : '') + (pending ? ' claimable' : '');
     div.innerHTML = `
-      <div class="ms-trophy-icon trophy-slot ${done ? 'trophy-' + ms.trophy : 'trophy-empty'}">
+      <div class="ms-trophy-icon trophy-slot ${done ? 'trophy-' + ms.trophy : pending ? 'trophy-pending' : 'trophy-empty'}">
         <div class="trophy-r">R</div>
         <div class="trophy-stand"></div>
       </div>
@@ -285,11 +286,19 @@ function renderMilestones() {
       </div>
       <div class="ms-right">
         <div class="ms-reward">+${ms.reward} cr</div>
-        <div class="ms-status">${done ? '✓ DONE' : 'PENDING'}</div>
+        ${pending
+          ? `<button class="btn-claim-milestone" onclick="claimMilestone('${ms.id}')">CLAIM</button>`
+          : `<div class="ms-status">${done ? '✓ DONE' : 'PENDING'}</div>`
+        }
       </div>
     `;
     el.appendChild(div);
   });
+}
+
+function updateMissionsTabBadge() {
+  const badge = document.getElementById('missions-tab-badge');
+  if (badge) badge.style.display = (state.milestonesToClaim || []).length > 0 ? '' : 'none';
 }
 
 // ── Day / Night Warehouse ─────────────────────────────────
@@ -493,10 +502,12 @@ function renderTrophyShelf() {
   if (!shelf) return;
   shelf.innerHTML = '';
   MILESTONES.forEach(ms => {
-    const earned = state.milestonesCompleted.includes(ms.id);
+    const earned  = state.milestonesCompleted.includes(ms.id);
+    const pending = !earned && (state.milestonesToClaim || []).includes(ms.id);
+    const cls = earned ? 'trophy-' + ms.trophy : pending ? 'trophy-pending' : 'trophy-empty';
     const slot = document.createElement('div');
-    slot.className = 'trophy-slot ' + (earned ? 'trophy-' + ms.trophy : 'trophy-empty');
-    slot.title = earned ? ms.name + '\n' + ms.desc : '???';
+    slot.className = 'trophy-slot ' + cls;
+    slot.title = earned ? ms.name + ' — ' + ms.desc : pending ? ms.name + ' — READY TO CLAIM!' : '???';
     slot.innerHTML = `<div class="trophy-r">R</div><div class="trophy-stand"></div>`;
     shelf.appendChild(slot);
   });

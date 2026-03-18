@@ -211,19 +211,38 @@ function closeReveal() {
 function checkMilestones() {
   let anyNew = false;
   MILESTONES.forEach(ms => {
-    if (!state.milestonesCompleted.includes(ms.id) && ms.req(state)) {
-      state.milestonesCompleted.push(ms.id);
-      state.credits           += ms.reward;
-      state.totalCreditsEarned += ms.reward;
+    if (!state.milestonesCompleted.includes(ms.id) &&
+        !state.milestonesToClaim.includes(ms.id) &&
+        ms.req(state)) {
+      state.milestonesToClaim.push(ms.id);
       anyNew = true;
-      saveState();
-      setTimeout(() => {
-        showToast('🎖 ' + ms.name, ms.desc + '\n+' + ms.reward + ' credits!');
-        playSound('milestone');
-      }, 1600); // delay so it doesn't overlap opening sound
     }
   });
-  if (anyNew) { renderMilestones(); renderTrophyShelf(); }
+  if (anyNew) {
+    saveState();
+    renderMilestones();
+    renderTrophyShelf();
+    updateMissionsTabBadge();
+    setTimeout(() => showToast('🎖 Mission Complete!', 'Visit MISSIONS to claim your reward!'), 1600);
+  }
+}
+
+function claimMilestone(id) {
+  const idx = state.milestonesToClaim.indexOf(id);
+  if (idx === -1) return;
+  const ms = MILESTONES.find(m => m.id === id);
+  if (!ms) return;
+  state.milestonesToClaim.splice(idx, 1);
+  state.milestonesCompleted.push(ms.id);
+  state.credits            += ms.reward;
+  state.totalCreditsEarned += ms.reward;
+  saveState();
+  renderMilestones();
+  renderTrophyShelf();
+  updateMissionsTabBadge();
+  renderTopBar();
+  showToast('🏆 ' + ms.name + ' claimed!', '+' + ms.reward + ' credits!');
+  playSound('milestone');
 }
 
 // ── Prestige ─────────────────────────────────────────────

@@ -146,6 +146,7 @@ function init() {
   renderBooklet();
   renderMilestones();
   renderTestimonials();
+  updateMissionsTabBadge();
 
   // Show game tab by default
   switchTab('game');

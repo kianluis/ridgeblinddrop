@@ -13,6 +13,7 @@ let state = {
   orders: [],            // { id, tier, startTime, duration, ready }
   pullHistory: [],       // { id, name, rarity }
   milestonesCompleted: [],
+  milestonesToClaim: [],      // achieved but not yet claimed by player
   firstRare: false,
   firstUltra: false,
   nextOrderId: 1,
