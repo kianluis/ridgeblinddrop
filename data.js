@@ -101,12 +101,12 @@ const TESTIMONIALS = [
 ];
 
 const MILESTONES = [
-  { id:'first-drop',    name:'First Drop!',    desc:'Open your first package',            req:s=>s.packagesOpened>=1,        reward:25  },
-  { id:'collector',     name:'Collector',      desc:'Collect 5 unique items',             req:()=>uniqueCount()>=5,          reward:50  },
-  { id:'dedicated',     name:'Dedicated',      desc:'Open 10 packages',                   req:s=>s.packagesOpened>=10,       reward:75  },
-  { id:'rare-hunter',   name:'Rare Hunter',    desc:'Pull your first Rare item',          req:s=>s.firstRare,                reward:100 },
-  { id:'ultra-lucky',   name:'Ultra Lucky',    desc:'Pull your first Ultra Rare item',    req:s=>s.firstUltra,               reward:250 },
-  { id:'completionist', name:'Completionist',  desc:'Collect all '+COLLECTIBLES.length+' items', req:()=>uniqueCount()>=COLLECTIBLES.length, reward:500 },
-  { id:'high-roller',   name:'High Roller',    desc:'Open 50 packages',                   req:s=>s.packagesOpened>=50,       reward:200 },
-  { id:'loaded',        name:'Loaded',         desc:'Accumulate 1000 total credits',      req:s=>s.totalCreditsEarned>=1000, reward:150 },
+  { id:'first-drop',    name:'First Drop!',    desc:'Open your first package',            req:s=>s.packagesOpened>=1,        reward:25,  trophy:'bronze'   },
+  { id:'collector',     name:'Collector',      desc:'Collect 5 unique items',             req:()=>uniqueCount()>=5,          reward:50,  trophy:'bronze'   },
+  { id:'dedicated',     name:'Dedicated',      desc:'Open 10 packages',                   req:s=>s.packagesOpened>=10,       reward:75,  trophy:'silver'   },
+  { id:'rare-hunter',   name:'Rare Hunter',    desc:'Pull your first Rare item',          req:s=>s.firstRare,                reward:100, trophy:'silver'   },
+  { id:'loaded',        name:'Loaded',         desc:'Accumulate 1000 total credits',      req:s=>s.totalCreditsEarned>=1000, reward:150, trophy:'silver'   },
+  { id:'high-roller',   name:'High Roller',    desc:'Open 50 packages',                   req:s=>s.packagesOpened>=50,       reward:200, trophy:'gold'     },
+  { id:'ultra-lucky',   name:'Ultra Lucky',    desc:'Pull your first Ultra Rare item',    req:s=>s.firstUltra,               reward:250, trophy:'gold'     },
+  { id:'completionist', name:'Completionist',  desc:'Collect all '+COLLECTIBLES.length+' items', req:()=>uniqueCount()>=COLLECTIBLES.length, reward:500, trophy:'platinum' },
 ];
