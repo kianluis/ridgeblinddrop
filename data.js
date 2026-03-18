@@ -101,12 +101,34 @@ const TESTIMONIALS = [
 ];
 
 const MILESTONES = [
-  { id:'first-drop',    name:'First Drop!',    desc:'Open your first package',            req:s=>s.packagesOpened>=1,        reward:25,  trophy:'bronze'   },
-  { id:'collector',     name:'Collector',      desc:'Collect 5 unique items',             req:()=>uniqueCount()>=5,          reward:50,  trophy:'bronze'   },
-  { id:'dedicated',     name:'Dedicated',      desc:'Open 10 packages',                   req:s=>s.packagesOpened>=10,       reward:75,  trophy:'silver'   },
-  { id:'rare-hunter',   name:'Rare Hunter',    desc:'Pull your first Rare item',          req:s=>s.firstRare,                reward:100, trophy:'silver'   },
-  { id:'loaded',        name:'Loaded',         desc:'Accumulate 1000 total credits',      req:s=>s.totalCreditsEarned>=1000, reward:150, trophy:'silver'   },
-  { id:'high-roller',   name:'High Roller',    desc:'Open 50 packages',                   req:s=>s.packagesOpened>=50,       reward:200, trophy:'gold'     },
-  { id:'ultra-lucky',   name:'Ultra Lucky',    desc:'Pull your first Ultra Rare item',    req:s=>s.firstUltra,               reward:250, trophy:'gold'     },
-  { id:'completionist', name:'Completionist',  desc:'Collect all '+COLLECTIBLES.length+' items', req:()=>uniqueCount()>=COLLECTIBLES.length, reward:500, trophy:'platinum' },
+  // ── Bronze ──────────────────────────────────────────────
+  { id:'first-drop',    name:'First Drop!',      desc:'Open your first package',                  req:s=>s.packagesOpened>=1,                                                 reward:25,   trophy:'bronze'     },
+  { id:'collector',     name:'Collector',        desc:'Collect 5 unique items',                   req:()=>uniqueCount()>=5,                                                   reward:50,   trophy:'bronze'     },
+  // ── No trophy — credit top-ups to keep the loop going ───
+  { id:'quick-start',   name:'Quick Start',      desc:'Open 5 packages',                          req:s=>s.packagesOpened>=5,                                                 reward:30                        },
+  { id:'on-a-roll',     name:'On a Roll',        desc:'Open 25 packages',                         req:s=>s.packagesOpened>=25,                                                reward:60                        },
+  { id:'thirty-deep',   name:'Thirty Deep',      desc:'Open 30 packages',                         req:s=>s.packagesOpened>=30,                                                reward:75                        },
+  { id:'fifty-club',    name:'Fifty Club',       desc:'Open 50 packages',                         req:s=>s.packagesOpened>=50,                                                reward:100                       },
+  { id:'credit-stash',  name:'Credit Stash',     desc:'Earn 500 total credits',                   req:s=>s.totalCreditsEarned>=500,                                           reward:40                        },
+  { id:'big-baller',    name:'Big Baller',       desc:'Earn 2,500 total credits',                 req:s=>s.totalCreditsEarned>=2500,                                          reward:150                       },
+  // ── Silver ──────────────────────────────────────────────
+  { id:'dedicated',     name:'Dedicated',        desc:'Open 10 packages',                         req:s=>s.packagesOpened>=10,                                                reward:75,   trophy:'silver'     },
+  { id:'rare-hunter',   name:'Rare Hunter',      desc:'Pull your first Rare item',                req:s=>s.firstRare,                                                         reward:100,  trophy:'silver'     },
+  { id:'half-set',      name:'Half Set',         desc:'Collect 9 unique items',                   req:()=>uniqueCount()>=9,                                                   reward:80,   trophy:'silver'     },
+  { id:'loaded',        name:'Loaded',           desc:'Earn 1,000 total credits',                 req:s=>s.totalCreditsEarned>=1000,                                          reward:150,  trophy:'silver'     },
+  // ── Gold ────────────────────────────────────────────────
+  { id:'high-roller',   name:'High Roller',      desc:'Open 75 packages',                         req:s=>s.packagesOpened>=75,                                                reward:200,  trophy:'gold'       },
+  { id:'ultra-lucky',   name:'Ultra Lucky',      desc:'Pull your first Ultra Rare item',          req:s=>s.firstUltra,                                                        reward:250,  trophy:'gold'       },
+  { id:'almost-there',  name:'Almost There',     desc:'Collect 15 unique items',                  req:()=>uniqueCount()>=15,                                                  reward:150,  trophy:'gold'       },
+  { id:'century',       name:'Century',          desc:'Open 100 packages',                        req:s=>s.packagesOpened>=100,                                               reward:300,  trophy:'gold'       },
+  // ── Platinum ────────────────────────────────────────────
+  { id:'completionist', name:'Completionist',    desc:'Collect all '+COLLECTIBLES.length+' items',req:()=>uniqueCount()>=COLLECTIBLES.length,                                 reward:500,  trophy:'platinum'   },
+  { id:'ultra-hunter',  name:'Ultra Hunter',     desc:'Pull 3 Ultra Rare items',                  req:s=>(s.pullHistory||[]).filter(p=>p.rarity==='ultra').length>=3,          reward:350,  trophy:'platinum'   },
+  // ── Diamond ─────────────────────────────────────────────
+  { id:'obsessed',      name:'Obsessed',         desc:'Open 200 packages',                        req:s=>s.packagesOpened>=200,                                               reward:600,  trophy:'diamond'    },
+  { id:'credit-king',   name:'Credit King',      desc:'Earn 10,000 total credits',                req:s=>s.totalCreditsEarned>=10000,                                         reward:500,  trophy:'diamond'    },
+  { id:'ultra-devotee', name:'Ultra Devotee',    desc:'Pull 5 Ultra Rare items',                  req:s=>(s.pullHistory||[]).filter(p=>p.rarity==='ultra').length>=5,          reward:750,  trophy:'diamond'    },
+  // ── Iridescent ──────────────────────────────────────────
+  { id:'ridge-fanatic', name:'Ridge Fanatic',    desc:'Open 500 packages',                        req:s=>s.packagesOpened>=500,                                               reward:1000, trophy:'iridescent' },
+  { id:'rainbow-chaser',name:'Rainbow Chaser',   desc:'Pull every Ultra Rare item at least once', req:s=>COLLECTIBLES.filter(c=>c.rarity==='ultra').every(c=>(s.collection[c.id]||0)>0), reward:1500, trophy:'iridescent' },
 ];

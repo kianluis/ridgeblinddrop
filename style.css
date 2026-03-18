@@ -1176,7 +1176,60 @@ body {
   50%       { box-shadow: 0 0 16px rgba(220,210,255,1.0); }
 }
 
+/* diamond */
+.trophy-diamond .trophy-r {
+  color: #003848;
+  background: linear-gradient(135deg, #a8f0ff 0%, #40d8ff 45%, #a8f0ff 100%);
+  border-color: #00b8e0;
+  box-shadow: 0 0 12px rgba(0,210,255,0.9);
+  animation: diamond-pulse 1.8s ease-in-out infinite;
+}
+.trophy-diamond .trophy-stand { background: #00a0c8; }
+@keyframes diamond-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(0,210,255,0.7);  }
+  50%       { box-shadow: 0 0 18px rgba(120,240,255,1.0); }
+}
+
+/* iridescent — animated hue-rotate rainbow */
+.trophy-iridescent .trophy-r {
+  color: #fff;
+  background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcb77, #4dabf7, #cc5de8);
+  border-color: #fff;
+  box-shadow: 0 0 14px rgba(255,255,255,0.8);
+  animation: iris-spin 2.5s linear infinite;
+  background-size: 300% 300%;
+}
+.trophy-iridescent .trophy-stand {
+  background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcb77, #4dabf7, #cc5de8);
+  animation: iris-spin 2.5s linear infinite;
+  background-size: 300% 100%;
+}
+@keyframes iris-spin {
+  0%   { filter: hue-rotate(0deg)   brightness(1.1); }
+  100% { filter: hue-rotate(360deg) brightness(1.1); }
+}
+
 .ms-trophy-icon { flex-shrink: 0; margin-right: 8px; align-self: center; }
+
+/* credit badge for no-trophy milestones */
+.ms-credit-icon {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 5px;
+  width: 22px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  color: var(--text-dim);
+  flex-shrink: 0;
+  margin-right: 8px;
+  align-self: center;
+}
+.ms-credit-done    { border-color: var(--success); color: var(--success); }
+.ms-credit-pending { border-color: var(--amber);   color: var(--amber);
+  animation: pending-pulse 1.2s ease-in-out infinite; }
 
 /* milestone card claimable state */
 .milestone-card.claimable {
