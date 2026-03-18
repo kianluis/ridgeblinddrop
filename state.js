@@ -4,9 +4,9 @@
 // ═══════════════════════════════════════════════════════
 
 let state = {
-  credits: 100,
+  credits: 150,
   packagesOpened: 0,
-  totalCreditsEarned: 100,
+  totalCreditsEarned: 150,
   carrier: 'budget',
   carriersOwned: ['budget'],
   collection: {},        // id -> count
