@@ -380,6 +380,108 @@ function closeItemDetail() {
   document.getElementById('item-detail-overlay').style.display = 'none';
 }
 
+// ── Pixel-art avatars ─────────────────────────────────────
+
+// 8×8 grids: 0=transparent, 1=skin, 2=hair, 3=eye/mouth, 4=hat/accent
+const _AVATAR_GRIDS = [
+  // 0: round face, dark bob hair
+  [[0,0,2,2,2,2,0,0],[0,2,2,2,2,2,2,0],[0,1,1,1,1,1,1,0],
+   [0,1,3,1,1,3,1,0],[0,1,1,1,1,1,1,0],[0,1,0,3,3,0,1,0],
+   [0,1,1,1,1,1,1,0],[0,0,2,2,2,2,0,0]],
+  // 1: wavy longer hair
+  [[0,2,2,2,2,2,2,0],[2,2,2,2,2,2,2,2],[2,1,1,1,1,1,1,2],
+   [2,1,3,1,1,3,1,2],[2,1,1,1,1,1,1,2],[2,1,3,3,3,3,1,2],
+   [2,2,1,1,1,1,2,2],[0,2,2,2,2,2,2,0]],
+  // 2: cap / bucket hat
+  [[4,4,4,4,4,4,4,4],[0,4,4,4,4,4,4,0],[0,1,1,1,1,1,1,0],
+   [0,1,3,1,1,3,1,0],[0,1,1,1,1,1,1,0],[0,1,3,3,3,3,1,0],
+   [0,1,1,1,1,1,1,0],[0,0,1,1,1,1,0,0]],
+  // 3: glasses + neat hair
+  [[0,0,2,2,2,2,0,0],[0,2,2,2,2,2,2,0],[0,1,1,1,1,1,1,0],
+   [0,4,3,4,4,3,4,0],[0,1,1,1,1,1,1,0],[0,1,3,3,3,3,1,0],
+   [0,1,1,1,1,1,1,0],[0,0,2,2,2,2,0,0]],
+  // 4: beard + short hair
+  [[0,0,2,2,2,2,0,0],[0,2,1,1,1,1,2,0],[0,1,1,1,1,1,1,0],
+   [0,1,3,1,1,3,1,0],[0,1,1,1,1,1,1,0],[0,2,2,2,2,2,2,0],
+   [0,2,2,2,2,2,2,0],[0,0,2,2,2,2,0,0]],
+  // 5: big curly / afro hair
+  [[2,2,2,2,2,2,2,2],[2,2,2,2,2,2,2,2],[2,1,1,1,1,1,1,2],
+   [2,1,3,1,1,3,1,2],[2,1,1,1,1,1,1,2],[2,1,3,3,3,3,1,2],
+   [2,2,1,1,1,1,2,2],[2,2,2,2,2,2,2,2]],
+];
+
+const _AVATAR_PALETTES = [
+  { skin:'#f5c5a3', hair:'#3d1f00', eye:'#1a0a00', hat:'#1a5080' },
+  { skin:'#ffe0c8', hair:'#c06828', eye:'#2a1008', hat:'#c06828' },
+  { skin:'#e0a878', hair:'#1a0f00', eye:'#100600', hat:'#8b1e1e' },
+  { skin:'#c87848', hair:'#1a0a00', eye:'#100600', hat:'#7030a0' },
+  { skin:'#ffe8d0', hair:'#4a3020', eye:'#1a0a00', hat:'#4a3020' },
+  { skin:'#d09060', hair:'#1a0a00', eye:'#100600', hat:'#1a5030' },
+];
+
+function _makeAvatarDataURL(avatarIndex) {
+  const p    = _AVATAR_PALETTES[avatarIndex % _AVATAR_PALETTES.length];
+  const grid = _AVATAR_GRIDS[avatarIndex % _AVATAR_GRIDS.length];
+  const PX   = 4;
+  const cvs  = document.createElement('canvas');
+  cvs.width  = cvs.height = 8 * PX;
+  const ctx  = cvs.getContext('2d');
+  const cmap = { 0:null, 1:p.skin, 2:p.hair, 3:p.eye, 4:p.hat };
+  for (let r = 0; r < 8; r++) {
+    for (let c = 0; c < 8; c++) {
+      const col = cmap[grid[r][c]];
+      if (!col) continue;
+      ctx.fillStyle = col;
+      ctx.fillRect(c * PX, r * PX, PX, PX);
+    }
+  }
+  return cvs.toDataURL();
+}
+
+// ── Testimonials ──────────────────────────────────────────
+
+const _RARITY_COLORS = { common:'#7a6a5a', uncommon:'#2e7a3a', rare:'#2a5fa8', ultra:'#7040b8' };
+
+function renderTestimonials() {
+  const track = document.getElementById('testimonials-track');
+  if (!track) return;
+
+  // Double the list so the CSS marquee loops seamlessly
+  const entries = [...TESTIMONIALS, ...TESTIMONIALS];
+  track.innerHTML = '';
+
+  entries.forEach(t => {
+    const item       = COLLECTIBLES.find(c => c.id === t.item);
+    const rarity     = item ? item.rarity : 'common';
+    const rimColor   = _RARITY_COLORS[rarity];
+    const starsHTML  = '★'.repeat(t.stars) + '<span class="test-star-empty">' +
+                       '★'.repeat(5 - t.stars) + '</span>';
+    const avatarURL  = _makeAvatarDataURL(t.avatar);
+
+    const card = document.createElement('div');
+    card.className = 'test-card';
+    card.innerHTML = `
+      <div class="test-card-top">
+        <img class="test-avatar" src="${avatarURL}" alt="">
+        <div class="test-customer-info">
+          <div class="test-customer-name">${t.name}</div>
+          <div class="test-customer-loc">${t.location}</div>
+          <div class="test-stars">${starsHTML}</div>
+        </div>
+      </div>
+      <div class="test-text">"${t.text}"</div>
+      ${item ? `
+        <div class="test-item-badge" style="border-color:${rimColor};color:${rimColor};">
+          <img class="test-item-img" src="${item.img}" alt="">
+          <span class="test-item-name">${item.name.replace('\n', ' ')}</span>
+        </div>
+        <div class="test-verified">✓ VERIFIED PURCHASE</div>
+      ` : ''}
+    `;
+    track.appendChild(card);
+  });
+}
+
 // ── Render All ────────────────────────────────────────────
 
 function renderAll() {
