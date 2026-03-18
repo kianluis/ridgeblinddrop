@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background -->
+  <rect width="32" height="32" rx="5" fill="#1a0f00"/>
+  <!-- Box body -->
+  <rect x="5" y="14" width="22" height="14" rx="2" fill="#7a3a10"/>
+  <!-- Box lid -->
+  <rect x="4" y="11" width="24" height="5" rx="1.5" fill="#9a4a18"/>
+  <!-- Ribbon vertical -->
+  <rect x="14" y="11" width="4" height="17" fill="#e8922a"/>
+  <!-- Ribbon horizontal -->
+  <rect x="4" y="16" width="24" height="4" fill="#e8922a"/>
+  <!-- Bow left -->
+  <ellipse cx="12.5" cy="11.5" rx="4.5" ry="2.5" fill="#f0ae42" transform="rotate(-25 12.5 11.5)"/>
+  <!-- Bow right -->
+  <ellipse cx="19.5" cy="11.5" rx="4.5" ry="2.5" fill="#f0ae42" transform="rotate(25 19.5 11.5)"/>
+  <!-- Bow knot -->
+  <circle cx="16" cy="11.5" r="2.5" fill="#e8922a"/>
+  <circle cx="16" cy="11.5" r="1.2" fill="#f8c060"/>
+</svg>
