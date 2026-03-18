@@ -1308,6 +1308,13 @@ body {
   color: var(--bg);
   border-color: #e05050;
 }
+.reset-topbar-btn.reset-confirm {
+  background: #e05050;
+  color: #fff;
+  border-color: #e05050;
+  font-size: 6px;
+  animation: none;
+}
 
 /* persistent topbar button */
 .guide-topbar-btn {

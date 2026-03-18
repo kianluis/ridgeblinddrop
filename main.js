@@ -102,7 +102,7 @@ let _dayNightCounter = 0;
 
 // ── Guide overlay ─────────────────────────────────────────
 
-const GUIDE_KEY = 'ridgeMysteryGuideShown';
+const GUIDE_KEY = 'ridgeMysteryGuideShown_' + SESSION_ID;
 
 function openGuide() {
   document.getElementById('guide-overlay').classList.remove('hidden');
@@ -113,11 +113,26 @@ function closeGuide() {
   localStorage.setItem(GUIDE_KEY, '1');
 }
 
+let _resetPending = false;
+let _resetTimer   = null;
+
 function resetProgress() {
-  if (!confirm('Reset ALL progress? This cannot be undone.')) return;
-  localStorage.removeItem('ridgemysterydrop_v2');
-  localStorage.removeItem(GUIDE_KEY);
-  location.reload();
+  const btn = document.getElementById('reset-btn');
+  if (!_resetPending) {
+    _resetPending = true;
+    btn.textContent = 'SURE?';
+    btn.classList.add('reset-confirm');
+    _resetTimer = setTimeout(() => {
+      _resetPending = false;
+      btn.textContent = '↺';
+      btn.classList.remove('reset-confirm');
+    }, 3000);
+  } else {
+    clearTimeout(_resetTimer);
+    localStorage.removeItem(SAVE_KEY);
+    localStorage.removeItem(GUIDE_KEY);
+    location.reload();
+  }
 }
 
 // ── Init ──────────────────────────────────────────────────
