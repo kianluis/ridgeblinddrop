@@ -5,6 +5,23 @@
 
 let _lastRenderedCredits = null;
 
+// ── Item icon helper ──────────────────────────────────────
+// Returns an <img> when item.img is set, otherwise a fallback <div>.
+
+function _itemIconEl(item, px) {
+  if (item.img) {
+    const img = document.createElement('img');
+    img.src = item.img;
+    img.alt = item.name.replace('\n', ' ');
+    img.style.cssText = `width:${px}px;height:${px}px;object-fit:contain;border-radius:4px;`;
+    return img;
+  }
+  const el = document.createElement('div');
+  el.className = item.icon || '';
+  el.style.cssText = `width:${px}px;height:${px}px;`;
+  return el;
+}
+
 // ── Top Bar ──────────────────────────────────────────────
 
 function renderTopBar() {
@@ -208,13 +225,9 @@ function renderBooklet() {
         (collected ? 'collected' : 'uncollected') +
         (isNewly   ? ' newly-collected' : '');
 
-      const iconEl = document.createElement('div');
-      iconEl.className = item.icon;
-      iconEl.style.cssText = 'width:32px;height:32px;';
-
       const iconWrap = document.createElement('div');
       iconWrap.className = 'item-icon';
-      iconWrap.appendChild(iconEl);
+      iconWrap.appendChild(_itemIconEl(item, 32));
 
       card.appendChild(iconWrap);
       card.innerHTML += `
@@ -346,10 +359,7 @@ function showItemDetail(id) {
 
   const iconWrap = document.getElementById('item-detail-icon-wrap');
   iconWrap.innerHTML = '';
-  const iconEl = document.createElement('div');
-  iconEl.className = item.icon;
-  iconEl.style.cssText = 'width:64px;height:64px;';
-  iconWrap.appendChild(iconEl);
+  iconWrap.appendChild(_itemIconEl(item, 64));
 
   document.getElementById('item-detail-name').textContent = item.name.replace('\n', ' ');
   document.getElementById('item-detail-name').style.color = rarityColor(item.rarity);

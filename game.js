@@ -146,10 +146,7 @@ function _showReveal(item, isNew, creditsGained, dupBonus) {
   // Icon
   const revealIcon = document.getElementById('reveal-icon');
   revealIcon.innerHTML = '';
-  const iconEl = document.createElement('div');
-  iconEl.className = item.icon;
-  iconEl.style.cssText = 'width:64px;height:64px;';
-  revealIcon.appendChild(iconEl);
+  revealIcon.appendChild(_itemIconEl(item, 64));
 
   // Text fields
   const nameEl = document.getElementById('reveal-name');
