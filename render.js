@@ -509,7 +509,7 @@ function renderTrophyShelf() {
     const cls = earned ? 'trophy-' + ms.trophy : pending ? 'trophy-pending' : 'trophy-empty';
     const slot = document.createElement('div');
     slot.className = 'trophy-slot ' + cls;
-    slot.title = earned ? ms.name + ' — ' + ms.desc : pending ? ms.name + ' — READY TO CLAIM!' : '???';
+    slot.title = earned ? ms.name + ' — ' + ms.desc : pending ? ms.name + ' — READY TO CLAIM!' : 'Unlock Trophy';
     slot.innerHTML = `<div class="trophy-r">R</div><div class="trophy-stand"></div>`;
     shelf.appendChild(slot);
   });
