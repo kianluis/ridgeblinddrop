@@ -24,15 +24,31 @@ let state = {
   lastNewItemId: null,   // used for flip animation
 };
 
+// ── Session ID (one per URL — different players get different URLs) ──
+
+function getSessionId() {
+  const params = new URLSearchParams(location.search);
+  let sid = params.get('s');
+  if (!sid) {
+    sid = Math.random().toString(36).slice(2, 8);
+    params.set('s', sid);
+    history.replaceState(null, '', location.pathname + '?' + params.toString());
+  }
+  return sid;
+}
+
+const SESSION_ID = getSessionId();
+const SAVE_KEY   = 'ridgemysterydrop_v2_' + SESSION_ID;
+
 // ── Persistence ──────────────────────────────────────────
 
 function saveState() {
-  try { localStorage.setItem('ridgemysterydrop_v2', JSON.stringify(state)); } catch(e){}
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch(e){}
 }
 
 function loadState() {
   try {
-    const raw = localStorage.getItem('ridgemysterydrop_v2');
+    const raw = localStorage.getItem(SAVE_KEY);
     if (raw) {
       const loaded = JSON.parse(raw);
       // Merge loaded into defaults so new keys survive upgrades

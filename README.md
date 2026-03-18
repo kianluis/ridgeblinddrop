@@ -1,6 +1,6 @@
 # Ridge Mystery Drop 📦
 
-A tongue-in-cheek idle gacha game built for Ridge team presentations. Open mystery packages, collect Ridge products, and try to complete your Collector's Booklet before the next standup.
+A tongue-in-cheek idle gacha game. Open mystery packages, collect Ridge products, and try to complete your Collector's Booklet before the next standup.
 
 ---
 
@@ -20,60 +20,6 @@ Credits trickle in passively (1 per 30 seconds), so it rewards leaving the tab o
 
 ---
 
-## File Structure
-
-```
-index.html   — HTML structure and script/style wiring
-style.css    — All styles and pixel-art CSS icons
-data.js      — Game constants (tiers, carriers, collectibles, milestones)
-state.js     — State object, persistence (localStorage), helper functions
-audio.js     — Web Audio API sound system (no audio files needed)
-render.js    — All UI rendering functions
-game.js      — Core game logic (ordering, opening, milestones, prestige)
-main.js      — Entry point: init, game loop, tab switching, modals
-README.md    — This file
-```
-
----
-
-## How to Run Locally
-
-No build step required.
-
-```bash
-# Option 1 — just open the file directly
-open index.html
-
-# Option 2 — serve locally to avoid any CORS edge cases
-npx serve .
-# then open http://localhost:3000
-```
-
----
-
-## How to Deploy to Vercel
-
-### Via CLI
-
-```bash
-npm i -g vercel
-vercel
-# Follow the prompts — choose "Other" framework, output directory "."
-```
-
-### Via Dashboard
-
-1. Push this repo to GitHub
-2. Go to [vercel.com/new](https://vercel.com/new)
-3. Import the repo
-4. Framework preset: **Other**
-5. Output directory: leave blank (root)
-6. Click **Deploy**
-
-Vercel will serve `index.html` as the root. No `vercel.json` needed.
-
----
-
 ## Gameplay Tips
 
 - **Standard** packages are cheap but slow — stack multiples while you wait.
@@ -82,7 +28,8 @@ Vercel will serve `index.html` as the root. No `vercel.json` needed.
 - The **Collector's Booklet** filter buttons let you focus on what you're missing.
 - Sound can be toggled with the 🔊 button in the top bar.
 - The warehouse background changes based on your real local time (dawn / day / dusk / night).
+- Each player gets their own save via a unique URL — share your `?s=` link to pick up where you left off.
 
 ---
 
-*Made with love (and mild self-deprecation) by the Ridge team.*
+*Made by Louise.*
