@@ -60,7 +60,19 @@ function openPackage(orderId) {
   // Remove from queue immediately and roll item
   state.orders.splice(orderIdx, 1);
   const tier = PACKAGE_TIERS.find(t => t.id === order.tier);
-  const item = rollItem(tier.rareboost);
+
+  // Pity system: guarantee Mr. Doodle on pull 101 if never received it
+  const doodle = COLLECTIBLES.find(c => c.id === 'carryon-mr-doodle');
+  const item = (state.pullsSinceDoodle >= 100)
+    ? doodle
+    : rollItem(tier.rareboost);
+
+  // Update pity counter
+  if (item.id === 'carryon-mr-doodle') {
+    state.pullsSinceDoodle = 0;
+  } else {
+    state.pullsSinceDoodle = (state.pullsSinceDoodle || 0) + 1;
+  }
 
   // Update state
   const isNew = !state.collection[item.id];

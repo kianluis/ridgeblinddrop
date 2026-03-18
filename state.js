@@ -4,9 +4,9 @@
 // ═══════════════════════════════════════════════════════
 
 let state = {
-  credits: 100,
+  credits: 150,
   packagesOpened: 0,
-  totalCreditsEarned: 100,
+  totalCreditsEarned: 150,
   carrier: 'budget',
   carriersOwned: ['budget'],
   collection: {},        // id -> count
@@ -23,6 +23,7 @@ let state = {
   prestigeRareBonus: 0,  // additive bonus to rare rates
   bookletFilter: 'all',
   lastNewItemId: null,   // used for flip animation
+  pullsSinceDoodle: 0,   // pity counter — guaranteed at 100
 };
 
 // ── Session ID (one per URL — different players get different URLs) ──
@@ -101,8 +102,15 @@ function rollItem(rareboost) {
   else if (r < rates.ultra + rates.rare + rates.uncommon) rarity = 'uncommon';
   else                                                    rarity = 'common';
 
+  // Weighted pool selection (weight field defaults to 1)
   const pool = COLLECTIBLES.filter(c => c.rarity === rarity);
-  return pool[Math.floor(Math.random() * pool.length)];
+  const totalW = pool.reduce((sum, c) => sum + (c.weight ?? 1), 0);
+  let pick = Math.random() * totalW;
+  for (const c of pool) {
+    pick -= (c.weight ?? 1);
+    if (pick <= 0) return c;
+  }
+  return pool[pool.length - 1];
 }
 
 function rarityColor(r) {

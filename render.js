@@ -275,11 +275,13 @@ function renderMilestones() {
     const pending = !done && state.milestonesToClaim.includes(ms.id);
     const div = document.createElement('div');
     div.className = 'milestone-card' + (done ? ' done' : '') + (pending ? ' claimable' : '');
+    const trophyHTML = ms.trophy
+      ? `<div class="ms-trophy-icon trophy-slot ${done ? 'trophy-' + ms.trophy : pending ? 'trophy-pending' : 'trophy-empty'}">
+           <div class="trophy-r">R</div><div class="trophy-stand"></div>
+         </div>`
+      : `<div class="ms-trophy-icon ms-credit-icon ${done ? 'ms-credit-done' : pending ? 'ms-credit-pending' : ''}">cr</div>`;
     div.innerHTML = `
-      <div class="ms-trophy-icon trophy-slot ${done ? 'trophy-' + ms.trophy : pending ? 'trophy-pending' : 'trophy-empty'}">
-        <div class="trophy-r">R</div>
-        <div class="trophy-stand"></div>
-      </div>
+      ${trophyHTML}
       <div class="ms-info">
         <div class="ms-name">${ms.name}</div>
         <div class="ms-desc">${ms.desc}</div>
@@ -501,7 +503,7 @@ function renderTrophyShelf() {
   const shelf = document.getElementById('trophy-shelf');
   if (!shelf) return;
   shelf.innerHTML = '';
-  MILESTONES.forEach(ms => {
+  MILESTONES.filter(ms => ms.trophy).forEach(ms => {
     const earned  = state.milestonesCompleted.includes(ms.id);
     const pending = !earned && (state.milestonesToClaim || []).includes(ms.id);
     const cls = earned ? 'trophy-' + ms.trophy : pending ? 'trophy-pending' : 'trophy-empty';
