@@ -112,6 +112,13 @@ function closeGuide() {
   localStorage.setItem(GUIDE_KEY, '1');
 }
 
+function resetProgress() {
+  if (!confirm('Reset ALL progress? This cannot be undone.')) return;
+  localStorage.removeItem('ridgemysterydrop_v2');
+  localStorage.removeItem(GUIDE_KEY);
+  location.reload();
+}
+
 // ── Init ──────────────────────────────────────────────────
 
 function init() {
