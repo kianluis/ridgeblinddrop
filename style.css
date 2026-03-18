@@ -1058,6 +1058,98 @@ body {
 .milestone-card.done     .ms-status { color: var(--success); }
 .milestone-card:not(.done) .ms-status { color: var(--text-dim); }
 
+/* ── TROPHY SHELF ────────────────────────────────────────── */
+
+#trophy-panel { padding: 8px 8px 10px; }
+
+#trophy-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 8px 6px 12px;
+  background: linear-gradient(180deg, #1e0e04 0%, #2e160a 30%, #3d2010 70%, #4a2814 100%);
+  border-radius: 3px;
+  border-bottom: 5px solid #6a3810;
+  border-top: 1px solid rgba(255,160,60,0.12);
+  box-shadow:
+    inset 0 4px 10px rgba(0,0,0,0.55),
+    0 3px 0 #2a1006,
+    0 4px 0 rgba(0,0,0,0.4);
+  position: relative;
+}
+#trophy-shelf::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px, transparent 22px,
+    rgba(0,0,0,0.07) 22px, rgba(0,0,0,0.07) 23px
+  );
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+.trophy-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: default;
+  transition: transform 0.12s ease;
+  position: relative;
+}
+.trophy-slot:not(.trophy-empty):hover { transform: translateY(-3px); }
+
+.trophy-r {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  width: 20px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px 3px 0 0;
+  border: 1.5px solid transparent;
+  line-height: 1;
+  transition: box-shadow 0.2s;
+}
+.trophy-stand {
+  width: 22px;
+  height: 4px;
+  border-radius: 0 0 2px 2px;
+}
+
+.trophy-empty .trophy-r    { color: #1e0c04; background: #180a02; border-color: #2e1408; }
+.trophy-empty .trophy-stand { background: #2a1006; }
+
+.trophy-bronze .trophy-r    { color: #4a1c00; background: #c07828; border-color: #7a3a0e;
+  box-shadow: 0 0 5px rgba(190,110,30,0.55); }
+.trophy-bronze .trophy-stand { background: #7a3a0e; }
+
+.trophy-silver .trophy-r    { color: #303030; background: #b8b8b8; border-color: #787878;
+  box-shadow: 0 0 5px rgba(180,180,180,0.55); }
+.trophy-silver .trophy-stand { background: #787878; }
+
+.trophy-gold .trophy-r    { color: #4a3000; background: #ffd700; border-color: #a87c00;
+  box-shadow: 0 0 8px rgba(255,210,0,0.75); }
+.trophy-gold .trophy-stand { background: #a87c00; }
+
+.trophy-platinum .trophy-r {
+  color: #5050a0;
+  background: linear-gradient(135deg, #e8e4f8 0%, #b8b0e0 50%, #e8e4f8 100%);
+  border-color: #9898c8;
+  box-shadow: 0 0 10px rgba(180,170,240,0.8);
+  animation: plat-shimmer 2s ease-in-out infinite;
+}
+.trophy-platinum .trophy-stand { background: #9898c8; }
+
+@keyframes plat-shimmer {
+  0%, 100% { box-shadow: 0 0 8px rgba(180,170,240,0.7); }
+  50%       { box-shadow: 0 0 16px rgba(220,210,255,1.0); }
+}
+
+.ms-trophy-icon { flex-shrink: 0; margin-right: 8px; align-self: center; }
+
 /* ── OPEN OVERLAY ────────────────────────────────────────── */
 #open-overlay {
   display: none; position: fixed; inset: 0;

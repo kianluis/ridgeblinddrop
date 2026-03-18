@@ -275,6 +275,10 @@ function renderMilestones() {
     const div  = document.createElement('div');
     div.className = 'milestone-card' + (done ? ' done' : '');
     div.innerHTML = `
+      <div class="ms-trophy-icon trophy-slot ${done ? 'trophy-' + ms.trophy : 'trophy-empty'}">
+        <div class="trophy-r">R</div>
+        <div class="trophy-stand"></div>
+      </div>
       <div class="ms-info">
         <div class="ms-name">${ms.name}</div>
         <div class="ms-desc">${ms.desc}</div>
@@ -482,6 +486,22 @@ function renderTestimonials() {
   });
 }
 
+// ── Trophy Shelf ──────────────────────────────────────────
+
+function renderTrophyShelf() {
+  const shelf = document.getElementById('trophy-shelf');
+  if (!shelf) return;
+  shelf.innerHTML = '';
+  MILESTONES.forEach(ms => {
+    const earned = state.milestonesCompleted.includes(ms.id);
+    const slot = document.createElement('div');
+    slot.className = 'trophy-slot ' + (earned ? 'trophy-' + ms.trophy : 'trophy-empty');
+    slot.title = earned ? ms.name + '\n' + ms.desc : '???';
+    slot.innerHTML = `<div class="trophy-r">R</div><div class="trophy-stand"></div>`;
+    shelf.appendChild(slot);
+  });
+}
+
 // ── Render All ────────────────────────────────────────────
 
 function renderAll() {
@@ -489,4 +509,5 @@ function renderAll() {
   renderOrderQueue();
   renderOrderPanel();
   renderPullHistory();
+  renderTrophyShelf();
 }

@@ -223,7 +223,7 @@ function checkMilestones() {
       }, 1600); // delay so it doesn't overlap opening sound
     }
   });
-  if (anyNew) renderMilestones();
+  if (anyNew) { renderMilestones(); renderTrophyShelf(); }
 }
 
 // ── Prestige ─────────────────────────────────────────────
