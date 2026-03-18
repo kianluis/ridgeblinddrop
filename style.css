@@ -1297,6 +1297,18 @@ body {
    GUIDE OVERLAY
    ═══════════════════════════════════════════════════════ */
 
+/* reset topbar button */
+.reset-topbar-btn {
+  color: #e05050;
+  border: 1px solid #e05050;
+  font-size: var(--fs-sm);
+}
+.reset-topbar-btn:hover {
+  background: #e05050;
+  color: var(--bg);
+  border-color: #e05050;
+}
+
 /* persistent topbar button */
 .guide-topbar-btn {
   color: var(--amber);
@@ -1359,6 +1371,19 @@ body {
   font-size: var(--fs-lg);
   color: var(--text);
   letter-spacing: 0.12em;
+}
+
+/* intro blurb */
+.guide-blurb {
+  font-family: sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+  text-align: center;
+  margin: 0;
+  padding: var(--sp-2) var(--sp-2);
+  border-bottom: 1px solid var(--border);
+  letter-spacing: 0;
 }
 
 /* 3-col grid of cards */
