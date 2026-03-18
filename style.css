@@ -1446,9 +1446,9 @@ body {
    ══════════════════════════════════════════════════════════ */
 
 #testimonials-section {
-  margin: var(--sp-5) auto 0;
-  padding: 0 0 var(--sp-5);
-  max-width: 1200px;
+  margin: var(--sp-3) 0 0;
+  padding: 0 0 var(--sp-3);
+  width: 100%;
 }
 
 /* ── Header banner ──────────────────────────────────────── */
@@ -1457,7 +1457,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: var(--sp-4);
-  margin: 0 var(--sp-4) var(--sp-4);
+  margin: 0 0 var(--sp-3);
   padding: var(--sp-3) var(--sp-5);
   background: linear-gradient(135deg, #1a0f00 0%, #2e1a06 50%, #1a0f00 100%);
   border: 2px solid var(--border-hi);
