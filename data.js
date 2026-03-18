@@ -60,6 +60,46 @@ const COLLECTIBLES = [
 
 const BASE_RATES = { common:0.60, uncommon:0.25, rare:0.12, ultra:0.03 };
 
+// ── Testimonials ─────────────────────────────────────────
+const TESTIMONIALS = [
+  { name:'Tyler M.',    location:'Austin, TX',        stars:5, avatar:0,
+    text:"Pulled the MKBHD Vapor on my third pack. My coworkers won't stop staring.",
+    item:'wallet-mkbhd-vapor' },
+  { name:'Priya S.',    location:'Seattle, WA',       stars:5, avatar:1,
+    text:"The Sakura wallet arrived and I actually screamed. Absolutely gorgeous.",
+    item:'wallet-sakura' },
+  { name:'Marcus T.',   location:'Chicago, IL',       stars:5, avatar:2,
+    text:"Iridescent edition is like holding a galaxy. 10/10 no notes whatsoever.",
+    item:'wallet-iridescent' },
+  { name:'Jess K.',     location:'Nashville, TN',     stars:5, avatar:3,
+    text:"Got the Mr. Doodle carry-on as an ultra rare. Jaws dropped at the airport.",
+    item:'carryon-mr-doodle' },
+  { name:'Devon R.',    location:'Portland, OR',      stars:5, avatar:4,
+    text:"Gold Horizon wallet is the most beautiful thing I own. Not an exaggeration.",
+    item:'wallet-gold-horizon' },
+  { name:'Aisha W.',    location:'Atlanta, GA',       stars:5, avatar:5,
+    text:"GT MagSafe snapped onto my phone and I keep staring at it during meetings.",
+    item:'magsafe-wallet-gt' },
+  { name:'Sam L.',      location:'Denver, CO',        stars:5, avatar:0,
+    text:"Hyper Lime power bank got me through a 14-hour flight. Neon AND functional.",
+    item:'power-bank-hyperlime' },
+  { name:'Kaito N.',    location:'San Francisco, CA', stars:4, avatar:3,
+    text:"Carbon fiber ring fits perfectly. Already gotten 5 compliments this week.",
+    item:'ring-carbon-fiber' },
+  { name:'Brittany F.', location:'Miami, FL',         stars:5, avatar:1,
+    text:"Rodeo Red Outlaw showed up and the name is 100% accurate. Wild finish.",
+    item:'wallet-rodeored-outlaw' },
+  { name:'Omar J.',     location:'New York, NY',      stars:5, avatar:2,
+    text:"Kintsugi White looks like modern art. Opened 6 packs to get it. Worth it.",
+    item:'wallet-kintsugi-white' },
+  { name:'Rachel T.',   location:'Phoenix, AZ',       stars:5, avatar:5,
+    text:"Lavender commuter backpack?? I didn't expect to cry at a package opening.",
+    item:'commuter-backpack-lav' },
+  { name:'Luke C.',     location:'Boston, MA',        stars:4, avatar:4,
+    text:"Royal Black is a daily carry classic. Clean, minimal, elite. Just get it.",
+    item:'wallet-royalblack' },
+];
+
 const MILESTONES = [
   { id:'first-drop',    name:'First Drop!',    desc:'Open your first package',            req:s=>s.packagesOpened>=1,        reward:25  },
   { id:'collector',     name:'Collector',      desc:'Collect 5 unique items',             req:()=>uniqueCount()>=5,          reward:50  },

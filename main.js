@@ -122,6 +122,7 @@ function init() {
   renderAll();
   renderBooklet();
   renderMilestones();
+  renderTestimonials();
 
   // Show game tab by default
   switchTab('game');
