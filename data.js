@@ -52,7 +52,7 @@ const COLLECTIBLES = [
   // ── ULTRA RARE ──────────────────────────────────────────
   { id:'wallet-iridescent',     name:'Ridge Wallet\n(Iridescent)',           rarity:'ultra',    credits:180,
     img:'https://cdn.shopify.com/s/files/1/0613/6213/files/Iridescence-Wallet-RenderFront.jpg?v=1770820026' },
-  { id:'carryon-mr-doodle',     name:'Ridge Carry On\n(Mr. Doodle)',         rarity:'ultra',    credits:180,
+  { id:'carryon-mr-doodle',     name:'Ridge Carry On\n(Mr. Doodle)',         rarity:'ultra',    credits:180, weight:0.4,
     img:'https://ridge.com/cdn/shop/files/MrDoodle_CarryOn_THUMB_01_f8d3286f-c8b4-486c-862b-7140129d3e13_2000x.jpg?v=1764150871' },
   { id:'wallet-mkbhd-vapor',    name:'Ridge Wallet\n(MKBHD Vapor)',          rarity:'ultra',    credits:300,
     img:'https://ridge.com/cdn/shop/files/MKBHDVapor-Wallet-RenderFront_7c649890-2065-4e4d-9b87-8cbf4df7c5e1_2000x.jpg?v=1767831553', special:'2xcredits' },
