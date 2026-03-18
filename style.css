@@ -1547,24 +1547,7 @@ body {
   padding: var(--sp-2) 0 var(--sp-3);
 }
 
-/* edge fade-out */
-.test-track-wrap::before,
-.test-track-wrap::after {
-  content: '';
-  position: absolute;
-  top: 0; bottom: 0;
-  width: clamp(40px, 6vw, 80px);
-  z-index: 2;
-  pointer-events: none;
-}
-.test-track-wrap::before {
-  left: 0;
-  background: linear-gradient(90deg, var(--bg) 0%, transparent 100%);
-}
-.test-track-wrap::after {
-  right: 0;
-  background: linear-gradient(270deg, var(--bg) 0%, transparent 100%);
-}
+
 
 .test-track {
   display: flex;
