@@ -29,6 +29,7 @@ function setBookletFilter(filter) {
 
 function toggleSound() {
   state.soundEnabled = !state.soundEnabled;
+  if (state.soundEnabled) startBgMusic(); else stopBgMusic();
   saveState();
   renderTopBar();
 }
@@ -139,6 +140,12 @@ function init() {
 
   // Clear the lastNewItemId after first booklet render so the animation only plays once
   setTimeout(() => { state.lastNewItemId = null; }, 800);
+
+  // Start background music on first user interaction (browser autoplay policy)
+  document.addEventListener('click', function _musicBoot() {
+    if (state.soundEnabled) startBgMusic();
+    document.removeEventListener('click', _musicBoot);
+  });
 
   // Show guide on first visit only
   if (!localStorage.getItem(GUIDE_KEY)) {
