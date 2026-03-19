@@ -159,6 +159,7 @@ const STORE_ITEMS = [
   { id:'prop-painting',      cat:'props',   name:'Wallet Painting',desc:'Ridge art for the crew',   cost: 200 },
   { id:'prop-desk',          cat:'props',   name:'Desk',           desc:'A proper workspace',       cost: 250 },
   { id:'prop-chair',         cat:'props',   name:'Chair',          desc:'Sit down and relax',       cost: 200 },
+  { id:'prop-storage',       cat:'props',   name:'Tidy Storage',   desc:'No more floor chaos',      cost: 300 },
   // Workers
   { id:'worker-daniel',      cat:'workers', name:'Daniel',         desc:'New hire, very eager',     cost: 350 },
   { id:'worker-austin',      cat:'workers', name:'Austin',         desc:'The reliable one',         cost: 400 },

@@ -104,6 +104,7 @@ function storePreview(item) {
     const icons = {
       'prop-succulent': '▲', 'prop-plant': '✿',
       'prop-painting': '▣',  'prop-desk': '▬', 'prop-chair': '⊓',
+      'prop-storage': '▤',
     };
     return `<div class="preview-icon">${icons[item.id] || '◆'}</div>`;
   }
@@ -189,9 +190,15 @@ function applyCosmetics() {
   }
 
   // Props — visible when owned
-  ['prop-succulent', 'prop-plant', 'prop-painting', 'prop-desk', 'prop-chair'].forEach(id => {
+  ['prop-succulent', 'prop-plant', 'prop-painting', 'prop-desk', 'prop-chair', 'prop-storage'].forEach(id => {
     const el = document.getElementById('wh-' + id);
     if (el) el.style.display = owned.includes(id) ? '' : 'none';
+  });
+
+  // Tidy storage — hide scattered floor boxes when owned
+  const tidyOwned = owned.includes('prop-storage');
+  document.querySelectorAll('#warehouse-scene .floor-box').forEach(el => {
+    el.style.display = tidyOwned ? 'none' : '';
   });
 
   // Workers — visible when owned
