@@ -924,24 +924,24 @@ body {
   background: rgba(0,0,0,0.2);
 }
 .btn-store-equip {
-  background: rgba(20,50,90,0.4);
-  border-color: #5090c0;
-  color: #a8d4f8;
-}
-.btn-store-equip:hover {
   background: #2060a0;
+  border-color: #5090c0;
   color: #ffffff;
 }
-.btn-store-equipped {
-  background: rgba(0,70,0,0.35);
-  border-color: #50b850;
-  color: #88e088;
-  cursor: default;
+.btn-store-equip:hover {
+  background: rgba(20,50,90,0.4);
+  color: #a8d4f8;
 }
-.btn-store-equipped:not(:disabled):hover {
+.btn-store-equipped {
   background: rgba(0,100,0,0.45);
   border-color: #70d070;
   color: #aafaaa;
+  cursor: default;
+}
+.btn-store-equipped:not(:disabled):hover {
+  background: rgba(0,70,0,0.35);
+  border-color: #50b850;
+  color: #88e088;
   cursor: pointer;
 }
 
