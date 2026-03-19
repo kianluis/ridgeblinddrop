@@ -154,7 +154,10 @@ function renderOrderQueue() {
     div.innerHTML = `
       <div class="order-card-top">
         <span class="order-tier-badge ${tier.cls}">${tier.name.toUpperCase()}</span>
-        <span class="order-carrier-name">via ${carrier.name}</span>
+        ${order.free
+          ? `<span class="order-free-badge">FREE</span>`
+          : `<span class="order-carrier-name">via ${carrier.name}</span>`
+        }
       </div>
       <div class="order-progress-bar">
         <div class="order-progress-fill" style="width:${pct}%"></div>
