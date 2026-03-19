@@ -689,7 +689,7 @@ body {
 /* Ridge Wallet Painting */
 #wh-prop-painting {
   position: absolute;
-  top: 6%; left: 28%;
+  top: 18%; left: 50%; transform: translateX(-50%);
   z-index: 4;
   width: 92px; height: 68px;
   background: #12101c;
@@ -764,36 +764,40 @@ body {
   border-bottom: none;
 }
 
-/* Window prop */
+/* Window prop — hangs below the Ridge painting, centered */
 #wh-prop-window {
   position: absolute;
-  top: 8%; right: 8%;
+  top: calc(18% + 76px); left: 50%; transform: translateX(-50%);
   z-index: 4;
-  width: 58px; height: 46px;
+  width: 62px; height: 36px;
+  /* crossbars + sky outside */
   background:
-    linear-gradient(#7a5020, #7a5020) 50% 0 / 3px 100% no-repeat,
-    linear-gradient(#7a5020, #7a5020) 0 50% / 100% 3px no-repeat,
-    linear-gradient(180deg, #1a60c0 0%, #4898e0 55%, #80c0f0 85%, #b0e0a0 100%);
-  border: 5px solid #7a5020;
-  box-shadow: inset 0 0 0 1px #c0a060, 3px 3px 0 #4a2808;
+    linear-gradient(#6a3e10, #6a3e10) 50% 0   / 4px 100% no-repeat,
+    linear-gradient(#6a3e10, #6a3e10) 0   50%  / 100% 4px no-repeat,
+    linear-gradient(180deg, #1060c8 0%, #50a0e8 55%, #90ccf5 80%, #6cc040 100%);
+  border: 5px solid #6a3e10;
+  border-bottom: 9px solid #5a3008; /* thick sill */
+  box-shadow:
+    3px 4px 0 #3a1e04,               /* cast shadow on wall */
+    inset 0 0 0 1px rgba(255,255,255,0.12); /* inner glass sheen */
   overflow: hidden;
 }
-#wh-prop-window::before { /* puffy cloud */
+#wh-prop-window::before { /* glass glare — upper-left quad */
   content: '';
   position: absolute;
-  top: 6px; left: 5px;
-  width: 10px; height: 6px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 50%;
-  box-shadow: 7px 2px 0 4px rgba(255,255,255,0.9), 3px -2px 0 3px rgba(255,255,255,0.95);
+  top: 1px; left: 1px;
+  width: 42%; height: 40%;
+  background: rgba(255,255,255,0.22);
+  pointer-events: none;
 }
-#wh-prop-window::after { /* tree tops */
+#wh-prop-window::after { /* outside — tree tops + cloud */
   content: '';
   position: absolute;
-  bottom: 0; left: 4px;
-  width: 10px; height: 18px;
-  background: #2a7820;
-  box-shadow: 15px 5px 0 6px #226818, 30px 1px 0 5px #308828;
+  bottom: 0; left: 3px;
+  width: 9px; height: 16px;
+  background: #2e8428;
+  /* more trees rightward */
+  box-shadow: 14px 5px 0 5px #268020, 28px 2px 0 4px #34943a;
 }
 
 /* Organized floor storage (replaces scattered floor boxes) */
@@ -956,10 +960,10 @@ body {
   text-shadow: 0 0 4px var(--amber);
   z-index: 6;
 }
-/* Pixel wall clock — upper left */
+/* Pixel wall clock — shop prop, sits left of the Ridge painting */
 .wh-clock {
   position: absolute;
-  left: 2%; top: 18%;
+  right: calc(50% + 56px); top: 18%;
   width: 14px; height: 14px;
   border-radius: 50%;
   background: #f5edd0;
@@ -987,10 +991,10 @@ body {
   transform: translateX(-50%) rotate(110deg);
 }
 
-/* Small notice board — upper left */
+/* Small notice board — shop prop, sits right of the Ridge painting */
 .wh-poster {
   position: absolute;
-  left: 14%; top: 16%;
+  left: calc(50% + 56px); top: 18%;
   width: 22px; height: 17px;
   background: #f0e0a0;
   border: 2px solid #8a6a20;

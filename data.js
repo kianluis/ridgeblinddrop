@@ -161,6 +161,8 @@ const STORE_ITEMS = [
   { id:'prop-chair',         cat:'props',   name:'Chair',          desc:'Sit down and relax',       cost: 200 },
   { id:'prop-storage',       cat:'props',   name:'Tidy Storage',   desc:'No more floor chaos',      cost: 300 },
   { id:'prop-window',        cat:'props',   name:'Window',         desc:'A view to the outside',    cost: 250 },
+  { id:'prop-clock',         cat:'props',   name:'Wall Clock',     desc:'Know what shift it is',    cost: 100 },
+  { id:'prop-board',         cat:'props',   name:'Notice Board',   desc:'Crew announcements',       cost: 120 },
   // Workers
   { id:'worker-daniel',      cat:'workers', name:'Daniel',         desc:'New hire, very eager',     cost: 350 },
   { id:'worker-austin',      cat:'workers', name:'Austin',         desc:'The reliable one',         cost: 400 },
