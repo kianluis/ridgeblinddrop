@@ -238,18 +238,27 @@ function renderBooklet() {
         (collected ? 'collected' : 'uncollected') +
         (isNewly   ? ' newly-collected' : '');
 
-      const iconWrap = document.createElement('div');
-      iconWrap.className = 'item-icon';
-      iconWrap.appendChild(_itemIconEl(item, 32));
+      // Build icon HTML inline to avoid the innerHTML-clobber double-icon bug
+      let iconHTML;
+      if (collected && item.img) {
+        iconHTML = `<div class="item-icon booklet-item-icon"><img src="${item.img}" alt="${item.name.replace('\n', ' ')}" style="width:80px;height:80px;object-fit:contain;border-radius:6px;"></div>`;
+      } else if (collected) {
+        iconHTML = `<div class="item-icon booklet-item-icon ${item.icon || ''}" style="width:80px;height:80px;"></div>`;
+      } else {
+        iconHTML = `<div class="item-icon booklet-item-icon booklet-mystery-icon" style="width:80px;height:80px;"></div>`;
+      }
 
-      card.appendChild(iconWrap);
-      card.innerHTML += `
+      card.innerHTML = `
+        ${iconHTML}
         <div class="item-name">${collected ? item.name.replace('\n', '<br>') : '???'}</div>
         <span class="rarity-badge ${badgeClass(rarity)}">${labels[rarity]}</span>
         ${collected ? `<div class="pull-count">×${count}</div>` : ''}
       `;
-      // Re-insert icon (innerHTML clobbers it)
-      card.insertBefore(iconWrap, card.firstChild);
+
+      if (collected) {
+        card.style.cursor = 'pointer';
+        card.onclick = () => showItemDetail(item.id);
+      }
 
       grid.appendChild(card);
     });
@@ -387,7 +396,7 @@ function showItemDetail(id) {
 
   const iconWrap = document.getElementById('item-detail-icon-wrap');
   iconWrap.innerHTML = '';
-  iconWrap.appendChild(_itemIconEl(item, 64));
+  iconWrap.appendChild(_itemIconEl(item, 100));
 
   document.getElementById('item-detail-name').textContent = item.name.replace('\n', ' ');
   document.getElementById('item-detail-name').style.color = rarityColor(item.rarity);
@@ -395,11 +404,38 @@ function showItemDetail(id) {
     `<span class="rarity-badge ${badgeClass(item.rarity)}">${labels[item.rarity]}</span>`;
   const countEl = document.getElementById('item-detail-count');
   countEl.textContent = count > 0 ? '×' + count + ' owned' : 'Not yet collected';
-  countEl.style.color = count > 0 ? 'var(--text-dim)' : 'var(--text-dim)';
 
   const box = document.getElementById('item-detail-box');
+  // Remove old rarity classes and re-apply
+  box.classList.remove('detail-rarity-common', 'detail-rarity-uncommon', 'detail-rarity-rare', 'detail-rarity-ultra');
   box.style.borderColor = rarityColor(item.rarity);
   box.style.boxShadow   = `0 0 24px ${rarityColor(item.rarity)}55`;
+  // Reset entrance animation
+  box.style.animation = 'none';
+  void box.offsetWidth;
+  box.style.animation = '';
+  box.classList.add('detail-rarity-' + item.rarity);
+
+  // Sparkles for rare/ultra inside detail box
+  let sparkleEl = box.querySelector('.detail-sparkle-container');
+  if (!sparkleEl) {
+    sparkleEl = document.createElement('div');
+    sparkleEl.className = 'detail-sparkle-container';
+    box.appendChild(sparkleEl);
+  }
+  sparkleEl.innerHTML = '';
+  const sparkCount = item.rarity === 'ultra' ? 20 : item.rarity === 'rare' ? 10 : 0;
+  const sColor = rarityColor(item.rarity);
+  for (let i = 0; i < sparkCount; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle detail-sparkle';
+    const tx = (Math.random() - 0.5) * 180;
+    const ty = (Math.random() - 0.5) * 180;
+    s.style.cssText = `left:50%;top:50%;--tx:${tx}px;--ty:${ty}px;` +
+      `animation-delay:${(Math.random() * 0.5).toFixed(2)}s;` +
+      `background:${sColor};box-shadow:0 0 6px ${sColor};`;
+    sparkleEl.appendChild(s);
+  }
 
   document.getElementById('item-detail-overlay').style.display = 'flex';
 }
