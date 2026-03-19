@@ -65,7 +65,7 @@ function openPackage(orderId) {
   const doodle = COLLECTIBLES.find(c => c.id === 'carryon-mr-doodle');
   const item = (state.pullsSinceDoodle >= 100)
     ? doodle
-    : rollItem(tier.rareboost);
+    : rollItem(tier);
 
   // Update pity counters
   if (item.id === 'carryon-mr-doodle') {

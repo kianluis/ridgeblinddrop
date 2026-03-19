@@ -4,10 +4,12 @@
 // ═══════════════════════════════════════════════════════
 
 const PACKAGE_TIERS = [
-  { id:'standard',  name:'Standard',  cost:20,  baseCredits:10, baseTime:40,  rareboost:0,    cls:'tier-standard'  },
+  { id:'standard',  name:'Standard',  cost:20,  baseCredits:10, baseTime:40,  rareboost:0,    cls:'tier-standard',
+    baseRates: { common:0.82, uncommon:0.15, rare:0.025, ultra:0.005 } },
   { id:'express',   name:'Express',   cost:30,  baseCredits:15, baseTime:30,  rareboost:0.10, cls:'tier-express'   },
   { id:'priority',  name:'Priority',  cost:50,  baseCredits:25, baseTime:15,  rareboost:0.25, cls:'tier-priority'  },
-  { id:'overnight', name:'Overnight', cost:100, baseCredits:50, baseTime:5,   rareboost:0.50, cls:'tier-overnight' },
+  { id:'overnight', name:'Overnight', cost:100, baseCredits:50, baseTime:5,   rareboost:0.50, cls:'tier-overnight',
+    baseRates: { common:0, uncommon:0.55, rare:0.35, ultra:0.10 } },
 ];
 
 const CARRIERS = [
