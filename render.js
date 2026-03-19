@@ -63,7 +63,12 @@ function renderTopBar() {
 // ── Inline Order Panel ────────────────────────────────────
 
 const TIER_ICONS    = { standard:'📦', express:'🚚', priority:'✈️', overnight:'🚀' };
-const CARRIER_ICONS = { budget:'📦', ridgepost:'🚚', express:'✈️', sonic:'🚀' };
+const CARRIER_LOGOS = {
+  usps:  'https://cdn.simpleicons.org/usps/004B87',
+  ups:   'https://cdn.simpleicons.org/ups/351C15',
+  fedex: 'https://cdn.simpleicons.org/fedex/4D148C',
+  dhl:   'https://cdn.simpleicons.org/dhl/D40511',
+};
 
 function renderOrderPanel() {
   // Tier cards
@@ -109,7 +114,7 @@ function renderOrderPanel() {
     }
     div.innerHTML = `
       ${isActive ? '<span class="carrier-active-badge">ACTIVE</span>' : ''}
-      <div class="carrier-tile-icon">${CARRIER_ICONS[carrier.id] || '📦'}</div>
+      <div class="carrier-tile-icon"><img src="${CARRIER_LOGOS[carrier.id]}" class="carrier-logo" alt="${carrier.name}"></div>
       <div class="carrier-speed">${carrier.mult}×</div>
       ${!isActive && !owned ? `<div class="carrier-price-tag">${carrier.cost} cr</div>` : ''}
       ${owned && !isActive  ? `<div class="carrier-price-tag use-tag">USE</div>` : ''}

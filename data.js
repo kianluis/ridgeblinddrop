@@ -11,10 +11,10 @@ const PACKAGE_TIERS = [
 ];
 
 const CARRIERS = [
-  { id:'budget',    name:'Budget Courier', cost:0,    mult:1.0, desc:'Default carrier. Gets the job done. Eventually.' },
-  { id:'ridgepost', name:'RidgePost',      cost:75,   mult:1.5, desc:'1.5× speed. Our own postal service, naturally.' },
-  { id:'express',   name:'ExpressRidge',   cost:190,  mult:2.5, desc:'2.5× speed. The van drives itself, allegedly.' },
-  { id:'sonic',     name:'SonicRidge',     cost:480,  mult:5.0, desc:'5× speed. We have no idea how this works.' },
+  { id:'usps',  name:'USPS',  cost:0,    mult:1.0, desc:'Default carrier. Gets the job done. Eventually.' },
+  { id:'ups',   name:'UPS',   cost:75,   mult:1.5, desc:'1.5× speed. Brown never looked so fast.' },
+  { id:'fedex', name:'FedEx', cost:190,  mult:2.5, desc:'2.5× speed. When it absolutely has to be there.' },
+  { id:'dhl',   name:'DHL',   cost:480,  mult:5.0, desc:'5× speed. International speed, delivered.' },
 ];
 
 const COLLECTIBLES = [
