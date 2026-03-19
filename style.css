@@ -882,6 +882,7 @@ body {
 .tier-card-icon  { font-size: clamp(22px, 3.5vw, 34px); line-height: 1; padding: var(--sp-1) 0 var(--sp-2); image-rendering: auto; display: block; }
 .tier-card-time  { font-size: var(--fs-xs); color: var(--text-dim); margin-bottom: var(--sp-2); line-height: 2.2; }
 .tier-card-boost { font-size: var(--fs-xs); padding: 2px var(--sp-2); display: block; margin-bottom: var(--sp-2); word-break: break-word; }
+.tier-card-cost  { font-size: var(--fs-xs); color: var(--text); font-family: 'Press Start 2P', monospace; margin-bottom: var(--sp-2); }
 
 .btn-order-card {
   width: 100%;
