@@ -775,7 +775,7 @@ body {
   background:
     linear-gradient(#6a3e10, #6a3e10) 50% 0   / 4px 100% no-repeat,
     linear-gradient(#6a3e10, #6a3e10) 0   50%  / 100% 4px no-repeat,
-    linear-gradient(180deg, #1060c8 0%, #50a0e8 55%, #90ccf5 80%, #6cc040 100%);
+    linear-gradient(180deg, #1060c8 0%, #50a0e8 55%, #90ccf5 80%, #c8e8f8 100%);
   border: 5px solid #6a3e10;
   border-bottom: 9px solid #5a3008; /* thick sill */
   box-shadow:
@@ -791,15 +791,7 @@ body {
   background: rgba(255,255,255,0.22);
   pointer-events: none;
 }
-#wh-prop-window::after { /* outside — tree tops + cloud */
-  content: '';
-  position: absolute;
-  bottom: 0; left: 3px;
-  width: 9px; height: 16px;
-  background: #2e8428;
-  /* more trees rightward */
-  box-shadow: 14px 5px 0 5px #268020, 28px 2px 0 4px #34943a;
-}
+#wh-prop-window::after { content: none; }
 
 /* Organized floor storage (replaces scattered floor boxes) */
 #wh-prop-storage {
