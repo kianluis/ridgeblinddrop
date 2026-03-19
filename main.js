@@ -181,6 +181,7 @@ function resetProgress() {
     }, 3000);
   } else {
     clearTimeout(_resetTimer);
+    window.removeEventListener('beforeunload', saveState);
     localStorage.removeItem(SAVE_KEY);
     localStorage.removeItem(GUIDE_KEY);
     location.reload();
