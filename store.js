@@ -6,6 +6,7 @@
 // ── Color lookup tables ───────────────────────────────────
 
 const WALL_THEMES = {
+  'wall-default':  null, // sentinel — handled by updateDayNight()
   'wall-gunmetal': 'linear-gradient(180deg, #6a6a72 0%, #4e4e58 55%, #36363e 100%)',
   'wall-navy':     'linear-gradient(180deg, #2a4878 0%, #1a3460 55%, #0e2042 100%)',
   'wall-olive':    'linear-gradient(180deg, #586432 0%, #424c24 55%, #2c3418 100%)',
@@ -15,8 +16,9 @@ const WALL_THEMES = {
 };
 
 const CAT_COLORS = {
-  'cat-orange': { main: '#d46a0a', shadow: '#a84808' },
-  'cat-white':  { main: '#e8e0d0', shadow: '#c0b898' },
+  'cat-default': { main: '#c87840', shadow: '#a05e28' },
+  'cat-orange':  { main: '#d46a0a', shadow: '#a84808' },
+  'cat-white':  { main: '#e8e0d0', shadow: '#c0b898', eye: '#1a6aaa' },
   'cat-black':  { main: '#252530', shadow: '#111118' },
   'cat-tabby':  {
     main: '#909090', shadow: '#606060',
@@ -31,7 +33,8 @@ const CAT_COLORS = {
 };
 
 const SHIRT_COLORS = {
-  'shirt-blue':   { main: '#2255aa', shadow: '#1a3d80' },
+  'shirt-default': { main: '#cc2222', shadow: '#991818' },
+  'shirt-blue':    { main: '#2255aa', shadow: '#1a3d80' },
   'shirt-green':  { main: '#226633', shadow: '#1a4d26' },
   'shirt-black':  { main: '#222233', shadow: '#111120' },
   'shirt-orange': { main: '#cc6622', shadow: '#a04a16' },
@@ -62,10 +65,11 @@ function renderStore() {
       <div class="store-grid">`;
 
     for (const item of items) {
-      const isOwned    = owned.includes(item.id);
+      const isOwned    = item.cost === 0 || owned.includes(item.id);
       const isColorCat = cat !== 'props' && cat !== 'workers';
+      const isDefault  = item.id.endsWith('-default');
       const isEquipped = isColorCat
-        ? color[cat] === item.id
+        ? (isDefault ? !color[cat] : color[cat] === item.id)
         : isOwned; // props/workers active as soon as owned
 
       const canAfford = state.credits >= item.cost;
@@ -100,7 +104,9 @@ function renderStore() {
 function storePreview(item) {
   if (item.cat === 'wall') {
     const grad = WALL_THEMES[item.id] || 'linear-gradient(180deg,#888,#444)';
-    return `<div class="preview-swatch preview-wall" style="background:${grad}"></div>`;
+    // Default wall shows the day-sky gradient as a representative preview
+    const display = grad ?? 'linear-gradient(180deg,#a8c4e0 0%,#c8a870 55%,#8a6840 100%)';
+    return `<div class="preview-swatch preview-wall" style="background:${display}"></div>`;
   }
   if (item.cat === 'cat') {
     const c = CAT_COLORS[item.id] || { main: '#c87840', shadow: '#a05e28' };
@@ -154,8 +160,8 @@ function storeEquip(itemId) {
   if (!item) return;
   if (!state.roomColor) state.roomColor = {};
 
-  // Toggle: clicking an already-equipped color resets to default
-  if (state.roomColor[item.cat] === itemId) {
+  // Default tile always clears the override; other tiles toggle
+  if (itemId.endsWith('-default') || state.roomColor[item.cat] === itemId) {
     delete state.roomColor[item.cat];
   } else {
     state.roomColor[item.cat] = itemId;
@@ -190,6 +196,8 @@ function applyCosmetics() {
     const c = CAT_COLORS[color.cat] || { main: '#c87840', shadow: '#a05e28' };
     cat.style.setProperty('--cat-color',  c.main);
     cat.style.setProperty('--cat-shadow', c.shadow);
+    if (c.eye) cat.style.setProperty('--cat-eye', c.eye);
+    else cat.style.removeProperty('--cat-eye');
     if (c.bodyBg) {
       cat.style.setProperty('--cat-body-bg', c.bodyBg);
       cat.style.setProperty('--cat-head-bg', c.headBg || c.bodyBg);

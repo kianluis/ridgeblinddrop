@@ -138,20 +138,23 @@ const MILESTONES = [
 
 // ── Warehouse Store ───────────────────────────────────────
 const STORE_ITEMS = [
-  // Wall colors — cheapest → most expensive
-  { id:'wall-gunmetal',      cat:'wall',    name:'Gunmetal',       desc:'Industrial gray finish',   cost: 150 },
+  // Wall colors — default (free) first, then cheapest → most expensive
+  { id:'wall-default',       cat:'wall',    name:'Warehouse',      desc:'Time-based ambient lighting', cost: 0   },
+  { id:'wall-gunmetal',      cat:'wall',    name:'Gunmetal',       desc:'Cool industrial gray',     cost: 150 },
   { id:'wall-navy',          cat:'wall',    name:'Alpine Navy',    desc:'Deep navy blue',           cost: 175 },
-  { id:'wall-olive',         cat:'wall',    name:'Matte Olive',    desc:'Tactical olive drab',      cost: 175 },
-  { id:'wall-orange',        cat:'wall',    name:'Basecamp Orange',desc:'Bold warehouse warmth',    cost: 200 },
-  { id:'wall-lime',          cat:'wall',    name:'Hyper Lime',     desc:'High-vis lime energy',     cost: 200 },
+  { id:'wall-olive',         cat:'wall',    name:'Matte Olive',    desc:'Tactical olive drab green',cost: 175 },
+  { id:'wall-orange',        cat:'wall',    name:'Basecamp Orange',desc:'Warm burnt orange',        cost: 200 },
+  { id:'wall-lime',          cat:'wall',    name:'Hyper Lime',     desc:'Electric yellow-green',    cost: 200 },
   { id:'wall-iridescent',    cat:'wall',    name:'Iridescent',     desc:'Shifting violet shimmer',  cost: 200 },
-  // Cat colors — cheapest → most expensive
+  // Cat colors — default (free) first, then cheapest → most expensive
+  { id:'cat-default',        cat:'cat',     name:'Brown',          desc:'Classic tawny brown coat', cost: 0   },
   { id:'cat-orange',         cat:'cat',     name:'Orange',         desc:'Classic ginger coat',      cost:  50 },
   { id:'cat-white',          cat:'cat',     name:'White',          desc:'Pure snow coat',           cost:  60 },
   { id:'cat-black',          cat:'cat',     name:'Black',          desc:'Mysterious & stealthy',    cost:  70 },
   { id:'cat-tabby',          cat:'cat',     name:'Tabby',          desc:'Gray & black stripes',     cost:  90 },
   { id:'cat-calico',         cat:'cat',     name:'Calico',         desc:'White, orange & black',    cost: 120 },
-  // Sean shirt colors (all same cost)
+  // Sean shirt colors — default (free) first, then paid
+  { id:'shirt-default',      cat:'shirt',   name:'Red',            desc:"Sean's signature look",    cost: 0   },
   { id:'shirt-blue',         cat:'shirt',   name:'Navy',           desc:"Sean went corporate",      cost:  75 },
   { id:'shirt-green',        cat:'shirt',   name:'Forest',         desc:'Earthy green energy',      cost:  75 },
   { id:'shirt-black',        cat:'shirt',   name:'Black',          desc:'Looking very serious',     cost:  75 },
