@@ -95,11 +95,11 @@ function gameTick() {
     changed = true;
   }
 
-  // Idle credits — 5 per 10 real seconds
+  // Idle credits — 5 per 5 real seconds
   const idleElapsed = (now - state.lastIdleTick) / 1000;
-  if (idleElapsed >= 10) {
-    const gained = Math.floor(idleElapsed / 10) * 5;
-    state.lastIdleTick += Math.floor(idleElapsed / 10) * 10 * 1000;
+  if (idleElapsed >= 5) {
+    const gained = Math.floor(idleElapsed / 5) * 5;
+    state.lastIdleTick += Math.floor(idleElapsed / 5) * 5 * 1000;
     state.credits           += gained;
     state.totalCreditsEarned += gained;
     showIdleFloat(gained);
@@ -176,7 +176,7 @@ function resetProgress() {
     btn.classList.add('reset-confirm');
     _resetTimer = setTimeout(() => {
       _resetPending = false;
-      btn.textContent = '↺';
+      btn.textContent = '↺ RESET';
       btn.classList.remove('reset-confirm');
     }, 3000);
   } else {

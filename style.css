@@ -181,14 +181,7 @@ body {
 .icon-btn:hover { border-color: var(--amber); color: #f0c060; }
 
 #reset-btn {
-  color: #e87070;
-  border-color: #a03030;
   letter-spacing: 1px;
-}
-#reset-btn:hover {
-  background: var(--danger);
-  border-color: var(--danger);
-  color: #fff;
 }
 
 @keyframes creditsBump {
@@ -1827,21 +1820,25 @@ body {
 
 /* reset topbar button */
 .reset-topbar-btn {
-  color: #e05050;
-  border: 1px solid #e05050;
+  color: #e87070;
+  border: 1px solid #c04040;
   font-size: var(--fs-sm);
 }
 .reset-topbar-btn:hover {
-  background: #e05050;
-  color: var(--bg);
-  border-color: #e05050;
+  background: #c04040;
+  color: #fff;
+  border-color: #c04040;
 }
 .reset-topbar-btn.reset-confirm {
-  background: #e05050;
+  background: #c04040;
   color: #fff;
-  border-color: #e05050;
-  font-size: 6px;
+  border-color: #c04040;
   animation: none;
+}
+.reset-topbar-btn.reset-confirm:hover {
+  background: #a03030;
+  border-color: #a03030;
+  color: #fff;
 }
 
 /* persistent topbar button */
