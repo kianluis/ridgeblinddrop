@@ -437,37 +437,6 @@ body {
   border-top: 2px solid #c08840;
 }
 
-#conveyor {
-  position: absolute; bottom: 30px; left: 0; right: 0; height: 16px;
-  background: repeating-linear-gradient(
-    90deg, #7a6040 0, #7a6040 10px, #685030 10px, #685030 20px
-  );
-  border-top: 2px solid #a08050;
-  border-bottom: 2px solid #a08050;
-  overflow: hidden;
-}
-#conveyor-belt {
-  position: absolute; top: 4px; left: 0;
-  width: 200%; height: 5px;
-  background: repeating-linear-gradient(
-    90deg, #a08860 0, #a08860 14px, #806840 14px, #806840 18px
-  );
-  animation: beltMove 0.9s linear infinite;
-}
-@keyframes beltMove { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-
-.conv-box {
-  position: absolute; bottom: 46px;
-  width: 18px; height: 18px;
-  border: 2px solid var(--amber); background: #d4a060;
-  animation: conveyorSlide 4s linear infinite;
-}
-.conv-box::before {
-  content: ''; position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  width: 5px; height: 5px; background: var(--amber);
-}
-@keyframes conveyorSlide { from{left:104%} to{left:-24px} }
 
 .stack-box { position: absolute; border: 2px solid; }
 .floor-box  { position: absolute; border: 2px solid; }
@@ -475,7 +444,7 @@ body {
 /* ── Sean the pixel warehouse worker ── */
 #worker {
   position: absolute;
-  bottom: 46px;
+  bottom: 30px;
   width: 18px; height: 36px;
   z-index: 3;
   animation: seanPatrol 10s linear infinite;
@@ -549,6 +518,69 @@ body {
 .leg-r { right: 1px; animation: legSwingR 0.35s steps(2, end) infinite; }
 @keyframes legSwingL { 0%,100%{ transform: rotate(-18deg); } 50%{ transform: rotate(18deg); } }
 @keyframes legSwingR { 0%,100%{ transform: rotate(18deg);  } 50%{ transform: rotate(-18deg); } }
+
+/* ── Pixel cat ── */
+#wh-cat {
+  position: absolute;
+  bottom: 30px;
+  right: 16%;
+  width: 20px; height: 26px;
+  z-index: 2;
+}
+.cat-tail {
+  position: absolute;
+  bottom: 0; right: -3px;
+  width: 4px; height: 16px;
+  background: #c87840;
+  border-radius: 2px 2px 0 0;
+  transform-origin: bottom center;
+  animation: catTailSway 2.2s ease-in-out infinite;
+  box-shadow: inset -1px 0 0 #a05e28;
+}
+@keyframes catTailSway {
+  0%, 100% { transform: rotate(-22deg); }
+  50%       { transform: rotate(22deg);  }
+}
+.cat-body {
+  position: absolute;
+  bottom: 0; left: 3px;
+  width: 14px; height: 10px;
+  background: #c87840;
+  box-shadow: inset -2px -2px 0 #a05e28;
+}
+.cat-head {
+  position: absolute;
+  bottom: 10px; left: 4px;
+  width: 12px; height: 9px;
+  background: #c87840;
+  box-shadow: inset -2px -2px 0 #a05e28;
+  animation: catBlink 5s ease-in-out infinite;
+}
+/* pixel ears via border triangles */
+.cat-head::before,
+.cat-head::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  width: 0; height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-bottom: 4px solid #c87840;
+}
+.cat-head::before { left: 0; }
+.cat-head::after  { right: 0; }
+/* eyes: two 2×2 yellow dots using box-shadow */
+.cat-eyes {
+  position: absolute;
+  top: 3px; left: 2px;
+  width: 2px; height: 2px;
+  background: #f0d020;
+  box-shadow: 6px 0 0 #f0d020;
+}
+@keyframes catBlink {
+  0%, 88%, 92%, 100% { transform: scaleY(1); }
+  90%                 { transform: scaleY(0.1); }
+}
 
 .wh-sign {
   position: absolute; top: var(--sp-2); right: var(--sp-2);
