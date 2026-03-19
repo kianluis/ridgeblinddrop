@@ -1062,6 +1062,8 @@ body {
   box-shadow: 0 6px 14px rgba(120,80,20,0.18);
 }
 .tier-card.cant-afford { opacity: 0.45; cursor: not-allowed; }
+.tier-card.locked { opacity: 0.35; cursor: not-allowed; filter: grayscale(1); }
+.tier-card-unlock { font-size: var(--fs-xs); color: var(--text-dim); margin-top: var(--sp-2); line-height: 1.6; }
 .tier-card.tier-express  { border-top-color: var(--uncommon); }
 .tier-card.tier-priority { border-top-color: var(--rare); }
 .tier-card.tier-overnight{ border-top-color: var(--ultra); }
