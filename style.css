@@ -1985,6 +1985,149 @@ body {
   line-height: 1;
 }
 
+/* Package box (Place an Order) */
+.css-box {
+  display: inline-block;
+  width: .9em; height: .78em;
+  background: #c8922a;
+  border: 2px solid #8a5e10;
+  border-radius: 1px;
+  position: relative;
+  vertical-align: middle;
+}
+.css-box::before { /* tape strip */
+  content: '';
+  position: absolute;
+  left: -1px; right: -1px;
+  top: calc(50% - .09em); height: .18em;
+  background: #f0d060;
+  border-top: 1px solid #b09020;
+  border-bottom: 1px solid #b09020;
+}
+.css-box::after { /* lid */
+  content: '';
+  position: absolute;
+  left: -2px; right: -2px; bottom: 100%;
+  height: .24em;
+  background: #d8a03c;
+  border: 2px solid #8a5e10;
+  border-bottom: 1px solid #9a7020;
+}
+
+/* Stopwatch (Wait for Delivery) */
+.css-watch {
+  display: inline-block;
+  width: .82em; height: .82em;
+  background: #f0f0f0;
+  border: 2px solid #556;
+  border-radius: 50%;
+  position: relative;
+  vertical-align: middle;
+  margin-top: .08em;
+}
+.css-watch::before { /* crown */
+  content: '';
+  position: absolute;
+  bottom: 100%; left: 50%;
+  transform: translateX(-50%);
+  width: .28em; height: .13em;
+  background: #556;
+  border-radius: 3px 3px 0 0;
+}
+.css-watch::after { /* clock hand */
+  content: '';
+  position: absolute;
+  bottom: 50%; left: 50%;
+  width: 2px; height: .28em;
+  background: #334;
+  transform-origin: bottom center;
+  transform: translateX(-50%) rotate(25deg);
+  border-radius: 1px;
+}
+
+/* Gift box (Open Your Package) */
+.css-gift {
+  display: inline-block;
+  width: .9em; height: .82em;
+  background: #e03030;
+  border: 2px solid #a01818;
+  border-radius: 1px;
+  position: relative;
+  vertical-align: middle;
+}
+.css-gift::before { /* horizontal ribbon band */
+  content: '';
+  position: absolute;
+  left: -2px; right: -2px;
+  top: 34%; height: 22%;
+  background: #f8cc20;
+}
+.css-gift::after { /* vertical ribbon stripe */
+  content: '';
+  position: absolute;
+  top: -2px; bottom: -2px;
+  left: 50%; transform: translateX(-50%);
+  width: 18%;
+  background: #f8cc20;
+}
+
+/* Gold trophy (Collect All 17) */
+.css-trophy {
+  display: inline-block;
+  width: .85em; height: .9em;
+  position: relative;
+  vertical-align: middle;
+}
+.css-trophy::before { /* cup + handles + stem + base via clip-path */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #ffe980 0%, #f5b800 55%, #c47a00 100%);
+  clip-path: polygon(
+    20% 0%,  80% 0%,
+    90% 0%,  100% 12%, 100% 38%, 85% 44%,
+    72% 60%, 63% 68%,
+    72% 68%, 72% 80%, 28% 80%, 28% 68%,
+    37% 68%, 28% 60%,
+    15% 44%, 0% 38%, 0% 12%, 10% 0%
+  );
+}
+.css-trophy::after { /* shine highlight */
+  content: '';
+  position: absolute;
+  top: 6%; left: 22%;
+  width: 13%; height: 30%;
+  background: rgba(255,255,255,.38);
+  border-radius: 50%;
+  transform: rotate(-15deg);
+}
+
+/* Green up arrow (Upgrade Carriers) */
+.css-arrow-up {
+  display: inline-block;
+  width: .7em; height: .88em;
+  position: relative;
+  vertical-align: middle;
+}
+.css-arrow-up::before { /* arrowhead */
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  border-left: .35em solid transparent;
+  border-right: .35em solid transparent;
+  border-bottom: .46em solid #22dd44;
+}
+.css-arrow-up::after { /* shaft */
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: .3em; height: .5em;
+  background: #22dd44;
+  border-radius: 0 0 2px 2px;
+}
+
 /* Each icon: float + scale + unique color glow */
 .guide-card:nth-child(1) .guide-card-icon {
   animation: guideIconFloat 3.4s ease-in-out infinite, guideGlow1 3.4s ease-in-out infinite;
