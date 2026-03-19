@@ -377,14 +377,21 @@ body {
   );
 }
 
-/* warm inner vignette */
+/* warm inner vignette + CRT scanlines */
 #warehouse-scene::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 45%, rgba(80,30,5,0.25) 100%);
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px, transparent 3px,
+      rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px
+    ),
+    radial-gradient(ellipse at center, transparent 45%, rgba(80,30,5,0.25) 100%);
   z-index: 5;
   pointer-events: none;
+  animation: whAtmosphere 6s ease-in-out infinite;
 }
 
 .wh-light {
@@ -605,7 +612,7 @@ body {
   cursor: pointer;
   font-family: 'Press Start 2P', monospace;
   font-size: var(--fs-xs);
-  animation: openBtnPulse 1.1s ease-in-out infinite;
+  animation: openBtnPulse 2s ease-in-out infinite;
   letter-spacing: 1px;
 }
 
@@ -923,7 +930,7 @@ body {
   background: var(--bg);
   border: 1px solid var(--border);
 }
-.booklet-progress-fill { height: 100%; background: linear-gradient(90deg, var(--amber), var(--amber2)); transition: width 0.5s; }
+.booklet-progress-fill { height: 100%; background: linear-gradient(90deg, var(--amber), var(--amber2)); transition: width 600ms ease-out; position: relative; overflow: hidden; }
 .booklet-pct { font-size: var(--fs-xs); color: var(--amber); white-space: nowrap; }
 
 .booklet-filters {
@@ -964,13 +971,14 @@ body {
   border: 1px solid var(--border);
   padding: var(--sp-3);
   text-align: center;
-  transition: border-color 0.2s, transform 0.15s;
+  transition: border-color 0.15s ease-out, transform 0.15s ease-out, box-shadow 0.15s ease-out;
   cursor: default;
 }
 .booklet-card.collected { cursor: pointer; }
 .booklet-card.collected:hover {
   border-color: var(--amber);
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 6px 16px rgba(120,80,20,0.15);
 }
 .booklet-card.uncollected { opacity: 0.35; filter: grayscale(1); }
 
@@ -989,14 +997,14 @@ body {
   50%  { transform:rotateY(-90deg); filter:grayscale(0); }
   100% { transform:rotateY(0deg);   filter:grayscale(0); }
 }
-.booklet-card.newly-collected { animation: cardFlipReveal 0.5s ease-out; }
+.booklet-card.newly-collected { animation: cardFlipReveal 0.5s ease-out, bookletGoldGlow 1.2s ease-out 0.5s both; }
 
 @keyframes ultraGlow {
   0%,100% { box-shadow:0 0 6px var(--ultra),  0 0 12px var(--ultra-glow); }
   50%     { box-shadow:0 0 16px var(--ultra),  0 0 30px var(--ultra-glow); }
 }
 .booklet-card.rarity-ultra.collected { animation: ultraGlow 2s ease-in-out infinite; }
-.booklet-card.rarity-ultra.collected.newly-collected { animation: cardFlipReveal 0.5s ease-out; }
+.booklet-card.rarity-ultra.collected.newly-collected { animation: cardFlipReveal 0.5s ease-out, bookletGoldGlow 1.2s ease-out 0.5s both; }
 
 /* ── PRESTIGE AREA ───────────────────────────────────────── */
 .prestige-panel {
@@ -1279,7 +1287,7 @@ body {
   transition: background 0.15s, transform 0.1s;
 }
 .btn-claim-milestone:hover { background: #ffcc44; transform: scale(1.05); }
-.btn-claim-milestone:active { transform: scale(0.97); }
+.btn-claim-milestone:active { transform: scale(0.95); transition: transform 0.12s ease; }
 
 /* red ! badge on Missions tab */
 .tab-notify-badge {
@@ -1347,19 +1355,24 @@ body {
 }
 #box-stage-label { font-size: var(--fs-sm); color: var(--amber); letter-spacing: 2px; }
 
-@keyframes boxShake {
-  0%,100% { transform:translateX(0)    rotate(0deg); }
-  10%     { transform:translateX(-6px) rotate(-3deg); }
-  20%     { transform:translateX(6px)  rotate(3deg); }
-  30%     { transform:translateX(-6px) rotate(-2deg); }
-  40%     { transform:translateX(6px)  rotate(2deg); }
-  50%     { transform:translateX(-4px) rotate(-1deg); }
-  60%     { transform:translateX(4px)  rotate(1deg); }
-  70%     { transform:translateX(-2px); }
-  80%     { transform:translateX(2px); }
-  90%     { transform:translateX(-1px); }
+@keyframes boxShakeEscalating {
+  0%   { transform: translateX(0) rotate(0deg); }
+  7%   { transform: translateX(-1px) rotate(-0.2deg); }
+  14%  { transform: translateX(1px)  rotate(0.2deg); }
+  21%  { transform: translateX(-1.5px) rotate(-0.4deg); }
+  28%  { transform: translateX(2px)  rotate(0.7deg); }
+  35%  { transform: translateX(-2.5px) rotate(-1deg); }
+  42%  { transform: translateX(3px)  rotate(1.3deg); }
+  49%  { transform: translateX(-3.5px) rotate(-1.8deg); }
+  56%  { transform: translateX(4px)  rotate(2.2deg); }
+  63%  { transform: translateX(-5px) rotate(-2.8deg); }
+  70%  { transform: translateX(5px)  rotate(2.8deg); }
+  77%  { transform: translateX(-5px) rotate(-2.5deg); }
+  84%  { transform: translateX(4px)  rotate(2deg); }
+  91%  { transform: translateX(-3px) rotate(-1.2deg); }
+  100% { transform: translateX(0) rotate(0deg); }
 }
-#opening-box.shaking { animation: boxShake 0.62s ease-in-out; }
+#opening-box.shaking { animation: boxShakeEscalating 0.65s ease-in forwards; }
 
 /* ── RARITY FLASH ────────────────────────────────────────── */
 #rarity-flash {
@@ -1400,7 +1413,7 @@ body {
   border: none; font-family: 'Press Start 2P', monospace;
   font-size: var(--fs-sm); padding: var(--sp-2) var(--sp-4);
   cursor: pointer;
-  animation: openBtnPulse 1.1s ease-in-out infinite;
+  animation: openBtnPulse 2s ease-in-out infinite;
   transition: background 0.12s;
   letter-spacing: 1px;
 }
@@ -1929,4 +1942,267 @@ body {
   letter-spacing: 0.08em;
   margin-top: 2px;
   opacity: 0.85;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ANIMATION ENHANCEMENTS — Living Atmosphere & Feedback
+   ═══════════════════════════════════════════════════════ */
+
+/* ── AMBIENT ATMOSPHERE ───────────────────────────────── */
+
+/* Vignette overlay breathes gently (scanlines inherit the pulse) */
+@keyframes whAtmosphere {
+  0%, 100% { opacity: 0.85; }
+  50%       { opacity: 1.0; }
+}
+
+/* Slow idle float for warehouse static elements */
+@keyframes warehouseFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-2.5px); }
+}
+/* Stack boxes — different durations + delays for organic feel */
+#warehouse-scene .stack-box:nth-child(6) {
+  animation: warehouseFloat 3.2s ease-in-out infinite;
+  animation-delay: 0s;
+}
+#warehouse-scene .stack-box:nth-child(7) {
+  animation: warehouseFloat 3.8s ease-in-out infinite;
+  animation-delay: 0.75s;
+}
+#warehouse-scene .stack-box:nth-child(8) {
+  animation: warehouseFloat 4.1s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+/* Shelves */
+#warehouse-scene .shelf:nth-child(4) {
+  animation: warehouseFloat 4.0s ease-in-out infinite;
+  animation-delay: 0.4s;
+}
+#warehouse-scene .shelf:nth-child(5) {
+  animation: warehouseFloat 3.6s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+
+/* ── CREDITS POP ──────────────────────────────────────── */
+
+@keyframes creditsPopUp {
+  0%   { transform: scale(1);    color: var(--amber); }
+  35%  { transform: scale(1.15); color: #3fa852; }
+  100% { transform: scale(1);    color: var(--amber); }
+}
+@keyframes creditsPopDown {
+  0%   { transform: scale(1);    color: var(--amber); }
+  35%  { transform: scale(1.15); color: var(--amber2); }
+  100% { transform: scale(1);    color: var(--amber); }
+}
+.credits-pop-up   { animation: creditsPopUp   0.2s ease-out; }
+.credits-pop-down { animation: creditsPopDown 0.2s ease-out; }
+
+/* ── BUTTON EFFECTS ───────────────────────────────────── */
+
+/* Hover glow pulse */
+@keyframes btnHoverGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(176,94,20,0); }
+  50%       { box-shadow: 0 0 8px 3px rgba(176,94,20,0.3); }
+}
+.btn-order-card:hover:not(:disabled),
+.btn-claim-milestone:hover,
+.icon-btn:hover {
+  animation: btnHoverGlow 1.5s ease-in-out infinite;
+}
+
+/* Mousedown press */
+.btn-order-card:active:not(:disabled),
+.icon-btn:active { transform: scale(0.95); transition: transform 0.12s ease; }
+.btn-open:active  { transform: scale(0.96); transition: transform 0.12s ease; }
+
+/* Open button fade-in entrance for first-ready moment */
+@keyframes btnFadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.btn-open.btn-arriving {
+  animation: openBtnPulse 2s ease-in-out infinite, btnFadeIn 0.4s ease-out both;
+}
+
+/* ── BOOKLET PROGRESS SHIMMER ─────────────────────────── */
+
+.booklet-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: -80px;
+  width: 60px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+  transform: skewX(-15deg);
+  pointer-events: none;
+}
+.booklet-progress-fill.shimmer::after {
+  animation: progressShimmer 0.6s ease-out forwards;
+}
+@keyframes progressShimmer {
+  to { left: calc(100% + 80px); }
+}
+
+/* ── ORDER ARRIVED SEQUENCE ───────────────────────────── */
+
+@keyframes trackerShake {
+  0%, 100% { transform: translateX(0); }
+  14%  { transform: translateX(-3px); }
+  28%  { transform: translateX(3px); }
+  43%  { transform: translateX(-3px); }
+  57%  { transform: translateX(3px); }
+  71%  { transform: translateX(-2px); }
+  86%  { transform: translateX(2px); }
+}
+.order-card.order-arriving {
+  animation: trackerShake 0.32s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+.order-card.order-arriving .order-progress-fill {
+  background: linear-gradient(90deg, #b88800, #ffd700);
+  transition: none;
+}
+
+/* Floating "★ ARRIVED ★" badge shown once per delivery */
+@keyframes arrivedBadgePop {
+  from { transform: scale(0.5) translateY(4px); opacity: 0; }
+  to   { transform: scale(1)   translateY(0);   opacity: 1; }
+}
+.arrived-badge-floating {
+  font-family: 'Press Start 2P', monospace;
+  font-size: var(--fs-xs);
+  color: #ffd700;
+  text-align: center;
+  letter-spacing: 2px;
+  padding: var(--sp-1) 0 var(--sp-2);
+  text-shadow: 0 0 8px rgba(255,215,0,0.7);
+  animation: arrivedBadgePop 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+  transition: opacity 0.35s ease;
+}
+
+/* ── PACKAGE OPENING — CAMERA FLASH ──────────────────── */
+
+#screen-flash {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1100;
+}
+@keyframes cameraFlash {
+  0%   { opacity: 0.13; }
+  100% { opacity: 0; }
+}
+#screen-flash.flash { animation: cameraFlash 0.12s ease-out forwards; }
+
+/* ── RARITY BURST ─────────────────────────────────────── */
+
+#rarity-burst {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 998;
+}
+
+.burst-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2.5px solid;
+  top: 0; left: 0;
+  transform: translate(-50%, -50%);
+  animation: burstRingExpand 0.85s cubic-bezier(0.1, 0.6, 0.4, 1) forwards;
+}
+@keyframes burstRingExpand {
+  from { width: 10px;  height: 10px;  opacity: 0.9; }
+  to   { width: 340px; height: 340px; opacity: 0; }
+}
+
+.burst-ray {
+  position: absolute;
+  top: 0; left: 0;
+  width: 2px; height: 0;
+  transform-origin: 0 50%;
+  animation: burstRayExpand 0.55s ease-out forwards;
+}
+@keyframes burstRayExpand {
+  0%   { height: 0;     opacity: 1; }
+  60%  { height: 90px;  opacity: 0.8; }
+  100% { height: 100px; opacity: 0; }
+}
+
+/* Ultra-rare: full-edge gold vignette */
+.ultra-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 997;
+  box-shadow: inset 0 0 120px 40px rgba(180,140,0,0.35);
+  animation: ultraVignetteFade 2s ease-out forwards;
+}
+@keyframes ultraVignetteFade {
+  0%   { opacity: 1; }
+  65%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ── STAGGERED REVEAL CARD ENTRANCE ──────────────────── */
+
+@keyframes revealEntranceIcon {
+  from { transform: scale(0);    opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+@keyframes revealEntranceSlide {
+  from { transform: translateY(8px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+.reveal-entrance-icon  { animation: revealEntranceIcon  0.3s cubic-bezier(0.34,1.56,0.64,1) both; }
+.reveal-entrance-slide { animation: revealEntranceSlide 0.22s ease-out both; }
+
+/* ── BOOKLET UNLOCK GOLDEN GLOW ───────────────────────── */
+
+@keyframes bookletGoldGlow {
+  0%   { box-shadow: 0 0  0px 0px rgba(255,210,0,0);    border-color: var(--border); }
+  30%  { box-shadow: 0 0 14px 4px rgba(255,210,0,0.75); border-color: #ffd700; }
+  100% { box-shadow: 0 0  0px 0px rgba(255,210,0,0);    border-color: var(--border); }
+}
+
+/* ── TAB PANEL ENTRANCE ───────────────────────────────── */
+
+@keyframes tabPanelFade {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.tab-entering { animation: tabPanelFade 0.3s ease-out both; }
+
+/* ── TOAST SHIMMER ────────────────────────────────────── */
+
+.toast {
+  position: relative;
+  overflow: hidden;
+}
+.toast::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: -100%;
+  width: 60%;
+  background: linear-gradient(90deg, transparent, rgba(255,210,100,0.18), transparent);
+  animation: toastShimmer 0.55s ease-out 0.05s forwards;
+  pointer-events: none;
+}
+@keyframes toastShimmer {
+  to { left: 200%; }
+}
+
+/* ── ORDER READY LABEL SOFT PULSE ─────────────────────── */
+
+@keyframes readyLabelPulse {
+  0%, 100% { color: var(--success); }
+  50%       { color: #6bdb7a; text-shadow: 0 0 6px rgba(63,185,80,0.45); }
+}
+.order-ready-label {
+  animation: readyLabelPulse 2.2s ease-in-out infinite;
 }

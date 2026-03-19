@@ -27,10 +27,11 @@ function _itemIconEl(item, px) {
 function renderTopBar() {
   const creditsEl = document.getElementById('hud-credits');
   const newVal = state.credits;
-  if (_lastRenderedCredits !== null && newVal > _lastRenderedCredits) {
-    creditsEl.classList.remove('credits-bump');
+  if (_lastRenderedCredits !== null && newVal !== _lastRenderedCredits) {
+    const cls = newVal > _lastRenderedCredits ? 'credits-pop-up' : 'credits-pop-down';
+    creditsEl.classList.remove('credits-pop-up', 'credits-pop-down', 'credits-bump');
     void creditsEl.offsetWidth; // force reflow so animation replays
-    creditsEl.classList.add('credits-bump');
+    creditsEl.classList.add(cls);
   }
   _lastRenderedCredits = newVal;
 
@@ -139,6 +140,7 @@ function renderOrderQueue() {
     const remaining = order.ready ? 0 : Math.max(0, order.duration - elapsed);
     const div = document.createElement('div');
     div.className = 'order-card tier-' + order.tier + (order.ready ? ' ready' : '');
+    div.dataset.orderId = order.id;
     div.innerHTML = `
       <div class="order-card-top">
         <span class="order-tier-badge ${tier.cls}">${tier.name.toUpperCase()}</span>
@@ -187,8 +189,19 @@ function renderBooklet() {
   const total   = getTotalItems();
   const pct     = total > 0 ? Math.round((uniqueC / total) * 100) : 0;
 
-  document.getElementById('booklet-pct').textContent            = pct + '%';
-  document.getElementById('booklet-progress-fill').style.width  = pct + '%';
+  document.getElementById('booklet-pct').textContent = pct + '%';
+  const _bFill = document.getElementById('booklet-progress-fill');
+  const _oldW  = _bFill.style.width;
+  _bFill.style.width = pct + '%';
+  // Shimmer sweep when progress advances (new item collected)
+  if (state.lastNewItemId && _oldW !== pct + '%') {
+    setTimeout(() => {
+      _bFill.classList.remove('shimmer');
+      void _bFill.offsetWidth;
+      _bFill.classList.add('shimmer');
+    }, 620);
+    setTimeout(() => _bFill.classList.remove('shimmer'), 1250);
+  }
 
   // Update active filter button
   document.querySelectorAll('.filter-btn').forEach(btn => {

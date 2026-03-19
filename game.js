@@ -148,9 +148,18 @@ function _showReveal(item, isNew, creditsGained, dupBonus) {
   const revealEl  = document.getElementById('reveal-state');
   const revealBox = document.getElementById('reveal-box');
 
+  // Camera flash
+  const sf = document.getElementById('screen-flash');
+  if (sf) { sf.classList.remove('flash'); void sf.offsetWidth; sf.classList.add('flash'); }
+
   revealEl.style.display        = 'flex';
   revealEl.style.flexDirection  = 'column';
   revealEl.style.alignItems     = 'center';
+
+  // Reset revealPop so it replays
+  revealBox.style.animation = 'none';
+  void revealBox.offsetWidth;
+  revealBox.style.animation = '';
 
   revealBox.style.borderColor = rarityColor(item.rarity);
   revealBox.style.boxShadow   = `0 0 24px ${rarityColor(item.rarity)}55`;
@@ -177,7 +186,16 @@ function _showReveal(item, isNew, creditsGained, dupBonus) {
     dupEl.style.display = 'none';
   }
 
-  document.getElementById('reveal-credits').textContent = '+' + creditsGained + ' CREDITS';
+  // Credits count-up (0 → creditsGained over 600ms)
+  const creditsEl = document.getElementById('reveal-credits');
+  creditsEl.textContent = '+0 CREDITS';
+  const _cStart = performance.now();
+  (function _cStep(now) {
+    const t = Math.min((now - _cStart) / 600, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    creditsEl.textContent = '+' + Math.round(eased * creditsGained) + ' CREDITS';
+    if (t < 1) requestAnimationFrame(_cStep);
+  })(performance.now());
 
   // NEW badge
   const existingBadge = revealBox.querySelector('.reveal-new-badge');
@@ -204,6 +222,56 @@ function _showReveal(item, isNew, creditsGained, dupBonus) {
       background:${sColor};box-shadow:0 0 6px ${sColor};`;
     sparkles.appendChild(s);
   }
+
+  // Rarity burst
+  const burst = document.getElementById('rarity-burst');
+  if (burst) {
+    burst.innerHTML = '';
+    const burstColors = { uncommon: '#2e7a3a', rare: '#2a5fa8', ultra: '#c8a000' };
+    const bc = burstColors[item.rarity];
+    if (bc) {
+      const ringCount = item.rarity === 'ultra' ? 4 : 2;
+      const rayCount  = item.rarity === 'ultra' ? 8 : item.rarity === 'rare' ? 6 : 0;
+      for (let i = 0; i < ringCount; i++) {
+        const ring = document.createElement('div');
+        ring.className = 'burst-ring';
+        ring.style.cssText = `border-color:${bc};animation-delay:${(i * 0.1).toFixed(1)}s;`;
+        burst.appendChild(ring);
+      }
+      for (let i = 0; i < rayCount; i++) {
+        const ray = document.createElement('div');
+        ray.className = 'burst-ray';
+        const angle = (i / rayCount) * 360;
+        ray.style.cssText = `background:${bc};box-shadow:0 0 3px ${bc};transform:rotate(${angle}deg);animation-delay:${(i * 0.02).toFixed(2)}s;`;
+        burst.appendChild(ray);
+      }
+      if (item.rarity === 'ultra') {
+        const vig = document.createElement('div');
+        vig.className = 'ultra-vignette';
+        document.body.appendChild(vig);
+        setTimeout(() => vig.remove(), 2200);
+      }
+    }
+  }
+
+  // Staggered entrance: icon → name → rarity → credits
+  [
+    ['reveal-icon',    'reveal-entrance-icon',  50],
+    ['reveal-name',    'reveal-entrance-slide', 220],
+    ['reveal-rarity',  'reveal-entrance-slide', 320],
+    ['reveal-credits', 'reveal-entrance-slide', 380],
+  ].forEach(([id, cls, delay]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.animation = 'none';
+    el.style.opacity   = '0';
+    setTimeout(() => {
+      el.style.opacity   = '';
+      el.style.animation = cls === 'reveal-entrance-icon'
+        ? 'revealEntranceIcon 0.3s cubic-bezier(0.34,1.56,0.64,1) both'
+        : 'revealEntranceSlide 0.22s ease-out both';
+    }, delay);
+  });
 
   // Close button label
   document.getElementById('reveal-close-btn').textContent =
