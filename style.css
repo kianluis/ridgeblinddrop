@@ -566,13 +566,13 @@ body {
 }
 .cat-head::before { left: 0; }
 .cat-head::after  { right: 0; }
-/* eyes: two 2×2 yellow dots using box-shadow */
+/* eyes: two 2×2 dots using box-shadow */
 .cat-eyes {
   position: absolute;
   top: 3px; left: 2px;
   width: 2px; height: 2px;
-  background: #f0d020;
-  box-shadow: 6px 0 0 #f0d020;
+  background: var(--cat-eye, #f0d020);
+  box-shadow: 6px 0 0 var(--cat-eye, #f0d020);
 }
 @keyframes catBlink {
   0%, 88%, 92%, 100% { transform: scaleY(1); }

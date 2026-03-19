@@ -18,7 +18,7 @@ const WALL_THEMES = {
 const CAT_COLORS = {
   'cat-default': { main: '#c87840', shadow: '#a05e28' },
   'cat-orange':  { main: '#d46a0a', shadow: '#a84808' },
-  'cat-white':  { main: '#e8e0d0', shadow: '#c0b898' },
+  'cat-white':  { main: '#e8e0d0', shadow: '#c0b898', eye: '#1a6aaa' },
   'cat-black':  { main: '#252530', shadow: '#111118' },
   'cat-tabby':  {
     main: '#909090', shadow: '#606060',
@@ -196,6 +196,8 @@ function applyCosmetics() {
     const c = CAT_COLORS[color.cat] || { main: '#c87840', shadow: '#a05e28' };
     cat.style.setProperty('--cat-color',  c.main);
     cat.style.setProperty('--cat-shadow', c.shadow);
+    if (c.eye) cat.style.setProperty('--cat-eye', c.eye);
+    else cat.style.removeProperty('--cat-eye');
     if (c.bodyBg) {
       cat.style.setProperty('--cat-body-bg', c.bodyBg);
       cat.style.setProperty('--cat-head-bg', c.headBg || c.bodyBg);
