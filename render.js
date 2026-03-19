@@ -57,7 +57,11 @@ function renderTopBar() {
 
   // Mute button icon
   const muteBtn = document.getElementById('mute-btn');
-  if (muteBtn) muteBtn.textContent = state.soundEnabled ? '🔊' : '🔇';
+  if (muteBtn) {
+    muteBtn.textContent = state.soundEnabled ? 'SOUND ON' : 'SOUND OFF';
+    muteBtn.classList.toggle('sound-on',  state.soundEnabled);
+    muteBtn.classList.toggle('sound-off', !state.soundEnabled);
+  }
 }
 
 // ── Inline Order Panel ────────────────────────────────────
