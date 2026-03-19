@@ -1,6 +1,13 @@
 /* ═══════════════════════════════════════════════════════
-   RIDGE MYSTERY DROP — style.css  (fluid redesign)
+   RIDGE BLIND DROP — style.css  (fluid redesign)
    ═══════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: 'RidgeBrand';
+  src: url('Ridge Headline Bold.otf') format('opentype');
+  font-weight: bold;
+  font-display: swap;
+}
 
 :root {
   --bg:         #ede8df;   /* warm sand — page background */
@@ -126,10 +133,9 @@ body {
   pointer-events: none;
 }
 
-/* Ridge wordmark — swap font-family here once OTF is in the repo */
 .ridge-brand {
-  font-family: 'Barlow', 'Arial Black', sans-serif;
-  font-weight: 800;
+  font-family: 'RidgeBrand', 'Arial Black', sans-serif;
+  font-weight: bold;
   font-size: clamp(11px, 1.5vw, 20px);
   letter-spacing: 4px;
   color: #1a0800;
