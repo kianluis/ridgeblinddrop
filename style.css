@@ -1124,11 +1124,6 @@ body {
   align-items: center;
   justify-content: center;
 }
-.carrier-logo {
-  width: clamp(28px, 3.2vw, 40px);
-  height: auto;
-  display: block;
-}
 .carrier-speed {
   font-size: var(--fs-xs);
   color: var(--amber);
@@ -2126,6 +2121,222 @@ body {
   width: .3em; height: .5em;
   background: #22dd44;
   border-radius: 0 0 2px 2px;
+}
+
+/* ── Tier card CSS icons ────────────────────────────────── */
+
+/* Standard — cardboard box */
+.css-tier-standard {
+  display: inline-block;
+  width: .88em; height: .78em;
+  background: #c8922a;
+  border: 2px solid #8a5e10;
+  position: relative;
+  vertical-align: middle;
+}
+.css-tier-standard::before { /* tape strip */
+  content: '';
+  position: absolute;
+  left: -1px; right: -1px;
+  top: calc(50% - .09em); height: .18em;
+  background: #f0d060;
+  border-top: 1px solid #b09020;
+  border-bottom: 1px solid #b09020;
+}
+.css-tier-standard::after { /* lid */
+  content: '';
+  position: absolute;
+  left: -2px; right: -2px; bottom: 100%;
+  height: .22em;
+  background: #d8a03c;
+  border: 2px solid #8a5e10;
+  border-bottom: 1px solid #9a7020;
+}
+
+/* Express — delivery truck (side profile) */
+.css-tier-express {
+  display: inline-block;
+  width: 1.2em; height: .88em;
+  position: relative;
+  vertical-align: middle;
+}
+.css-tier-express::before { /* truck body: cargo + stepped cab */
+  content: '';
+  position: absolute;
+  inset: 0 0 .2em 0;
+  background: linear-gradient(to right, #2a6bc4 60%, #1e52a0 60%);
+  clip-path: polygon(
+    0% 15%,  60% 15%,
+    60% 0%,  100% 0%,
+    100% 100%, 0% 100%
+  );
+}
+.css-tier-express::after { /* two wheels */
+  content: '';
+  position: absolute;
+  bottom: 0; left: .14em;
+  width: .18em; height: .18em;
+  background: #1a1a1a;
+  border-radius: 50%;
+  box-shadow: .6em 0 0 0 #1a1a1a;
+}
+
+/* Priority — airplane (top-down view) */
+.css-tier-priority {
+  display: inline-block;
+  width: 1em; height: .95em;
+  position: relative;
+  vertical-align: middle;
+}
+.css-tier-priority::before { /* swept wings */
+  content: '';
+  position: absolute;
+  top: 28%; left: 0; right: 0;
+  height: 22%;
+  background: #9ab8d8;
+  clip-path: polygon(0% 20%, 48% 0%, 52% 0%, 100% 20%, 100% 80%, 52% 100%, 48% 100%, 0% 80%);
+}
+.css-tier-priority::after { /* fuselage (drawn over wings) */
+  content: '';
+  position: absolute;
+  top: 4%; bottom: 8%;
+  left: 50%; transform: translateX(-50%);
+  width: 20%;
+  background: #d0e4f8;
+  border-radius: 50%;
+}
+
+/* Overnight — rocket */
+.css-tier-overnight {
+  display: inline-block;
+  width: .62em; height: 1.05em;
+  background: linear-gradient(to bottom, #e84040 0% 22%, #d0d0f0 22%);
+  border: 2px solid #9090c0;
+  border-radius: 50% 50% 3px 3px / 18% 18% 3px 3px;
+  position: relative;
+  vertical-align: middle;
+}
+.css-tier-overnight::before { /* swept fins (W shape) */
+  content: '';
+  position: absolute;
+  bottom: 8%; left: 50%;
+  transform: translateX(-50%);
+  width: 130%; height: 28%;
+  background: #b0b0e0;
+  clip-path: polygon(0% 100%, 18% 0%, 50% 40%, 82% 0%, 100% 100%);
+}
+.css-tier-overnight::after { /* flame */
+  content: '';
+  position: absolute;
+  top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border-left: .12em solid transparent;
+  border-right: .12em solid transparent;
+  border-top: .22em solid #f5a800;
+  margin-top: -1px;
+}
+
+/* ── Carrier CSS icons ──────────────────────────────────── */
+.carrier-tile-icon { font-size: clamp(28px, 3.2vw, 38px); }
+
+.carrier-tile-name {
+  font-size: 5px;
+  font-family: 'Press Start 2P', monospace;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+  margin: 1px 0;
+}
+
+/* USPS — blue envelope with red flap */
+.css-carrier-usps {
+  display: inline-block;
+  width: 1em; height: .68em;
+  background: #004B87;
+  border: 2px solid #003a68;
+  border-radius: 2px;
+  position: relative;
+  vertical-align: middle;
+  overflow: hidden;
+}
+.css-carrier-usps::before { /* red inverted-V flap */
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 58%;
+  background: #DA291C;
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+}
+.css-carrier-usps::after { /* fold line */
+  content: '';
+  position: absolute;
+  bottom: 22%; left: 8%; right: 8%;
+  height: 1px;
+  background: rgba(255,255,255,0.2);
+}
+
+/* UPS — brown shield */
+.css-carrier-ups {
+  display: inline-block;
+  width: .8em; height: 1em;
+  background: linear-gradient(160deg, #5a3018, #351C15);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 58%, 50% 100%, 0% 58%);
+  position: relative;
+  vertical-align: middle;
+}
+.css-carrier-ups::before { /* gold bar */
+  content: '';
+  position: absolute;
+  top: 28%; left: 18%; right: 18%;
+  height: .1em;
+  background: #FFB500;
+  border-radius: 1px;
+}
+.css-carrier-ups::after { /* second gold bar */
+  content: '';
+  position: absolute;
+  top: 43%; left: 18%; right: 18%;
+  height: .1em;
+  background: #FFB500;
+  opacity: 0.65;
+  border-radius: 1px;
+}
+
+/* FedEx — purple left / orange right */
+.css-carrier-fedex {
+  display: inline-block;
+  width: 1.1em; height: .55em;
+  background: #4D148C;
+  border: 2px solid #3a0e6a;
+  border-radius: 3px;
+  position: relative;
+  vertical-align: middle;
+  overflow: hidden;
+}
+.css-carrier-fedex::before { /* orange right half */
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 42%;
+  background: #FF6600;
+}
+.css-carrier-fedex::after { /* white right-arrow at join */
+  content: '';
+  position: absolute;
+  top: 50%; right: 14%;
+  transform: translateY(-50%);
+  border-top: .1em solid transparent;
+  border-bottom: .1em solid transparent;
+  border-left: .13em solid #fff;
+}
+
+/* DHL — red top / yellow bottom */
+.css-carrier-dhl {
+  display: inline-block;
+  width: 1em; height: .55em;
+  background: linear-gradient(to bottom, #D40511 0% 52%, #FFCC00 52% 100%);
+  border: 2px solid #a00008;
+  border-radius: 2px;
+  vertical-align: middle;
 }
 
 /* Each icon: float + scale + unique color glow */

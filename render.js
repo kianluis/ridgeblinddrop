@@ -66,12 +66,11 @@ function renderTopBar() {
 
 // ── Inline Order Panel ────────────────────────────────────
 
-const TIER_ICONS    = { standard:'📦', express:'🚚', priority:'✈️', overnight:'🚀' };
-const CARRIER_LOGOS = {
-  usps:  'https://cdn.simpleicons.org/usps/004B87',
-  ups:   'https://cdn.simpleicons.org/ups/351C15',
-  fedex: 'https://cdn.simpleicons.org/fedex/4D148C',
-  dhl:   'https://cdn.simpleicons.org/dhl/D40511',
+const TIER_ICONS = {
+  standard: '<span class="css-tier-standard"></span>',
+  express:  '<span class="css-tier-express"></span>',
+  priority: '<span class="css-tier-priority"></span>',
+  overnight:'<span class="css-tier-overnight"></span>',
 };
 
 function renderOrderPanel() {
@@ -87,7 +86,7 @@ function renderOrderPanel() {
     div.className = 'tier-card ' + tier.cls + (canAfford ? '' : ' cant-afford');
     div.innerHTML = `
       <div class="tier-card-name">${tier.name.toUpperCase()}</div>
-      <div class="tier-card-icon">${TIER_ICONS[tier.id] || '📦'}</div>
+      <div class="tier-card-icon">${TIER_ICONS[tier.id] || TIER_ICONS.standard}</div>
       <div class="tier-card-time">○ ${formatTime(shipTime)}<br>via ${carrier.name}</div>
       ${tier.rareboost > 0
         ? `<div class="tier-card-boost badge-${tier.id === 'express' ? 'uncommon' : tier.id === 'priority' ? 'rare' : 'ultra'}">
@@ -119,7 +118,8 @@ function renderOrderPanel() {
     }
     div.innerHTML = `
       ${isActive ? '<span class="carrier-active-badge">ACTIVE</span>' : ''}
-      <div class="carrier-tile-icon"><img src="${CARRIER_LOGOS[carrier.id]}" class="carrier-logo" alt="${carrier.name}"></div>
+      <div class="carrier-tile-icon"><span class="css-carrier-${carrier.id}"></span></div>
+      <div class="carrier-tile-name">${carrier.name}</div>
       <div class="carrier-speed">${carrier.mult}×</div>
       ${!isActive && !owned ? `<div class="carrier-price-tag">${carrier.cost} cr</div>` : ''}
       ${owned && !isActive  ? `<div class="carrier-price-tag use-tag">USE</div>` : ''}
