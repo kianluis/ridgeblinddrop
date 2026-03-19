@@ -368,7 +368,7 @@ function updateDayNight() {
   }
 
   // Don't override a store wall theme
-  const wallThemes = ['wall-gunmetal','wall-navy','wall-olive','wall-orange','wall-lime'];
+  const wallThemes = ['wall-gunmetal','wall-navy','wall-olive','wall-orange','wall-lime','wall-iridescent'];
   if (wallThemes.some(c => scene.classList.contains(c))) return;
 
   scene.style.background = `linear-gradient(180deg, ${skyTop} 60%, ${skyBot} 100%)`;

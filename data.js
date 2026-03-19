@@ -143,6 +143,7 @@ const STORE_ITEMS = [
   { id:'wall-olive',         cat:'wall',    name:'Matte Olive',    desc:'Tactical olive drab',      cost: 175 },
   { id:'wall-orange',        cat:'wall',    name:'Basecamp Orange',desc:'Bold warehouse warmth',    cost: 200 },
   { id:'wall-lime',          cat:'wall',    name:'Hyper Lime',     desc:'High-vis lime energy',     cost: 200 },
+  { id:'wall-iridescent',    cat:'wall',    name:'Iridescent',     desc:'Shifting violet shimmer',  cost: 200 },
   // Cat colors — cheapest → most expensive
   { id:'cat-orange',         cat:'cat',     name:'Orange',         desc:'Classic ginger coat',      cost:  50 },
   { id:'cat-white',          cat:'cat',     name:'White',          desc:'Pure snow coat',           cost:  60 },

@@ -584,7 +584,8 @@ body {
 #warehouse-scene.wall-navy     { background: linear-gradient(180deg, #2a4878 0%, #1a3460 55%, #0e2042 100%); }
 #warehouse-scene.wall-olive    { background: linear-gradient(180deg, #586432 0%, #424c24 55%, #2c3418 100%); }
 #warehouse-scene.wall-orange   { background: linear-gradient(180deg, #c05a22 0%, #9a4014 55%, #6a2808 100%); }
-#warehouse-scene.wall-lime     { background: linear-gradient(180deg, #8ec018 0%, #6a9a0e 55%, #486c06 100%); }
+#warehouse-scene.wall-lime       { background: linear-gradient(180deg, #8ec018 0%, #6a9a0e 55%, #486c06 100%); }
+#warehouse-scene.wall-iridescent { background: linear-gradient(180deg, #7a3a9a 0%, #5a2882 55%, #3a186a 100%); }
 
 /* ── Worker Daniel (store unlock) ────────────────────────── */
 #worker-daniel {

@@ -10,7 +10,8 @@ const WALL_THEMES = {
   'wall-navy':     'linear-gradient(180deg, #2a4878 0%, #1a3460 55%, #0e2042 100%)',
   'wall-olive':    'linear-gradient(180deg, #586432 0%, #424c24 55%, #2c3418 100%)',
   'wall-orange':   'linear-gradient(180deg, #c05a22 0%, #9a4014 55%, #6a2808 100%)',
-  'wall-lime':     'linear-gradient(180deg, #8ec018 0%, #6a9a0e 55%, #486c06 100%)',
+  'wall-lime':        'linear-gradient(180deg, #8ec018 0%, #6a9a0e 55%, #486c06 100%)',
+  'wall-iridescent':  'linear-gradient(180deg, #7a3a9a 0%, #5a2882 55%, #3a186a 100%)',
 };
 
 const CAT_COLORS = {
