@@ -2006,7 +2006,7 @@ body {
 /* Subtle float for card icons */
 @keyframes guideIconFloat {
   0%, 100% { transform: translateY(0)   scale(1); }
-  50%       { transform: translateY(-9px) scale(1.18); }
+  50%       { transform: translateY(-5px) scale(1.08); }
 }
 /* Per-card glow colours: gold, amber, blue, green, purple */
 @keyframes guideGlow1 {
