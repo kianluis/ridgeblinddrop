@@ -459,19 +459,85 @@ body {
 @keyframes conveyorSlide { from{left:104%} to{left:-24px} }
 
 .stack-box { position: absolute; border: 2px solid; }
+.floor-box  { position: absolute; border: 2px solid; }
 
+/* ── Sean the pixel warehouse worker ── */
 #worker {
-  position: absolute; bottom: 46px; left: 18px;
+  position: absolute;
+  bottom: 46px;
   width: 18px; height: 36px;
-  animation: workerBob 0.8s ease-in-out infinite;
+  z-index: 3;
+  animation: seanPatrol 10s linear infinite;
 }
-@keyframes workerBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
-.worker-head { position:absolute; top:0; left:5px; width:8px; height:8px; background:#c8a882; box-shadow:inset -2px -2px 0 #a07850; }
+
+/* walk left→right→left, flip with scaleX for direction */
+@keyframes seanPatrol {
+  0%   { left: 7%;  transform: scaleX(1);  }   /* at supply pile, face right */
+  5%   { left: 7%;  transform: scaleX(1);  }   /* pause: pick up box */
+  44%  { left: 57%; transform: scaleX(1);  }   /* arrived at delivery zone */
+  49%  { left: 57%; transform: scaleX(-1); }   /* turn around */
+  54%  { left: 57%; transform: scaleX(-1); }   /* pause: set down box */
+  93%  { left: 7%;  transform: scaleX(-1); }   /* back at supply pile */
+  98%  { left: 7%;  transform: scaleX(-1); }   /* pause */
+  100% { left: 7%;  transform: scaleX(1);  }   /* turn around */
+}
+
+/* name tag floats above head */
+.worker-nametag {
+  position: absolute;
+  top: -22px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 4px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  color: #fff;
+  background: #2255aa;
+  border: 1px solid #1a3d7a;
+  padding: 1px 3px;
+  pointer-events: none;
+}
+
+/* box held above head */
+.worker-carry-box {
+  position: absolute;
+  top: -13px; left: -2px;
+  width: 22px; height: 12px;
+  background: #d4a060;
+  border: 2px solid var(--amber);
+  box-shadow: inset -2px -2px 0 #a07030;
+  animation: carryBob 0.5s steps(2, end) infinite;
+}
+.worker-carry-box::before {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 5px; height: 5px;
+  background: var(--amber); opacity: 0.5;
+}
+@keyframes carryBob {
+  0%, 100% { transform: translateY(0);   }
+  50%       { transform: translateY(-1px); }
+}
+
+/* pixel body parts — arms angle upward to hold the box */
+.worker-head { position:absolute; top:0;  left:5px;  width:8px;  height:8px;  background:#c8a882; box-shadow:inset -2px -2px 0 #a07850; }
 .worker-body { position:absolute; top:8px; left:2px; width:14px; height:16px; background:#2255aa; box-shadow:inset -2px -2px 0 #1a3d7a; }
-.worker-legs { position:absolute; top:24px; left:2px; width:14px; height:10px; background:#5a4030; }
-.worker-arm-l,.worker-arm-r { position:absolute; top:10px; width:4px; height:12px; background:#2255aa; }
-.worker-arm-l { left:-2px; }
-.worker-arm-r { right:-2px; }
+.worker-arm-l,.worker-arm-r { position:absolute; top:6px; width:4px; height:12px; background:#2255aa; transform-origin: top center; }
+.worker-arm-l { left:-2px;  transform: rotate(-45deg); }
+.worker-arm-r { right:-2px; transform: rotate(45deg);  }
+
+/* two-legged pixel walk */
+.worker-legs { position:absolute; top:24px; left:2px; width:14px; height:10px; }
+.leg-l, .leg-r {
+  position: absolute; bottom: 0;
+  width: 6px; height: 10px;
+  background: #5a4030;
+  transform-origin: top center;
+}
+.leg-l { left: 1px;  animation: legSwingL 0.35s steps(2, end) infinite; }
+.leg-r { right: 1px; animation: legSwingR 0.35s steps(2, end) infinite; }
+@keyframes legSwingL { 0%,100%{ transform: rotate(-18deg); } 50%{ transform: rotate(18deg); } }
+@keyframes legSwingR { 0%,100%{ transform: rotate(18deg);  } 50%{ transform: rotate(-18deg); } }
 
 .wh-sign {
   position: absolute; top: var(--sp-2); right: var(--sp-2);
