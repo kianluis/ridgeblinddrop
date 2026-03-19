@@ -1896,22 +1896,41 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--sp-1);
-  transition: border-color 0.15s;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
-.guide-card:hover { border-color: var(--border-hi); }
+.guide-card:hover {
+  border-color: var(--amber);
+  box-shadow: 0 0 18px rgba(240,165,0,0.15);
+  transform: translateY(-3px);
+}
 
 .guide-card-icon {
-  font-size: 1.9em;
+  font-size: 2.2em;
   line-height: 1;
   margin-bottom: var(--sp-2);
   image-rendering: auto;
-  animation: guideIconFloat 4s ease-in-out infinite;
+  display: inline-block;
 }
-.guide-card:nth-child(2) .guide-card-icon { animation-delay: 0.6s; }
-.guide-card:nth-child(3) .guide-card-icon { animation-delay: 1.2s; }
-.guide-card:nth-child(4) .guide-card-icon { animation-delay: 0.3s; }
-.guide-card:nth-child(5) .guide-card-icon { animation-delay: 0.9s; }
-.guide-card:nth-child(6) .guide-card-icon { animation-delay: 1.5s; }
+
+/* Each icon: float + scale + unique color glow */
+.guide-card:nth-child(1) .guide-card-icon {
+  animation: guideIconFloat 3.4s ease-in-out infinite, guideGlow1 3.4s ease-in-out infinite;
+}
+.guide-card:nth-child(2) .guide-card-icon {
+  animation: guideIconFloat 3.4s ease-in-out 0.6s infinite, guideGlow2 3.4s ease-in-out 0.6s infinite;
+}
+.guide-card:nth-child(3) .guide-card-icon {
+  animation: guideIconFloat 3.4s ease-in-out 1.2s infinite, guideGlow3 3.4s ease-in-out 1.2s infinite;
+}
+.guide-card:nth-child(4) .guide-card-icon {
+  animation: guideIconFloat 3.4s ease-in-out 0.3s infinite, guideGlow4 3.4s ease-in-out 0.3s infinite;
+}
+.guide-card:nth-child(5) .guide-card-icon {
+  animation: guideIconFloat 3.4s ease-in-out 0.9s infinite, guideGlow5 3.4s ease-in-out 0.9s infinite;
+}
+.guide-card:nth-child(6) .guide-card-icon {
+  animation: guideIconFloat 3.4s ease-in-out 1.5s infinite, guideGlow1 3.4s ease-in-out 1.5s infinite;
+}
 .guide-card-head {
   font-size: var(--fs-sm);
   color: var(--amber);
@@ -1986,8 +2005,29 @@ body {
 }
 /* Subtle float for card icons */
 @keyframes guideIconFloat {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-3px); }
+  0%, 100% { transform: translateY(0)   scale(1); }
+  50%       { transform: translateY(-9px) scale(1.18); }
+}
+/* Per-card glow colours: gold, amber, blue, green, purple */
+@keyframes guideGlow1 {
+  0%, 100% { filter: drop-shadow(0 0 0px rgba(240,180,0,0)); }
+  50%       { filter: drop-shadow(0 0 8px rgba(240,180,0,0.95)) drop-shadow(0 0 20px rgba(240,180,0,0.4)); }
+}
+@keyframes guideGlow2 {
+  0%, 100% { filter: drop-shadow(0 0 0px rgba(200,130,40,0)); }
+  50%       { filter: drop-shadow(0 0 8px rgba(200,130,40,0.95)) drop-shadow(0 0 20px rgba(200,130,40,0.4)); }
+}
+@keyframes guideGlow3 {
+  0%, 100% { filter: drop-shadow(0 0 0px rgba(60,110,210,0)); }
+  50%       { filter: drop-shadow(0 0 8px rgba(60,110,210,0.95)) drop-shadow(0 0 20px rgba(60,110,210,0.4)); }
+}
+@keyframes guideGlow4 {
+  0%, 100% { filter: drop-shadow(0 0 0px rgba(46,122,58,0)); }
+  50%       { filter: drop-shadow(0 0 8px rgba(46,122,58,0.95)) drop-shadow(0 0 20px rgba(46,122,58,0.4)); }
+}
+@keyframes guideGlow5 {
+  0%, 100% { filter: drop-shadow(0 0 0px rgba(120,60,200,0)); }
+  50%       { filter: drop-shadow(0 0 8px rgba(120,60,200,0.95)) drop-shadow(0 0 20px rgba(120,60,200,0.4)); }
 }
 /* Start button breathing glow */
 @keyframes guideStartPulse {
