@@ -60,6 +60,7 @@ const SAVE_KEY   = 'ridgemysterydrop_v2_' + SESSION_ID;
 // ── Persistence ──────────────────────────────────────────
 
 function saveState() {
+  if (window._resetting) return;
   try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch(e){}
 }
 
