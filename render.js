@@ -82,14 +82,9 @@ function renderOrderPanel() {
     const shipTime  = getShipTime(tier);
     const canAfford = state.credits >= tier.cost;
     const carrier   = getCurrentCarrier();
-    const isLocked  = state.packagesOpened < tier.unlockAt;
     const div = document.createElement('div');
-    div.className = 'tier-card ' + tier.cls + (isLocked ? ' locked' : canAfford ? '' : ' cant-afford');
-    div.innerHTML = isLocked ? `
-      <div class="tier-card-name">${tier.name.toUpperCase()}</div>
-      <div class="tier-card-icon">🔒</div>
-      <div class="tier-card-unlock">Open ${tier.unlockAt} packages to unlock</div>
-    ` : `
+    div.className = 'tier-card ' + tier.cls + (canAfford ? '' : ' cant-afford');
+    div.innerHTML = `
       <div class="tier-card-name">${tier.name.toUpperCase()}</div>
       <div class="tier-card-icon">${TIER_ICONS[tier.id] || TIER_ICONS.standard}</div>
       <div class="tier-card-time">○ ${formatTime(shipTime)}<br>via ${carrier.name}</div>
