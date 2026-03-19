@@ -2188,12 +2188,14 @@ body {
   position: relative;
   vertical-align: middle;
 }
-.css-tier-priority::before { /* swept wing — drawn first (behind fuselage) */
+.css-tier-priority::before { /* swept wing spans both sides of fuselage — drawn behind */
   content: '';
   position: absolute;
   inset: 0;
   background: #7aaad8;
-  clip-path: polygon(35% 62%, 75% 62%, 50% 100%, 12% 100%);
+  /* spans 10%→84% vertically; fuselage (32%–68%) hides the middle,
+     leaving a thin far-wing sliver above and the main wing below */
+  clip-path: polygon(28% 10%, 72% 18%, 68% 84%, 6% 84%);
 }
 .css-tier-priority::after { /* fuselage + swept vertical tail fin — drawn on top */
   content: '';
