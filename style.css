@@ -900,15 +900,15 @@ body {
   letter-spacing: 1px;
 }
 .store-tile-desc {
-  font-size: 5px;
+  font-size: var(--fs-xs);
   color: var(--text-dim, #806040);
   letter-spacing: 0.5px;
   line-height: 1.5;
 }
 .btn-store {
   margin-top: var(--sp-1);
-  font-size: 5px;
-  padding: 3px 6px;
+  font-size: 7px;
+  padding: 4px 8px;
   letter-spacing: 1px;
   cursor: pointer;
   border: 1px solid;
@@ -916,7 +916,7 @@ body {
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 .btn-store-buy {
-  background: rgba(30,15,0,0.45);
+  background: rgba(180,100,0,0.25);
   border-color: var(--amber);
   color: var(--amber);
 }
@@ -925,30 +925,30 @@ body {
   color: var(--bg);
 }
 .btn-store-buy.cant-afford, .btn-store-buy:disabled {
-  border-color: #604020;
-  color: #604020;
+  border-color: #8a7050;
+  color: #9a8060;
   cursor: not-allowed;
-  background: transparent;
+  background: rgba(0,0,0,0.2);
 }
 .btn-store-equip {
-  background: rgba(30,15,0,0.45);
-  border-color: #6080a0;
-  color: #8ab0d0;
+  background: rgba(20,50,90,0.4);
+  border-color: #5090c0;
+  color: #a8d4f8;
 }
 .btn-store-equip:hover {
-  background: #406080;
-  color: #fff;
+  background: #2060a0;
+  color: #ffffff;
 }
 .btn-store-equipped {
-  background: rgba(0,60,0,0.25);
-  border-color: #40a040;
-  color: #70d070;
+  background: rgba(0,70,0,0.35);
+  border-color: #50b850;
+  color: #88e088;
   cursor: default;
 }
 .btn-store-equipped:not(:disabled):hover {
-  background: rgba(0,80,0,0.35);
-  border-color: #60c060;
-  color: #90e090;
+  background: rgba(0,100,0,0.45);
+  border-color: #70d070;
+  color: #aafaaa;
   cursor: pointer;
 }
 
