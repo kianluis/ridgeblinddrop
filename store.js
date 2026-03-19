@@ -105,6 +105,7 @@ function storePreview(item) {
       'prop-succulent': '▲', 'prop-plant': '✿',
       'prop-painting': '▣',  'prop-desk': '▬', 'prop-chair': '⊓',
       'prop-storage': '▤', 'prop-window': '▢',
+      'prop-clock': '⊙', 'prop-board': '⊞',
     };
     return `<div class="preview-icon">${icons[item.id] || '◆'}</div>`;
   }
@@ -190,7 +191,7 @@ function applyCosmetics() {
   }
 
   // Props — visible when owned
-  ['prop-succulent', 'prop-plant', 'prop-painting', 'prop-desk', 'prop-chair', 'prop-storage', 'prop-window'].forEach(id => {
+  ['prop-succulent', 'prop-plant', 'prop-painting', 'prop-desk', 'prop-chair', 'prop-storage', 'prop-window', 'prop-clock', 'prop-board'].forEach(id => {
     const el = document.getElementById('wh-' + id);
     if (el) el.style.display = owned.includes(id) ? '' : 'none';
   });
