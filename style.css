@@ -445,7 +445,7 @@ body {
 #worker {
   position: absolute;
   bottom: 30px;
-  width: 18px; height: 36px;
+  width: 18px; height: 42px;
   z-index: 3;
   animation: seanPatrol 10s linear infinite;
 }
@@ -471,8 +471,8 @@ body {
   letter-spacing: 1px;
   white-space: nowrap;
   color: #fff;
-  background: #2255aa;
-  border: 1px solid #1a3d7a;
+  background: #cc2222;
+  border: 1px solid #991818;
   padding: 1px 3px;
   pointer-events: none;
 }
@@ -501,13 +501,13 @@ body {
 
 /* pixel body parts — arms angle upward to hold the box */
 .worker-head { position:absolute; top:0;  left:5px;  width:8px;  height:8px;  background:#c8a882; box-shadow:inset -2px -2px 0 #a07850; }
-.worker-body { position:absolute; top:8px; left:2px; width:14px; height:16px; background:#2255aa; box-shadow:inset -2px -2px 0 #1a3d7a; }
-.worker-arm-l,.worker-arm-r { position:absolute; top:6px; width:4px; height:12px; background:#2255aa; transform-origin: top center; }
+.worker-body { position:absolute; top:8px; left:2px; width:14px; height:22px; background:#cc2222; box-shadow:inset -2px -2px 0 #991818; }
+.worker-arm-l,.worker-arm-r { position:absolute; top:6px; width:4px; height:12px; background:#cc2222; transform-origin: top center; }
 .worker-arm-l { left:-2px;  transform: rotate(-45deg); }
 .worker-arm-r { right:-2px; transform: rotate(45deg);  }
 
 /* two-legged pixel walk */
-.worker-legs { position:absolute; top:24px; left:2px; width:14px; height:10px; }
+.worker-legs { position:absolute; top:30px; left:2px; width:14px; height:10px; }
 .leg-l, .leg-r {
   position: absolute; bottom: 0;
   width: 6px; height: 10px;
