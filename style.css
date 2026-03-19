@@ -735,13 +735,89 @@ body {
 }
 .item-detail-close:hover { color: var(--text); }
 #item-detail-icon-wrap {
-  width: 64px; height: 64px;
+  width: 100px; height: 100px;
   display: flex; align-items: center; justify-content: center;
 }
 #item-detail-count {
   font-size: var(--fs-xs);
   color: var(--text-dim);
   margin-top: 4px;
+}
+
+/* Rarity entrance animations for item detail modal */
+@keyframes detailEnter {
+  from { opacity:0; transform: scale(0.88) translateY(12px); }
+  to   { opacity:1; transform: scale(1)    translateY(0); }
+}
+@keyframes detailGlowUncommon {
+  0%,100% { box-shadow: 0 0 16px #2e7a3a66; }
+  50%     { box-shadow: 0 0 32px #2e7a3aaa; }
+}
+@keyframes detailGlowRare {
+  0%,100% { box-shadow: 0 0 20px #2a5fa866; }
+  50%     { box-shadow: 0 0 42px #2a5fa8bb; }
+}
+@keyframes detailBorderUltra {
+  0%   { border-color: #c8a000; box-shadow: 0 0 32px #c8a00088; }
+  25%  { border-color: #a834b8; box-shadow: 0 0 40px #a834b888; }
+  50%  { border-color: #2a5fa8; box-shadow: 0 0 40px #2a5fa888; }
+  75%  { border-color: #2e7a3a; box-shadow: 0 0 40px #2e7a3a88; }
+  100% { border-color: #c8a000; box-shadow: 0 0 32px #c8a00088; }
+}
+@keyframes detailIconBounce {
+  0%   { transform: scale(0) rotate(-8deg); opacity:0; }
+  60%  { transform: scale(1.15) rotate(3deg); opacity:1; }
+  80%  { transform: scale(0.95) rotate(-1deg); }
+  100% { transform: scale(1) rotate(0); opacity:1; }
+}
+#item-detail-box {
+  animation: detailEnter 0.28s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+#item-detail-box.detail-rarity-uncommon {
+  animation: detailEnter 0.28s cubic-bezier(0.34,1.56,0.64,1) both,
+             detailGlowUncommon 2s ease-in-out 0.28s infinite;
+}
+#item-detail-box.detail-rarity-rare {
+  animation: detailEnter 0.28s cubic-bezier(0.34,1.56,0.64,1) both,
+             detailGlowRare 1.6s ease-in-out 0.28s infinite;
+}
+#item-detail-box.detail-rarity-ultra {
+  animation: detailEnter 0.28s cubic-bezier(0.34,1.56,0.64,1) both,
+             detailBorderUltra 2.4s linear 0.28s infinite;
+}
+#item-detail-icon-wrap img,
+#item-detail-icon-wrap > div {
+  animation: detailIconBounce 0.45s cubic-bezier(0.34,1.56,0.64,1) 0.1s both;
+}
+.detail-sparkle-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.detail-sparkle {
+  animation-duration: 0.7s !important;
+  animation-iteration-count: 1 !important;
+}
+
+/* Booklet card icon sizing */
+.booklet-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.booklet-mystery-icon {
+  background: var(--border);
+  border-radius: 6px;
+  position: relative;
+}
+.booklet-mystery-icon::after {
+  content: '?';
+  font-family: var(--font);
+  font-size: 28px;
+  color: var(--text-dim);
+  position: absolute;
 }
 
 /* ── INLINE ORDER PANEL ──────────────────────────────────── */
