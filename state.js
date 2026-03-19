@@ -7,8 +7,8 @@ let state = {
   credits: 150,
   packagesOpened: 0,
   totalCreditsEarned: 150,
-  carrier: 'budget',
-  carriersOwned: ['budget'],
+  carrier: 'usps',
+  carriersOwned: ['usps'],
   collection: {},        // id -> count
   orders: [],            // { id, tier, startTime, duration, ready }
   pullHistory: [],       // { id, name, rarity }

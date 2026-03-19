@@ -931,9 +931,13 @@ body {
 }
 .carrier-tile.cant-afford { opacity: 0.4; cursor: not-allowed; }
 .carrier-tile-icon {
-  font-size: clamp(20px, 2.8vw, 30px);
-  line-height: 1;
-  image-rendering: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.carrier-logo {
+  width: clamp(28px, 3.2vw, 40px);
+  height: auto;
   display: block;
 }
 .carrier-speed {
