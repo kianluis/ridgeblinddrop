@@ -97,6 +97,20 @@ function openPackage(orderId) {
   if (item.rarity === 'ultra') state.firstUltra = true;
   state.pullHistory.push({ id: item.id, name: item.name, rarity: item.rarity });
 
+  // Free common box bonus for rare or ultra pulls
+  if (item.rarity === 'rare' || item.rarity === 'ultra') {
+    const standardTier = PACKAGE_TIERS.find(t => t.id === 'standard');
+    state.orders.push({
+      id: state.nextOrderId++,
+      tier: 'standard',
+      startTime: Date.now(),
+      duration: 0,
+      ready: true,
+      free: true,
+    });
+    setTimeout(() => showToast('🎁 FREE BOX!', 'Lucky pull bonus — a free Common box is waiting!'), 2200);
+  }
+
   saveState();
   checkMilestones();
   renderAll();
