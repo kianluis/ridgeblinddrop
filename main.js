@@ -150,7 +150,10 @@ let _dayNightCounter = 0;
 const GUIDE_KEY = 'ridgeMysteryGuideShown_' + SESSION_ID;
 
 function openGuide() {
-  document.getElementById('guide-overlay').classList.remove('hidden');
+  const overlay = document.getElementById('guide-overlay');
+  overlay.classList.remove('hidden', 'guide-active');
+  void overlay.offsetWidth; // reflow so animations replay
+  overlay.classList.add('guide-active');
 }
 
 function closeGuide() {
