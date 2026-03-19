@@ -10,9 +10,20 @@ function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach((btn, i) => {
     btn.classList.toggle('active', tabs[i] === tab);
   });
-  document.getElementById('game-tab').style.display       = tab === 'game'       ? 'block' : 'none';
-  document.getElementById('booklet-panel').style.display  = tab === 'booklet'    ? 'block' : 'none';
+  document.getElementById('game-tab').style.display         = tab === 'game'       ? 'block' : 'none';
+  document.getElementById('booklet-panel').style.display    = tab === 'booklet'    ? 'block' : 'none';
   document.getElementById('milestones-panel').style.display = tab === 'milestones' ? 'block' : 'none';
+
+  // Fade-in entrance for non-game tabs
+  if (tab !== 'game') {
+    const panelId = tab === 'booklet' ? 'booklet-panel' : 'milestones-panel';
+    const panelEl = document.getElementById(panelId);
+    if (panelEl) {
+      panelEl.classList.remove('tab-entering');
+      void panelEl.offsetWidth;
+      panelEl.classList.add('tab-entering');
+    }
+  }
 
   if (tab === 'booklet')    renderBooklet();
   if (tab === 'milestones') renderMilestones();
@@ -54,6 +65,7 @@ function initStars() {
 // ── Game loop (runs every 500 ms) ─────────────────────────
 
 let _prevReadyCount = 0;
+const _animatedReadyOrders = new Set();
 
 function gameTick() {
   const now = Date.now();
@@ -61,11 +73,13 @@ function gameTick() {
   // Check for newly-arrived shipments
   let changed = false;
   let newlyReady = 0;
+  const newlyReadyIds = [];
   state.orders.forEach(order => {
     if (!order.ready && now >= order.startTime + order.duration * 1000) {
       order.ready = true;
       changed     = true;
       newlyReady++;
+      newlyReadyIds.push(order.id);
     }
   });
 
@@ -92,6 +106,37 @@ function gameTick() {
 
   renderOrderQueue();
   renderTopBar();
+
+  // Arriving animation sequence — one-shot per order
+  if (newlyReadyIds.length > 0) {
+    newlyReadyIds.forEach(id => {
+      if (_animatedReadyOrders.has(id)) return;
+      _animatedReadyOrders.add(id);
+
+      // Shake the order card + gold progress bar
+      const card = document.querySelector(`.order-card[data-order-id="${id}"]`);
+      if (card) {
+        card.classList.add('order-arriving');
+        const btn = card.querySelector('.btn-open');
+        if (btn) btn.classList.add('btn-arriving');
+      }
+
+      // "★ ARRIVED ★" floating badge inside the transit panel
+      const transitPanel = document.getElementById('transit-panel');
+      if (transitPanel) {
+        const badge = document.createElement('div');
+        badge.className = 'arrived-badge-floating';
+        badge.textContent = '★ ARRIVED ★';
+        const afterTitle = transitPanel.querySelector('.panel-title');
+        if (afterTitle) afterTitle.after(badge);
+        else transitPanel.prepend(badge);
+        setTimeout(() => {
+          badge.style.opacity = '0';
+          setTimeout(() => badge.remove(), 380);
+        }, 2600);
+      }
+    });
+  }
 
   // Update day/night roughly every minute (every 120 ticks × 500ms = 60 s)
   _dayNightCounter = (_dayNightCounter + 1) % 120;
