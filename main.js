@@ -95,11 +95,11 @@ function gameTick() {
     changed = true;
   }
 
-  // Idle credits — 1 per 10 real seconds
+  // Idle credits — 5 per 10 real seconds
   const idleElapsed = (now - state.lastIdleTick) / 1000;
   if (idleElapsed >= 10) {
-    const gained = Math.floor(idleElapsed / 10);
-    state.lastIdleTick += gained * 10 * 1000;
+    const gained = Math.floor(idleElapsed / 10) * 5;
+    state.lastIdleTick += Math.floor(idleElapsed / 10) * 10 * 1000;
     state.credits           += gained;
     state.totalCreditsEarned += gained;
     showIdleFloat(gained);
