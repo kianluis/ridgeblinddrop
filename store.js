@@ -104,13 +104,13 @@ function storePreview(item) {
     const icons = {
       'prop-succulent': '▲', 'prop-plant': '✿',
       'prop-painting': '▣',  'prop-desk': '▬', 'prop-chair': '⊓',
-      'prop-storage': '▤',
+      'prop-storage': '▤', 'prop-window': '▢',
     };
     return `<div class="preview-icon">${icons[item.id] || '◆'}</div>`;
   }
   if (item.cat === 'workers') {
     const label = item.id === 'worker-daniel' ? 'D' : 'A';
-    const col   = item.id === 'worker-daniel' ? '#2255aa' : '#226633';
+    const col   = item.id === 'worker-daniel' ? '#7a28b8' : '#c8a818';
     return `<div class="preview-icon preview-worker" style="background:${col}">${label}</div>`;
   }
   return '';
@@ -190,7 +190,7 @@ function applyCosmetics() {
   }
 
   // Props — visible when owned
-  ['prop-succulent', 'prop-plant', 'prop-painting', 'prop-desk', 'prop-chair', 'prop-storage'].forEach(id => {
+  ['prop-succulent', 'prop-plant', 'prop-painting', 'prop-desk', 'prop-chair', 'prop-storage', 'prop-window'].forEach(id => {
     const el = document.getElementById('wh-' + id);
     if (el) el.style.display = owned.includes(id) ? '' : 'none';
   });

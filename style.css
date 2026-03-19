@@ -439,7 +439,7 @@ body {
   position: absolute;
   bottom: 30px;
   width: 18px; height: 42px;
-  z-index: 3;
+  z-index: 8;
   animation: seanPatrol 10s linear infinite;
   --shirt-color: #cc2222;
   --shirt-shadow: #991818;
@@ -591,7 +591,7 @@ body {
   position: absolute;
   bottom: 30px;
   width: 18px; height: 42px;
-  z-index: 3;
+  z-index: 8;
   --shirt-color: #7a28b8;
   --shirt-shadow: #5a1890;
   animation: danielPatrol 8s linear infinite;
@@ -613,7 +613,7 @@ body {
   position: absolute;
   bottom: 30px;
   width: 18px; height: 42px;
-  z-index: 3;
+  z-index: 8;
   --shirt-color: #c8a818;
   --shirt-shadow: #a08810;
   animation: austinPatrol 12s linear infinite;
@@ -695,6 +695,7 @@ body {
   background: #12101c;
   border: 4px solid #7a5820;
   box-shadow: inset 0 0 0 2px #c8a870, 3px 3px 0 #3a2208;
+  overflow: hidden;
 }
 #wh-prop-painting::before { /* canvas */
   content: '';
@@ -708,11 +709,11 @@ body {
   top: 50%; left: 0; right: 0;
   transform: translateY(-50%);
   text-align: center;
-  font-size: 14px;
+  font-size: 8px;
   color: var(--amber);
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   font-family: inherit;
-  text-shadow: 0 0 6px rgba(255,180,60,0.6);
+  text-shadow: 0 0 4px rgba(255,180,60,0.6);
 }
 /* Desk */
 #wh-prop-desk {
@@ -742,7 +743,7 @@ body {
 #wh-prop-chair {
   position: absolute;
   bottom: 30px; right: 14%;
-  z-index: 2;
+  z-index: 1;
   width: 16px; height: 26px;
 }
 #wh-prop-chair::before { /* seat */
@@ -750,17 +751,49 @@ body {
   position: absolute;
   bottom: 6px; left: 0;
   width: 16px; height: 7px;
-  background: #5a4030;
-  border-top: 2px solid #8a6040;
+  background: #bb1a1a;
+  border-top: 2px solid #ee3a3a;
 }
 #wh-prop-chair::after { /* backrest */
   content: '';
   position: absolute;
   top: 0; left: 2px;
   width: 12px; height: 18px;
-  background: #5a4030;
-  border: 2px solid #8a6040;
+  background: #bb1a1a;
+  border: 2px solid #ee3a3a;
   border-bottom: none;
+}
+
+/* Window prop */
+#wh-prop-window {
+  position: absolute;
+  top: 8%; right: 8%;
+  z-index: 4;
+  width: 58px; height: 46px;
+  background:
+    linear-gradient(#7a5020, #7a5020) 50% 0 / 3px 100% no-repeat,
+    linear-gradient(#7a5020, #7a5020) 0 50% / 100% 3px no-repeat,
+    linear-gradient(180deg, #1a60c0 0%, #4898e0 55%, #80c0f0 85%, #b0e0a0 100%);
+  border: 5px solid #7a5020;
+  box-shadow: inset 0 0 0 1px #c0a060, 3px 3px 0 #4a2808;
+  overflow: hidden;
+}
+#wh-prop-window::before { /* puffy cloud */
+  content: '';
+  position: absolute;
+  top: 6px; left: 5px;
+  width: 10px; height: 6px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  box-shadow: 7px 2px 0 4px rgba(255,255,255,0.9), 3px -2px 0 3px rgba(255,255,255,0.95);
+}
+#wh-prop-window::after { /* tree tops */
+  content: '';
+  position: absolute;
+  bottom: 0; left: 4px;
+  width: 10px; height: 18px;
+  background: #2a7820;
+  box-shadow: 15px 5px 0 6px #226818, 30px 1px 0 5px #308828;
 }
 
 /* Organized floor storage (replaces scattered floor boxes) */
@@ -3071,48 +3104,8 @@ body {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(-2.5px); }
 }
-/* Stack boxes — different durations + delays for organic feel */
-#warehouse-scene .stack-box:nth-child(6) {
-  animation: warehouseFloat 3.2s ease-in-out infinite;
-  animation-delay: 0s;
-}
-#warehouse-scene .stack-box:nth-child(7) {
-  animation: warehouseFloat 3.8s ease-in-out infinite;
-  animation-delay: 0.75s;
-}
-#warehouse-scene .stack-box:nth-child(8) {
-  animation: warehouseFloat 4.1s ease-in-out infinite;
-  animation-delay: 1.5s;
-}
-/* Shelves — right side */
-#warehouse-scene .shelf:nth-child(4) {
-  animation: warehouseFloat 4.0s ease-in-out infinite;
-  animation-delay: 0.4s;
-}
-#warehouse-scene .shelf:nth-child(5) {
-  animation: warehouseFloat 3.6s ease-in-out infinite;
-  animation-delay: 1.2s;
-}
-/* Shelves — left side */
-#warehouse-scene .shelf:nth-child(10) {
-  animation: warehouseFloat 4.3s ease-in-out 0.7s infinite;
-}
-#warehouse-scene .shelf:nth-child(11) {
-  animation: warehouseFloat 3.7s ease-in-out 1.8s infinite;
-}
-/* Left shelf boxes */
-#warehouse-scene .stack-box:nth-child(12) {
-  animation: warehouseFloat 3.5s ease-in-out 0.4s infinite;
-}
-#warehouse-scene .stack-box:nth-child(13) {
-  animation: warehouseFloat 4.0s ease-in-out 1.1s infinite;
-}
-#warehouse-scene .stack-box:nth-child(14) {
-  animation: warehouseFloat 3.9s ease-in-out 2.0s infinite;
-}
-#warehouse-scene .stack-box:nth-child(15) {
-  animation: warehouseFloat 3.3s ease-in-out 0.9s infinite;
-}
+#warehouse-scene .stack-box,
+#warehouse-scene .shelf { animation: none; }
 
 /* ── CREDITS POP ──────────────────────────────────────── */
 
