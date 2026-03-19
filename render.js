@@ -325,6 +325,11 @@ function updateMissionsTabBadge() {
   if (badge) badge.style.display = (state.milestonesToClaim || []).length > 0 ? '' : 'none';
 }
 
+function updateCollectionTabBadge() {
+  const badge = document.getElementById('collection-tab-badge');
+  if (badge) badge.style.display = (state.newCollectionItems || []).length > 0 ? '' : 'none';
+}
+
 // ── Day / Night Warehouse ─────────────────────────────────
 
 function updateDayNight() {
@@ -572,4 +577,6 @@ function renderAll() {
   renderOrderPanel();
   renderPullHistory();
   renderTrophyShelf();
+  updateMissionsTabBadge();
+  updateCollectionTabBadge();
 }

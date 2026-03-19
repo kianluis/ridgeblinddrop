@@ -25,7 +25,11 @@ function switchTab(tab) {
     }
   }
 
-  if (tab === 'booklet')    renderBooklet();
+  if (tab === 'booklet') {
+    state.newCollectionItems = [];
+    updateCollectionTabBadge();
+    renderBooklet();
+  }
   if (tab === 'milestones') renderMilestones();
 }
 
