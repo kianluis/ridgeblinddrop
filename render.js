@@ -95,6 +95,7 @@ function renderOrderPanel() {
         : `<div class="tier-card-boost badge-common">STANDARD RATES</div>`
       }
       <div class="tier-card-cost">${tier.cost} cr</div>
+      ${tier.id === 'overnight' ? '<div class="tier-card-warn">⚠ HIGH CREDIT BURN</div>' : ''}
       <button class="btn-order-card" ${canAfford ? '' : 'disabled'} onclick="placeOrder('${tier.id}')">
         ORDER
       </button>
