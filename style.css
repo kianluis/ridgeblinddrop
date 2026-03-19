@@ -2181,58 +2181,62 @@ body {
   box-shadow: .6em 0 0 0 #1a1a1a;
 }
 
-/* Priority — airplane (top-down view) */
+/* Priority — airplane (top-down view, nose at top) */
 .css-tier-priority {
   display: inline-block;
   width: 1em; height: .95em;
   position: relative;
   vertical-align: middle;
 }
-.css-tier-priority::before { /* swept wings */
+.css-tier-priority::before { /* swept main wings — drawn first (behind fuselage) */
   content: '';
   position: absolute;
-  top: 28%; left: 0; right: 0;
-  height: 22%;
-  background: #9ab8d8;
-  clip-path: polygon(0% 20%, 48% 0%, 52% 0%, 100% 20%, 100% 80%, 52% 100%, 48% 100%, 0% 80%);
+  inset: 0;
+  background: #8aaec8;
+  clip-path: polygon(
+    0% 32%, 46% 24%, 54% 24%, 100% 32%,
+    100% 42%, 54% 34%, 46% 34%, 0% 42%
+  );
 }
-.css-tier-priority::after { /* fuselage (drawn over wings) */
+.css-tier-priority::after { /* fuselage + horizontal tail stabilizer — drawn on top */
   content: '';
   position: absolute;
-  top: 4%; bottom: 8%;
-  left: 50%; transform: translateX(-50%);
-  width: 20%;
+  inset: 0;
   background: #d0e4f8;
-  border-radius: 50%;
+  clip-path: polygon(
+    35% 0%, 65% 0%,
+    65% 72%, 88% 72%, 88% 90%,
+    12% 90%, 12% 72%, 35% 72%
+  );
 }
 
-/* Overnight — rocket */
+/* Overnight — rocket with narrow nose and swept fins in lower half */
 .css-tier-overnight {
   display: inline-block;
-  width: .62em; height: 1.05em;
-  background: linear-gradient(to bottom, #e84040 0% 22%, #d0d0f0 22%);
-  border: 2px solid #9090c0;
-  border-radius: 50% 50% 3px 3px / 18% 18% 3px 3px;
+  width: .55em; height: 1.1em;
   position: relative;
   vertical-align: middle;
 }
-.css-tier-overnight::before { /* swept fins (W shape) */
+.css-tier-overnight::before { /* full silhouette: narrow nose + body + swept fins */
   content: '';
   position: absolute;
-  bottom: 8%; left: 50%;
-  transform: translateX(-50%);
-  width: 130%; height: 28%;
-  background: #b0b0e0;
-  clip-path: polygon(0% 100%, 18% 0%, 50% 40%, 82% 0%, 100% 100%);
+  inset: 0;
+  background: linear-gradient(to bottom, #e84040 0% 14%, #c8c8e8 14%);
+  clip-path: polygon(
+    33% 0%, 67% 0%,
+    72% 12%, 72% 42%,
+    100% 90%, 68% 68%, 32% 68%, 0% 90%,
+    28% 42%, 28% 12%
+  );
 }
 .css-tier-overnight::after { /* flame */
   content: '';
   position: absolute;
   top: 100%; left: 50%;
   transform: translateX(-50%);
-  border-left: .12em solid transparent;
-  border-right: .12em solid transparent;
-  border-top: .22em solid #f5a800;
+  border-left: .11em solid transparent;
+  border-right: .11em solid transparent;
+  border-top: .2em solid #f5a800;
   margin-top: -1px;
 }
 
