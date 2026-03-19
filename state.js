@@ -118,7 +118,8 @@ function rollItem(rareboost) {
   else                                                    rarity = 'common';
 
   // Weighted pool selection (weight field defaults to 1)
-  const pool = COLLECTIBLES.filter(c => c.rarity === rarity);
+  // Mr. Doodle is pity-only (pull 101) — never enters the normal roll pool
+  const pool = COLLECTIBLES.filter(c => c.rarity === rarity && c.id !== 'carryon-mr-doodle');
   const totalW = pool.reduce((sum, c) => sum + (c.weight ?? 1), 0);
   let pick = Math.random() * totalW;
   for (const c of pool) {
