@@ -542,14 +542,14 @@ body {
   position: absolute;
   bottom: 0; left: 3px;
   width: 14px; height: 10px;
-  background: var(--cat-color);
+  background: var(--cat-body-bg, var(--cat-color));
   box-shadow: inset -2px -2px 0 var(--cat-shadow);
 }
 .cat-head {
   position: absolute;
   bottom: 10px; left: 4px;
   width: 12px; height: 9px;
-  background: var(--cat-color);
+  background: var(--cat-head-bg, var(--cat-color));
   box-shadow: inset -2px -2px 0 var(--cat-shadow);
   animation: catBlink 5s ease-in-out infinite;
 }
@@ -580,11 +580,11 @@ body {
 }
 
 /* ── Wall themes (store) ─────────────────────────────────── */
-#warehouse-scene.wall-blue   { background: linear-gradient(180deg, #5a7090 0%, #406080 55%, #28405a 100%); }
-#warehouse-scene.wall-green  { background: linear-gradient(180deg, #4a7048 0%, #346034 55%, #204820 100%); }
-#warehouse-scene.wall-gray   { background: linear-gradient(180deg, #686870 0%, #505058 55%, #38383e 100%); }
-#warehouse-scene.wall-dark   { background: linear-gradient(180deg, #1e1e2e 0%, #14141e 55%, #0a0a12 100%); }
-#warehouse-scene.wall-purple { background: linear-gradient(180deg, #5a3a7a 0%, #42286a 55%, #2a1648 100%); }
+#warehouse-scene.wall-gunmetal { background: linear-gradient(180deg, #6a6a72 0%, #4e4e58 55%, #36363e 100%); }
+#warehouse-scene.wall-navy     { background: linear-gradient(180deg, #2a4878 0%, #1a3460 55%, #0e2042 100%); }
+#warehouse-scene.wall-olive    { background: linear-gradient(180deg, #586432 0%, #424c24 55%, #2c3418 100%); }
+#warehouse-scene.wall-orange   { background: linear-gradient(180deg, #c05a22 0%, #9a4014 55%, #6a2808 100%); }
+#warehouse-scene.wall-lime     { background: linear-gradient(180deg, #8ec018 0%, #6a9a0e 55%, #486c06 100%); }
 
 /* ── Worker Daniel (store unlock) ────────────────────────── */
 #worker-daniel {

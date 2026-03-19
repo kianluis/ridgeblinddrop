@@ -6,18 +6,27 @@
 // ── Color lookup tables ───────────────────────────────────
 
 const WALL_THEMES = {
-  'wall-blue':   'linear-gradient(180deg, #5a7090 0%, #406080 55%, #28405a 100%)',
-  'wall-green':  'linear-gradient(180deg, #4a7048 0%, #346034 55%, #204820 100%)',
-  'wall-gray':   'linear-gradient(180deg, #686870 0%, #505058 55%, #38383e 100%)',
-  'wall-dark':   'linear-gradient(180deg, #1e1e2e 0%, #14141e 55%, #0a0a12 100%)',
-  'wall-purple': 'linear-gradient(180deg, #5a3a7a 0%, #42286a 55%, #2a1648 100%)',
+  'wall-gunmetal': 'linear-gradient(180deg, #6a6a72 0%, #4e4e58 55%, #36363e 100%)',
+  'wall-navy':     'linear-gradient(180deg, #2a4878 0%, #1a3460 55%, #0e2042 100%)',
+  'wall-olive':    'linear-gradient(180deg, #586432 0%, #424c24 55%, #2c3418 100%)',
+  'wall-orange':   'linear-gradient(180deg, #c05a22 0%, #9a4014 55%, #6a2808 100%)',
+  'wall-lime':     'linear-gradient(180deg, #8ec018 0%, #6a9a0e 55%, #486c06 100%)',
 };
 
 const CAT_COLORS = {
-  'cat-gray':  { main: '#808090', shadow: '#606070' },
-  'cat-black': { main: '#252530', shadow: '#111118' },
-  'cat-cream': { main: '#d4b88a', shadow: '#b09060' },
-  'cat-white': { main: '#e8e0d0', shadow: '#c0b898' },
+  'cat-orange': { main: '#d46a0a', shadow: '#a84808' },
+  'cat-white':  { main: '#e8e0d0', shadow: '#c0b898' },
+  'cat-black':  { main: '#252530', shadow: '#111118' },
+  'cat-tabby':  {
+    main: '#909090', shadow: '#606060',
+    bodyBg: 'repeating-linear-gradient(0deg,#909090 0px,#909090 3px,#383838 3px,#383838 5px)',
+    headBg: 'repeating-linear-gradient(0deg,#909090 0px,#909090 3px,#383838 3px,#383838 5px)',
+  },
+  'cat-calico': {
+    main: '#e8d8c0', shadow: '#c0a878',
+    bodyBg: 'linear-gradient(90deg,#e8d8c0 0%,#e8d8c0 36%,#c85820 36%,#c85820 64%,#1e1e28 64%,#1e1e28 100%)',
+    headBg: 'linear-gradient(90deg,#1e1e28 0%,#1e1e28 28%,#e8d8c0 28%,#e8d8c0 100%)',
+  },
 };
 
 const SHIRT_COLORS = {
@@ -180,6 +189,13 @@ function applyCosmetics() {
     const c = CAT_COLORS[color.cat] || { main: '#c87840', shadow: '#a05e28' };
     cat.style.setProperty('--cat-color',  c.main);
     cat.style.setProperty('--cat-shadow', c.shadow);
+    if (c.bodyBg) {
+      cat.style.setProperty('--cat-body-bg', c.bodyBg);
+      cat.style.setProperty('--cat-head-bg', c.headBg || c.bodyBg);
+    } else {
+      cat.style.removeProperty('--cat-body-bg');
+      cat.style.removeProperty('--cat-head-bg');
+    }
   }
 
   // Sean's shirt (CSS vars on #worker)
