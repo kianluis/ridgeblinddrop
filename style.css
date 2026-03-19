@@ -1878,6 +1878,26 @@ body {
   100% { filter: hue-rotate(360deg) brightness(1.1); }
 }
 
+/* doodle-god — black & white animated shimmer */
+.trophy-doodle-god .trophy-r {
+  color: #fff;
+  background: linear-gradient(135deg, #000 0%, #555 40%, #fff 50%, #555 60%, #000 100%);
+  border-color: #aaa;
+  box-shadow: 0 0 14px rgba(255,255,255,0.6);
+  animation: doodle-shimmer 2s linear infinite;
+  background-size: 300% 300%;
+}
+.trophy-doodle-god .trophy-stand {
+  background: linear-gradient(90deg, #000, #888, #fff, #888, #000);
+  animation: doodle-shimmer 2s linear infinite;
+  background-size: 300% 100%;
+}
+@keyframes doodle-shimmer {
+  0%   { background-position: 0% 50%;   filter: brightness(1.0); }
+  50%  { background-position: 100% 50%; filter: brightness(1.4); }
+  100% { background-position: 0% 50%;   filter: brightness(1.0); }
+}
+
 .ms-trophy-icon { flex-shrink: 0; margin-right: 8px; align-self: center; }
 
 /* credit badge for no-trophy milestones */

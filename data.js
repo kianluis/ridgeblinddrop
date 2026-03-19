@@ -133,7 +133,7 @@ const MILESTONES = [
   // ── Iridescent ──────────────────────────────────────────
   { id:'ridge-fanatic', name:'Ridge Fanatic',    desc:'Open 500 packages',                        req:s=>s.packagesOpened>=500,                                               reward:1000, trophy:'iridescent' },
   { id:'rainbow-chaser',name:'Rainbow Chaser',   desc:'Pull every Ultra Rare item at least once', req:s=>COLLECTIBLES.filter(c=>c.rarity==='ultra').every(c=>(s.collection[c.id]||0)>0), reward:1500, trophy:'iridescent' },
-  { id:'doodle-god',    name:'Doodle God',        desc:'Pull the legendary Mr. Doodle carry-on',  req:s=>(s.collection['carryon-mr-doodle']||0)>0,                            reward:500,  trophy:'iridescent' },
+  { id:'doodle-god',    name:'Doodle God',        desc:'Pull the legendary Mr. Doodle carry-on',  req:s=>(s.collection['carryon-mr-doodle']||0)>0,                            reward:500,  trophy:'doodle-god' },
 ];
 
 // ── Warehouse Store ───────────────────────────────────────
