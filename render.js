@@ -367,6 +367,10 @@ function updateDayNight() {
     nightMode = true;
   }
 
+  // Don't override a store wall theme
+  const wallThemes = ['wall-blue','wall-green','wall-gray','wall-dark','wall-purple'];
+  if (wallThemes.some(c => scene.classList.contains(c))) return;
+
   scene.style.background = `linear-gradient(180deg, ${skyTop} 60%, ${skyBot} 100%)`;
   document.querySelectorAll('.wh-light').forEach(l => {
     l.style.background  = lightColor;

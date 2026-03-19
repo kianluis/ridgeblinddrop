@@ -163,9 +163,14 @@ function applyCosmetics() {
   const owned = state.roomOwned || [];
   const color = state.roomColor || {};
 
-  // Wall theme
+  // Wall theme — clear inline style first so CSS class can win over updateDayNight()
   Object.keys(WALL_THEMES).forEach(c => scene.classList.remove(c));
-  if (color.wall) scene.classList.add(color.wall);
+  if (color.wall) {
+    scene.style.background = ''; // let the CSS class take over
+    scene.classList.add(color.wall);
+  } else {
+    updateDayNight(); // restore time-based gradient when no theme equipped
+  }
 
   // Cat color (CSS vars on #wh-cat)
   const cat = document.getElementById('wh-cat');
