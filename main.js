@@ -176,7 +176,7 @@ function resetProgress() {
     btn.classList.add('reset-confirm');
     _resetTimer = setTimeout(() => {
       _resetPending = false;
-      btn.textContent = '↺';
+      btn.textContent = '↺ RESET';
       btn.classList.remove('reset-confirm');
     }, 3000);
   } else {
