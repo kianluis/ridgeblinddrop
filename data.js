@@ -133,37 +133,40 @@ const MILESTONES = [
   // ── Iridescent ──────────────────────────────────────────
   { id:'ridge-fanatic', name:'Ridge Fanatic',    desc:'Open 500 packages',                        req:s=>s.packagesOpened>=500,                                               reward:1000, trophy:'iridescent' },
   { id:'rainbow-chaser',name:'Rainbow Chaser',   desc:'Pull every Ultra Rare item at least once', req:s=>COLLECTIBLES.filter(c=>c.rarity==='ultra').every(c=>(s.collection[c.id]||0)>0), reward:1500, trophy:'iridescent' },
+  { id:'doodle-god',    name:'Doodle God',        desc:'Pull the legendary Mr. Doodle carry-on',  req:s=>(s.collection['carryon-mr-doodle']||0)>0,                            reward:500,  trophy:'doodle-god' },
 ];
 
 // ── Warehouse Store ───────────────────────────────────────
 const STORE_ITEMS = [
-  // Wall colors
-  { id:'wall-blue',          cat:'wall',    name:'Slate',          desc:'Cool factory slate',       cost: 150 },
-  { id:'wall-green',         cat:'wall',    name:'Forest',         desc:'Deep warehouse green',     cost: 150 },
-  { id:'wall-gray',          cat:'wall',    name:'Concrete',       desc:'Urban concrete vibes',     cost: 150 },
-  { id:'wall-dark',          cat:'wall',    name:'Midnight',       desc:'Late-night shift energy',  cost: 200 },
-  { id:'wall-purple',        cat:'wall',    name:'Cosmic',         desc:'Out-of-this-world shift',  cost: 200 },
-  // Cat colors
-  { id:'cat-gray',           cat:'cat',     name:'Gray',           desc:'Classic gray coat',        cost:  50 },
-  { id:'cat-black',          cat:'cat',     name:'Black',          desc:'Mysterious & stealthy',    cost:  50 },
-  { id:'cat-cream',          cat:'cat',     name:'Cream',          desc:'Warm vanilla fluff',       cost:  75 },
-  { id:'cat-white',          cat:'cat',     name:'White',          desc:'Pure snow coat',           cost:  75 },
-  // Sean shirt colors
+  // Wall colors — cheapest → most expensive
+  { id:'wall-gunmetal',      cat:'wall',    name:'Gunmetal',       desc:'Industrial gray finish',   cost: 150 },
+  { id:'wall-navy',          cat:'wall',    name:'Alpine Navy',    desc:'Deep navy blue',           cost: 175 },
+  { id:'wall-olive',         cat:'wall',    name:'Matte Olive',    desc:'Tactical olive drab',      cost: 175 },
+  { id:'wall-orange',        cat:'wall',    name:'Basecamp Orange',desc:'Bold warehouse warmth',    cost: 200 },
+  { id:'wall-lime',          cat:'wall',    name:'Hyper Lime',     desc:'High-vis lime energy',     cost: 200 },
+  { id:'wall-iridescent',    cat:'wall',    name:'Iridescent',     desc:'Shifting violet shimmer',  cost: 200 },
+  // Cat colors — cheapest → most expensive
+  { id:'cat-orange',         cat:'cat',     name:'Orange',         desc:'Classic ginger coat',      cost:  50 },
+  { id:'cat-white',          cat:'cat',     name:'White',          desc:'Pure snow coat',           cost:  60 },
+  { id:'cat-black',          cat:'cat',     name:'Black',          desc:'Mysterious & stealthy',    cost:  70 },
+  { id:'cat-tabby',          cat:'cat',     name:'Tabby',          desc:'Gray & black stripes',     cost:  90 },
+  { id:'cat-calico',         cat:'cat',     name:'Calico',         desc:'White, orange & black',    cost: 120 },
+  // Sean shirt colors (all same cost)
   { id:'shirt-blue',         cat:'shirt',   name:'Navy',           desc:"Sean went corporate",      cost:  75 },
   { id:'shirt-green',        cat:'shirt',   name:'Forest',         desc:'Earthy green energy',      cost:  75 },
   { id:'shirt-black',        cat:'shirt',   name:'Black',          desc:'Looking very serious',     cost:  75 },
   { id:'shirt-orange',       cat:'shirt',   name:'Orange',         desc:'Bold warehouse look',      cost:  75 },
-  // Props
+  // Props — cheapest → most expensive
   { id:'prop-succulent',     cat:'props',   name:'Succulent',      desc:'A tiny desk plant',        cost: 100 },
-  { id:'prop-plant',         cat:'props',   name:'Tall Plant',     desc:'Adds life to the scene',   cost: 150 },
-  { id:'prop-painting',      cat:'props',   name:'Wallet Painting',desc:'Ridge art for the crew',   cost: 200 },
-  { id:'prop-desk',          cat:'props',   name:'Desk',           desc:'A proper workspace',       cost: 250 },
-  { id:'prop-chair',         cat:'props',   name:'Chair',          desc:'Sit down and relax',       cost: 200 },
-  { id:'prop-storage',       cat:'props',   name:'Tidy Storage',   desc:'No more floor chaos',      cost: 300 },
-  { id:'prop-window',        cat:'props',   name:'Window',         desc:'A view to the outside',    cost: 250 },
   { id:'prop-clock',         cat:'props',   name:'Wall Clock',     desc:'Know what shift it is',    cost: 100 },
   { id:'prop-board',         cat:'props',   name:'Notice Board',   desc:'Crew announcements',       cost: 120 },
-  // Workers
-  { id:'worker-daniel',      cat:'workers', name:'Daniel',         desc:'New hire, very eager',     cost: 350 },
-  { id:'worker-austin',      cat:'workers', name:'Austin',         desc:'The reliable one',         cost: 400 },
+  { id:'prop-plant',         cat:'props',   name:'Tall Plant',     desc:'Adds life to the scene',   cost: 150 },
+  { id:'prop-chair',         cat:'props',   name:'Chair',          desc:'Sit down and relax',       cost: 200 },
+  { id:'prop-painting',      cat:'props',   name:'Wallet Painting',desc:'Ridge art for the crew',   cost: 200 },
+  { id:'prop-window',        cat:'props',   name:'Window',         desc:'A view to the outside',    cost: 250 },
+  { id:'prop-desk',          cat:'props',   name:'Desk',           desc:'A proper workspace',       cost: 250 },
+  { id:'prop-storage',       cat:'props',   name:'Tidy Storage',   desc:'No more floor chaos',      cost: 300 },
+  // Workers — cheapest → most expensive
+  { id:'worker-daniel',      cat:'workers', name:'Daniel',         desc:'New hire, very eager',     cost: 1000 },
+  { id:'worker-austin',      cat:'workers', name:'Austin',         desc:'The reliable one',         cost: 1000 },
 ];
