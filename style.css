@@ -801,11 +801,14 @@ body {
   animation-iteration-count: 1 !important;
 }
 
-/* Booklet card icon sizing */
+/* Booklet card icon sizing — override the generic .item-icon 36px */
 .booklet-item-icon {
+  width: 80px !important;
+  height: 80px !important;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: var(--sp-2);
 }
 .booklet-mystery-icon {
   background: var(--border);
@@ -1047,6 +1050,9 @@ body {
   border: 1px solid var(--border);
   padding: var(--sp-3);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   transition: border-color 0.15s ease-out, transform 0.15s ease-out, box-shadow 0.15s ease-out;
   cursor: default;
 }

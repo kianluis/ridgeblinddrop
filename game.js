@@ -79,6 +79,10 @@ function openPackage(orderId) {
   state.collection[item.id] = (state.collection[item.id] || 0) + 1;
   state.packagesOpened++;
   state.lastNewItemId = isNew ? item.id : null;
+  if (isNew) {
+    if (!state.newCollectionItems) state.newCollectionItems = [];
+    if (!state.newCollectionItems.includes(item.id)) state.newCollectionItems.push(item.id);
+  }
 
   // Credits: base value, 2× on special, +3 duplicate bonus
   let creditsGained = item.credits;
@@ -96,6 +100,7 @@ function openPackage(orderId) {
   saveState();
   checkMilestones();
   renderAll();
+  updateCollectionTabBadge();
 
   // ── Animation sequence ───────────────────────────────
   const overlay     = document.getElementById('open-overlay');

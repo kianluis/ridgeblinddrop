@@ -24,6 +24,7 @@ let state = {
   bookletFilter: 'all',
   lastNewItemId: null,   // used for flip animation
   pullsSinceDoodle: 0,   // pity counter — guaranteed at 100
+  newCollectionItems: [], // newly unlocked items not yet viewed in Collection tab
 };
 
 // ── Session ID (one per URL — different players get different URLs) ──
