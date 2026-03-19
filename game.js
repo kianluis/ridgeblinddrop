@@ -90,8 +90,8 @@ function openPackage(orderId) {
     if (!state.newCollectionItems.includes(item.id)) state.newCollectionItems.push(item.id);
   }
 
-  // Credits: base value, 2× on special, rarity-scaled duplicate bonus
-  let creditsGained = item.credits;
+  // Credits: tier base return + rarity item value, 2× on special, rarity-scaled duplicate bonus
+  let creditsGained = (tier.baseCredits || 0) + item.credits;
   if (item.special === '2xcredits') creditsGained *= 2;
   const dupBonusByRarity = { common: 4, uncommon: 10, rare: 25, ultra: 60 };
   const dupBonus = isNew ? 0 : (dupBonusByRarity[item.rarity] ?? 4);
