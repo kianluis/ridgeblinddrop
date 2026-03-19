@@ -1640,9 +1640,9 @@ body {
 /* intro blurb */
 .guide-blurb {
   font-family: sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: var(--text-dim);
-  line-height: 1.8;
+  line-height: 1.85;
   text-align: center;
   margin: 0;
   padding: var(--sp-2) var(--sp-2);
@@ -1672,27 +1672,34 @@ body {
 .guide-card:hover { border-color: var(--border-hi); }
 
 .guide-card-icon {
-  font-size: 1.5em;
+  font-size: 1.9em;
   line-height: 1;
-  margin-bottom: 2px;
+  margin-bottom: var(--sp-2);
+  image-rendering: auto;
+  animation: guideIconFloat 4s ease-in-out infinite;
 }
+.guide-card:nth-child(2) .guide-card-icon { animation-delay: 0.6s; }
+.guide-card:nth-child(3) .guide-card-icon { animation-delay: 1.2s; }
+.guide-card:nth-child(4) .guide-card-icon { animation-delay: 0.3s; }
+.guide-card:nth-child(5) .guide-card-icon { animation-delay: 0.9s; }
+.guide-card:nth-child(6) .guide-card-icon { animation-delay: 1.5s; }
 .guide-card-head {
-  font-size: var(--fs-xs);
+  font-size: var(--fs-sm);
   color: var(--amber);
   letter-spacing: 0.08em;
-  margin-bottom: 2px;
+  margin-bottom: var(--sp-1);
 }
 .guide-card-body {
-  font-size: var(--fs-xs);
+  font-size: 0.78rem;
   color: var(--text-dim);
-  line-height: 1.9;
+  line-height: 1.85;
   font-family: sans-serif;
   letter-spacing: 0;
 }
 .guide-card-body strong {
   color: var(--text);
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.85em;
+  font-weight: 700;
+  font-family: sans-serif;
 }
 
 /* rarity legend */
@@ -1706,7 +1713,7 @@ body {
   border-bottom: 1px solid var(--border);
 }
 .guide-rar {
-  font-size: var(--fs-xs);
+  font-size: var(--fs-sm);
   letter-spacing: 0.06em;
 }
 .guide-rar-common   { color: var(--common); }
@@ -1722,13 +1729,76 @@ body {
   color: var(--bg);
   border: none;
   font-family: 'Press Start 2P', monospace;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-md);
   letter-spacing: 0.1em;
   cursor: pointer;
   transition: background 0.15s, transform 0.1s;
+  animation: guideStartPulse 2.2s ease-in-out infinite;
 }
-.guide-start-btn:hover  { background: var(--amber2); }
+.guide-start-btn:hover  { background: var(--amber2); animation: none; }
 .guide-start-btn:active { transform: scale(0.98); }
+
+/* ── Guide animations ───────────────────────────────────── */
+
+/* Box enters with a gentle scale-up */
+@keyframes guideBoxEnter {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+/* Individual cards slide in */
+@keyframes guideCardEnter {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* Blurb and footer rows fade in */
+@keyframes guideFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+/* Subtle float for card icons */
+@keyframes guideIconFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-3px); }
+}
+/* Start button breathing glow */
+@keyframes guideStartPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(176,94,20,0); }
+  50%       { box-shadow: 0 0 12px 4px rgba(176,94,20,0.3); }
+}
+/* Rarity label soft glow pulses */
+@keyframes rarGlowCommon   { 0%,100%{text-shadow:none} 50%{text-shadow:0 0 6px rgba(122,106,90,0.6)} }
+@keyframes rarGlowUncommon { 0%,100%{text-shadow:none} 50%{text-shadow:0 0 7px rgba(46,122,58,0.7)} }
+@keyframes rarGlowRare     { 0%,100%{text-shadow:none} 50%{text-shadow:0 0 7px rgba(42,95,168,0.7)} }
+@keyframes rarGlowUltra    { 0%,100%{text-shadow:none} 50%{text-shadow:0 0 9px rgba(112,64,184,0.8)} }
+
+/* Triggered by .guide-overlay.guide-active */
+.guide-overlay.guide-active .guide-box {
+  animation: guideBoxEnter 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.guide-overlay.guide-active .guide-blurb {
+  animation: guideFadeIn 0.3s ease-out 0.25s both;
+}
+.guide-overlay.guide-active .guide-card {
+  animation: guideCardEnter 0.28s ease-out both;
+}
+.guide-overlay.guide-active .guide-card:nth-child(1) { animation-delay: 0.10s; }
+.guide-overlay.guide-active .guide-card:nth-child(2) { animation-delay: 0.16s; }
+.guide-overlay.guide-active .guide-card:nth-child(3) { animation-delay: 0.22s; }
+.guide-overlay.guide-active .guide-card:nth-child(4) { animation-delay: 0.28s; }
+.guide-overlay.guide-active .guide-card:nth-child(5) { animation-delay: 0.34s; }
+.guide-overlay.guide-active .guide-card:nth-child(6) { animation-delay: 0.40s; }
+.guide-overlay.guide-active .guide-rarities {
+  animation: guideFadeIn 0.3s ease-out 0.46s both;
+}
+.guide-overlay.guide-active .guide-start-btn {
+  animation: guideStartPulse 2.2s ease-in-out 0.5s infinite, guideFadeIn 0.3s ease-out 0.50s both;
+}
+
+/* Rarity labels: ongoing gentle glow per rarity color */
+.guide-rar-common   { animation: rarGlowCommon   3.2s ease-in-out infinite; }
+.guide-rar-uncommon { animation: rarGlowUncommon  2.8s ease-in-out infinite 0.4s; }
+.guide-rar-rare     { animation: rarGlowRare      3.0s ease-in-out infinite 0.8s; }
+.guide-rar-ultra    { animation: rarGlowUltra     2.6s ease-in-out infinite 1.2s; }
 
 /* ══════════════════════════════════════════════════════════
    TESTIMONIALS SECTION
