@@ -5,14 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ridge Mystery Drop</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Barlow:wght@700;800&display=swap" rel="stylesheet">
+  <!-- TODO: swap Barlow for the actual Ridge OTF once added to repo:
+       @font-face { font-family:'RidgeBrand'; src:url('ridge-font.otf') format('opentype'); }
+       then change .ridge-brand { font-family:'RidgeBrand', ... } -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <!-- ══ TOP BAR ══════════════════════════════════════════════ -->
 <header id="topbar">
-  <h1>RIDGE MYSTERY DROP</h1>
+  <h1><span class="ridge-brand">RIDGE</span><span class="title-sep"> · </span><span class="title-name">MYSTERY DROP</span></h1>
   <div class="topbar-right">
     <div class="stat-chip">
       <span class="coin-icon"></span>
