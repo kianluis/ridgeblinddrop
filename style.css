@@ -745,21 +745,21 @@ body {
   position: absolute;
   bottom: 30px; right: 14%;
   z-index: 1;
-  width: 16px; height: 26px;
+  width: 22px; height: 48px;
 }
 #wh-prop-chair::before { /* seat */
   content: '';
   position: absolute;
-  bottom: 6px; left: 0;
-  width: 16px; height: 7px;
+  bottom: 8px; left: 0;
+  width: 22px; height: 10px;
   background: #bb1a1a;
   border-top: 2px solid #ee3a3a;
 }
 #wh-prop-chair::after { /* backrest */
   content: '';
   position: absolute;
-  top: 0; left: 2px;
-  width: 12px; height: 18px;
+  top: 0; left: 3px;
+  width: 16px; height: 34px;
   background: #bb1a1a;
   border: 2px solid #ee3a3a;
   border-bottom: none;
