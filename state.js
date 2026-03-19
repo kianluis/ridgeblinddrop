@@ -25,6 +25,8 @@ let state = {
   lastNewItemId: null,   // used for flip animation
   pullsSinceDoodle: 0,   // pity counter — guaranteed at 100
   newCollectionItems: [], // newly unlocked items not yet viewed in Collection tab
+  roomOwned: [],         // purchased store item IDs
+  roomColor: {},         // { wall, cat, shirt } → active item ID
 };
 
 // ── Session ID ────────────────────────────────────────────

@@ -134,3 +134,32 @@ const MILESTONES = [
   { id:'ridge-fanatic', name:'Ridge Fanatic',    desc:'Open 500 packages',                        req:s=>s.packagesOpened>=500,                                               reward:1000, trophy:'iridescent' },
   { id:'rainbow-chaser',name:'Rainbow Chaser',   desc:'Pull every Ultra Rare item at least once', req:s=>COLLECTIBLES.filter(c=>c.rarity==='ultra').every(c=>(s.collection[c.id]||0)>0), reward:1500, trophy:'iridescent' },
 ];
+
+// ── Warehouse Store ───────────────────────────────────────
+const STORE_ITEMS = [
+  // Wall colors
+  { id:'wall-blue',          cat:'wall',    name:'Slate',          desc:'Cool factory slate',       cost: 150 },
+  { id:'wall-green',         cat:'wall',    name:'Forest',         desc:'Deep warehouse green',     cost: 150 },
+  { id:'wall-gray',          cat:'wall',    name:'Concrete',       desc:'Urban concrete vibes',     cost: 150 },
+  { id:'wall-dark',          cat:'wall',    name:'Midnight',       desc:'Late-night shift energy',  cost: 200 },
+  { id:'wall-purple',        cat:'wall',    name:'Cosmic',         desc:'Out-of-this-world shift',  cost: 200 },
+  // Cat colors
+  { id:'cat-gray',           cat:'cat',     name:'Gray',           desc:'Classic gray coat',        cost:  50 },
+  { id:'cat-black',          cat:'cat',     name:'Black',          desc:'Mysterious & stealthy',    cost:  50 },
+  { id:'cat-cream',          cat:'cat',     name:'Cream',          desc:'Warm vanilla fluff',       cost:  75 },
+  { id:'cat-white',          cat:'cat',     name:'White',          desc:'Pure snow coat',           cost:  75 },
+  // Sean shirt colors
+  { id:'shirt-blue',         cat:'shirt',   name:'Navy',           desc:"Sean went corporate",      cost:  75 },
+  { id:'shirt-green',        cat:'shirt',   name:'Forest',         desc:'Earthy green energy',      cost:  75 },
+  { id:'shirt-black',        cat:'shirt',   name:'Black',          desc:'Looking very serious',     cost:  75 },
+  { id:'shirt-orange',       cat:'shirt',   name:'Orange',         desc:'Bold warehouse look',      cost:  75 },
+  // Props
+  { id:'prop-succulent',     cat:'props',   name:'Succulent',      desc:'A tiny desk plant',        cost: 100 },
+  { id:'prop-plant',         cat:'props',   name:'Tall Plant',     desc:'Adds life to the scene',   cost: 150 },
+  { id:'prop-painting',      cat:'props',   name:'Wallet Painting',desc:'Ridge art for the crew',   cost: 200 },
+  { id:'prop-desk',          cat:'props',   name:'Desk',           desc:'A proper workspace',       cost: 250 },
+  { id:'prop-chair',         cat:'props',   name:'Chair',          desc:'Sit down and relax',       cost: 200 },
+  // Workers
+  { id:'worker-daniel',      cat:'workers', name:'Daniel',         desc:'New hire, very eager',     cost: 350 },
+  { id:'worker-austin',      cat:'workers', name:'Austin',         desc:'The reliable one',         cost: 400 },
+];

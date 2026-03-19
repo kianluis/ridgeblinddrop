@@ -6,18 +6,19 @@
 // ── Tab switching ─────────────────────────────────────────
 
 function switchTab(tab) {
-  const tabs = ['game', 'booklet', 'milestones'];
+  const tabs = ['game', 'booklet', 'milestones', 'store'];
   document.querySelectorAll('.tab-btn').forEach((btn, i) => {
     btn.classList.toggle('active', tabs[i] === tab);
   });
   document.getElementById('game-tab').style.display         = tab === 'game'       ? 'block' : 'none';
   document.getElementById('booklet-panel').style.display    = tab === 'booklet'    ? 'block' : 'none';
   document.getElementById('milestones-panel').style.display = tab === 'milestones' ? 'block' : 'none';
+  document.getElementById('store-panel').style.display      = tab === 'store'      ? 'block' : 'none';
 
   // Fade-in entrance for non-game tabs
   if (tab !== 'game') {
-    const panelId = tab === 'booklet' ? 'booklet-panel' : 'milestones-panel';
-    const panelEl = document.getElementById(panelId);
+    const panelIds = { booklet: 'booklet-panel', milestones: 'milestones-panel', store: 'store-panel' };
+    const panelEl = document.getElementById(panelIds[tab]);
     if (panelEl) {
       panelEl.classList.remove('tab-entering');
       void panelEl.offsetWidth;
@@ -31,6 +32,7 @@ function switchTab(tab) {
     renderBooklet();
   }
   if (tab === 'milestones') renderMilestones();
+  if (tab === 'store') renderStore();
 }
 
 // ── Booklet filter ────────────────────────────────────────
@@ -197,6 +199,7 @@ function init() {
   loadState();
   initStars();
   updateDayNight();
+  applyCosmetics();
 
   renderAll();
   renderBooklet();
