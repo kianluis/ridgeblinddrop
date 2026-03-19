@@ -25,6 +25,8 @@ let state = {
   lastNewItemId: null,   // used for flip animation
   pullsSinceDoodle: 0,   // pity counter — guaranteed at 100
   newCollectionItems: [], // newly unlocked items not yet viewed in Collection tab
+  roomOwned: [],         // purchased store item IDs
+  roomColor: {},         // { wall, cat, shirt } → active item ID
 };
 
 // ── Session ID ────────────────────────────────────────────
@@ -100,11 +102,14 @@ function getShipTime(tier) {
   return Math.max(1, Math.round(tier.baseTime / carrier.mult));
 }
 
-function rollItem(rareboost) {
-  const totalBoost = (rareboost || 0) + (state.prestigeRareBonus || 0);
-  let rates = { ...BASE_RATES };
-  rates.common   = Math.max(0.10, rates.common   - totalBoost * 0.75);
-  rates.uncommon = Math.max(0.10, rates.uncommon - totalBoost * 0.15);
+function rollItem(tier) {
+  const rareboost  = tier.rareboost || 0;
+  const totalBoost = rareboost + (state.prestigeRareBonus || 0);
+  const base       = tier.baseRates || BASE_RATES;
+  const commonMin  = base.common > 0 ? 0.05 : 0; // respect tiers that ban commons
+  let rates = { ...base };
+  rates.common   = Math.max(commonMin, rates.common   - totalBoost * 0.75);
+  rates.uncommon = Math.max(0.10,      rates.uncommon - totalBoost * 0.15);
   rates.rare    += totalBoost * 0.70;
   rates.ultra   += totalBoost * 0.10;
   // Soft ultra pity: +0.5% per pull from pull 50→80 (max +15%), drains from common
@@ -112,7 +117,7 @@ function rollItem(rareboost) {
   if (pullsSinceUltra >= 50) {
     const ramp = Math.min(pullsSinceUltra - 49, 30) * 0.005;
     rates.ultra  += ramp;
-    rates.common  = Math.max(0.05, rates.common - ramp);
+    rates.common  = Math.max(commonMin, rates.common - ramp);
   }
   // Normalise
   const total = rates.common + rates.uncommon + rates.rare + rates.ultra;

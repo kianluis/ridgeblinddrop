@@ -47,6 +47,9 @@
     <span class="tab-icon">◆</span> MISSIONS
     <span id="missions-tab-badge" class="tab-notify-badge" style="display:none">!</span>
   </button>
+  <button class="tab-btn"         onclick="switchTab('store')">
+    <span class="tab-icon">◉</span> STORE
+  </button>
 </nav>
 
 <!-- ══ GAME TAB ═════════════════════════════════════════════ -->
@@ -125,6 +128,40 @@
               <div class="cat-eyes"></div>
             </div>
           </div>
+          <!-- Worker Daniel (store unlock) -->
+          <div id="worker-daniel" style="display:none">
+            <div class="worker-nametag">DANIEL</div>
+            <div class="worker-carry-box"></div>
+            <div class="worker-head"></div>
+            <div class="worker-body">
+              <div class="worker-arm-l"></div>
+              <div class="worker-arm-r"></div>
+            </div>
+            <div class="worker-legs">
+              <div class="leg-l"></div>
+              <div class="leg-r"></div>
+            </div>
+          </div>
+          <!-- Worker Austin (store unlock) -->
+          <div id="worker-austin" style="display:none">
+            <div class="worker-nametag">AUSTIN</div>
+            <div class="worker-carry-box"></div>
+            <div class="worker-head"></div>
+            <div class="worker-body">
+              <div class="worker-arm-l"></div>
+              <div class="worker-arm-r"></div>
+            </div>
+            <div class="worker-legs">
+              <div class="leg-l"></div>
+              <div class="leg-r"></div>
+            </div>
+          </div>
+          <!-- Store props (hidden until purchased) -->
+          <div id="wh-prop-succulent" style="display:none"></div>
+          <div id="wh-prop-plant"     style="display:none"></div>
+          <div id="wh-prop-painting"  style="display:none"></div>
+          <div id="wh-prop-desk"      style="display:none"></div>
+          <div id="wh-prop-chair"     style="display:none"></div>
           <div class="wh-sign">RIDGE WAREHOUSE</div>
           <div id="wh-stars"></div>
         </div>
@@ -273,6 +310,21 @@
   </div>
 </div>
 
+<!-- ══ STORE TAB ══════════════════════════════════════════════ -->
+<div id="store-panel" style="display:none;">
+  <div class="tab-content">
+    <div class="panel store-panel-wrap">
+      <div class="booklet-header">
+        <div class="booklet-header-left">
+          <div class="panel-title">WAREHOUSE STORE</div>
+          <div class="booklet-count">Customize your scene with credits</div>
+        </div>
+      </div>
+      <div id="store-content"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ OPEN OVERLAY ═════════════════════════════════════════ -->
 <div id="open-overlay">
   <div id="box-stage">
@@ -409,6 +461,7 @@
 <script src="audio.js"></script>
 <script src="render.js"></script>
 <script src="game.js"></script>
+<script src="store.js"></script>
 <script src="main.js"></script>
 
 </body>

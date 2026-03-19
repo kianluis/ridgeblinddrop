@@ -441,6 +441,8 @@ body {
   width: 18px; height: 42px;
   z-index: 3;
   animation: seanPatrol 10s linear infinite;
+  --shirt-color: #cc2222;
+  --shirt-shadow: #991818;
 }
 
 /* walk left→right→left, flip with scaleX for direction */
@@ -464,8 +466,8 @@ body {
   letter-spacing: 1px;
   white-space: nowrap;
   color: #fff;
-  background: #cc2222;
-  border: 1px solid #991818;
+  background: var(--shirt-color);
+  border: 1px solid var(--shirt-shadow);
   padding: 1px 3px;
   pointer-events: none;
 }
@@ -494,8 +496,8 @@ body {
 
 /* pixel body parts — arms angle upward to hold the box */
 .worker-head { position:absolute; top:0;  left:5px;  width:8px;  height:8px;  background:#c8a882; box-shadow:inset -2px -2px 0 #a07850; }
-.worker-body { position:absolute; top:8px; left:2px; width:14px; height:22px; background:#cc2222; box-shadow:inset -2px -2px 0 #991818; }
-.worker-arm-l,.worker-arm-r { position:absolute; top:6px; width:4px; height:12px; background:#cc2222; transform-origin: top center; }
+.worker-body { position:absolute; top:8px; left:2px; width:14px; height:22px; background:var(--shirt-color); box-shadow:inset -2px -2px 0 var(--shirt-shadow); }
+.worker-arm-l,.worker-arm-r { position:absolute; top:6px; width:4px; height:12px; background:var(--shirt-color); transform-origin: top center; }
 .worker-arm-l { left:-2px;  transform: rotate(-45deg); }
 .worker-arm-r { right:-2px; transform: rotate(45deg);  }
 
@@ -519,16 +521,18 @@ body {
   right: 16%;
   width: 20px; height: 26px;
   z-index: 2;
+  --cat-color: #c87840;
+  --cat-shadow: #a05e28;
 }
 .cat-tail {
   position: absolute;
   bottom: 0; right: -3px;
   width: 4px; height: 16px;
-  background: #c87840;
+  background: var(--cat-color);
   border-radius: 2px 2px 0 0;
   transform-origin: bottom center;
   animation: catTailSway 2.2s ease-in-out infinite;
-  box-shadow: inset -1px 0 0 #a05e28;
+  box-shadow: inset -1px 0 0 var(--cat-shadow);
 }
 @keyframes catTailSway {
   0%, 100% { transform: rotate(-22deg); }
@@ -538,15 +542,15 @@ body {
   position: absolute;
   bottom: 0; left: 3px;
   width: 14px; height: 10px;
-  background: #c87840;
-  box-shadow: inset -2px -2px 0 #a05e28;
+  background: var(--cat-color);
+  box-shadow: inset -2px -2px 0 var(--cat-shadow);
 }
 .cat-head {
   position: absolute;
   bottom: 10px; left: 4px;
   width: 12px; height: 9px;
-  background: #c87840;
-  box-shadow: inset -2px -2px 0 #a05e28;
+  background: var(--cat-color);
+  box-shadow: inset -2px -2px 0 var(--cat-shadow);
   animation: catBlink 5s ease-in-out infinite;
 }
 /* pixel ears via border triangles */
@@ -558,7 +562,7 @@ body {
   width: 0; height: 0;
   border-left: 3px solid transparent;
   border-right: 3px solid transparent;
-  border-bottom: 4px solid #c87840;
+  border-bottom: 4px solid var(--cat-color);
 }
 .cat-head::before { left: 0; }
 .cat-head::after  { right: 0; }
@@ -573,6 +577,293 @@ body {
 @keyframes catBlink {
   0%, 88%, 92%, 100% { transform: scaleY(1); }
   90%                 { transform: scaleY(0.1); }
+}
+
+/* ── Wall themes (store) ─────────────────────────────────── */
+#warehouse-scene.wall-blue   { background: linear-gradient(180deg, #5a7090 0%, #406080 55%, #28405a 100%); }
+#warehouse-scene.wall-green  { background: linear-gradient(180deg, #4a7048 0%, #346034 55%, #204820 100%); }
+#warehouse-scene.wall-gray   { background: linear-gradient(180deg, #686870 0%, #505058 55%, #38383e 100%); }
+#warehouse-scene.wall-dark   { background: linear-gradient(180deg, #1e1e2e 0%, #14141e 55%, #0a0a12 100%); }
+#warehouse-scene.wall-purple { background: linear-gradient(180deg, #5a3a7a 0%, #42286a 55%, #2a1648 100%); }
+
+/* ── Worker Daniel (store unlock) ────────────────────────── */
+#worker-daniel {
+  position: absolute;
+  bottom: 30px;
+  width: 18px; height: 42px;
+  z-index: 3;
+  --shirt-color: #2255aa;
+  --shirt-shadow: #1a3d80;
+  animation: danielPatrol 8s linear infinite;
+  animation-delay: -3s;
+}
+@keyframes danielPatrol {
+  0%   { left: 20%; transform: scaleX(1);  }
+  5%   { left: 20%; transform: scaleX(1);  }
+  44%  { left: 68%; transform: scaleX(1);  }
+  49%  { left: 68%; transform: scaleX(-1); }
+  54%  { left: 68%; transform: scaleX(-1); }
+  93%  { left: 20%; transform: scaleX(-1); }
+  98%  { left: 20%; transform: scaleX(-1); }
+  100% { left: 20%; transform: scaleX(1);  }
+}
+
+/* ── Worker Austin (store unlock) ────────────────────────── */
+#worker-austin {
+  position: absolute;
+  bottom: 30px;
+  width: 18px; height: 42px;
+  z-index: 3;
+  --shirt-color: #226633;
+  --shirt-shadow: #1a4d26;
+  animation: austinPatrol 12s linear infinite;
+  animation-delay: -7s;
+}
+@keyframes austinPatrol {
+  0%   { left: 35%; transform: scaleX(1);  }
+  5%   { left: 35%; transform: scaleX(1);  }
+  44%  { left: 80%; transform: scaleX(1);  }
+  49%  { left: 80%; transform: scaleX(-1); }
+  54%  { left: 80%; transform: scaleX(-1); }
+  93%  { left: 35%; transform: scaleX(-1); }
+  98%  { left: 35%; transform: scaleX(-1); }
+  100% { left: 35%; transform: scaleX(1);  }
+}
+
+/* ── Store props ─────────────────────────────────────────── */
+/* Succulent plant */
+#wh-prop-succulent {
+  position: absolute;
+  bottom: 30px; right: 24%;
+  z-index: 4;
+  width: 14px; height: 20px;
+}
+#wh-prop-succulent::before { /* plant */
+  content: '';
+  position: absolute;
+  bottom: 8px; left: 1px;
+  width: 12px; height: 10px;
+  background: #4a9a40;
+  border-radius: 50% 50% 20% 20%;
+  box-shadow: inset -2px -2px 0 #306828;
+}
+#wh-prop-succulent::after { /* pot */
+  content: '';
+  position: absolute;
+  bottom: 0; left: 2px;
+  width: 10px; height: 8px;
+  background: #c08850;
+  box-shadow: inset -2px -2px 0 #a06830;
+}
+/* Tall plant */
+#wh-prop-plant {
+  position: absolute;
+  bottom: 30px; left: 13%;
+  z-index: 4;
+  width: 20px; height: 34px;
+}
+#wh-prop-plant::after { /* pot */
+  content: '';
+  position: absolute;
+  bottom: 0; left: 4px;
+  width: 12px; height: 8px;
+  background: #c08850;
+  box-shadow: inset -2px -2px 0 #a06830;
+}
+#wh-prop-plant::before { /* stem + leaf shadows */
+  content: '';
+  position: absolute;
+  bottom: 6px; left: 8px;
+  width: 4px; height: 20px;
+  background: #386828;
+  box-shadow: -7px -5px 0 5px #4a9a40, 7px -10px 0 5px #3a8030;
+}
+/* Ridge Wallet Painting */
+#wh-prop-painting {
+  position: absolute;
+  top: 12%; left: 38%;
+  z-index: 4;
+  width: 26px; height: 20px;
+  background: #f8f0e0;
+  border: 3px solid #7a5820;
+  box-shadow: inset 0 0 0 1px #c8a870, 2px 2px 0 #5a3a10;
+}
+#wh-prop-painting::before { /* canvas */
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: linear-gradient(135deg, #2a2a3a 40%, #4a3a2a 100%);
+  border: 1px solid #8a6a30;
+}
+#wh-prop-painting::after { /* Ridge R hint */
+  content: 'R';
+  position: absolute;
+  top: 4px; left: 0; right: 0;
+  text-align: center;
+  font-size: 5px;
+  color: var(--amber);
+  letter-spacing: 0;
+  font-family: inherit;
+}
+/* Desk */
+#wh-prop-desk {
+  position: absolute;
+  bottom: 40px; right: 5%;
+  z-index: 2;
+  width: 42px; height: 14px;
+  background: #8a5a28;
+  border-top: 3px solid #c08840;
+  box-shadow: 3px 3px 0 #5a3810;
+}
+#wh-prop-desk::before { /* left leg */
+  content: '';
+  position: absolute;
+  bottom: -12px; left: 4px;
+  width: 4px; height: 12px;
+  background: #6a4018;
+}
+#wh-prop-desk::after { /* right leg */
+  content: '';
+  position: absolute;
+  bottom: -12px; right: 4px;
+  width: 4px; height: 12px;
+  background: #6a4018;
+}
+/* Chair */
+#wh-prop-chair {
+  position: absolute;
+  bottom: 30px; right: 14%;
+  z-index: 2;
+  width: 16px; height: 26px;
+}
+#wh-prop-chair::before { /* seat */
+  content: '';
+  position: absolute;
+  bottom: 6px; left: 0;
+  width: 16px; height: 7px;
+  background: #5a4030;
+  border-top: 2px solid #8a6040;
+}
+#wh-prop-chair::after { /* backrest */
+  content: '';
+  position: absolute;
+  top: 0; left: 2px;
+  width: 12px; height: 18px;
+  background: #5a4030;
+  border: 2px solid #8a6040;
+  border-bottom: none;
+}
+
+/* ══ STORE TAB ══════════════════════════════════════════════ */
+.store-panel-wrap { padding: var(--sp-3); }
+
+.store-section {
+  margin-bottom: var(--sp-4);
+}
+.store-section-title {
+  font-size: var(--fs-xs);
+  color: var(--amber);
+  letter-spacing: 2px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--sp-1);
+  margin-bottom: var(--sp-2);
+}
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+  gap: var(--sp-2);
+}
+.store-tile {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: var(--sp-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-1);
+  text-align: center;
+  transition: border-color 0.15s;
+}
+.store-tile.store-equipped { border-color: var(--amber); }
+.store-tile-preview {
+  width: 52px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+}
+.preview-swatch {
+  width: 52px; height: 38px;
+  border: 1px solid var(--border);
+}
+.preview-cat, .preview-shirt {
+  width: 32px; height: 32px;
+}
+.preview-icon {
+  font-size: 22px;
+  line-height: 38px;
+  color: var(--amber);
+}
+.preview-worker {
+  font-size: var(--fs-xs);
+  width: 26px; height: 26px;
+  line-height: 26px;
+  border-radius: 50%;
+  color: #fff;
+}
+.store-tile-name {
+  font-size: var(--fs-xs);
+  color: var(--cream);
+  letter-spacing: 1px;
+}
+.store-tile-desc {
+  font-size: 5px;
+  color: var(--text-dim, #806040);
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+}
+.btn-store {
+  margin-top: var(--sp-1);
+  font-size: 5px;
+  padding: 3px 6px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: 1px solid;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-store-buy {
+  background: rgba(30,15,0,0.45);
+  border-color: var(--amber);
+  color: var(--amber);
+}
+.btn-store-buy:hover:not(:disabled) {
+  background: var(--amber);
+  color: var(--bg);
+}
+.btn-store-buy.cant-afford, .btn-store-buy:disabled {
+  border-color: #604020;
+  color: #604020;
+  cursor: not-allowed;
+  background: transparent;
+}
+.btn-store-equip {
+  background: rgba(30,15,0,0.45);
+  border-color: #6080a0;
+  color: #8ab0d0;
+}
+.btn-store-equip:hover {
+  background: #406080;
+  color: #fff;
+}
+.btn-store-equipped {
+  background: rgba(0,60,0,0.25);
+  border-color: #40a040;
+  color: #70d070;
+  cursor: default;
+}
+.btn-store-equipped:not(:disabled):hover {
+  background: rgba(0,80,0,0.35);
+  border-color: #60c060;
+  color: #90e090;
+  cursor: pointer;
 }
 
 .wh-sign {
