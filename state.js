@@ -27,13 +27,27 @@ let state = {
   newCollectionItems: [], // newly unlocked items not yet viewed in Collection tab
 };
 
-// ── Session ID (one per URL — different players get different URLs) ──
+// ── Session ID ────────────────────────────────────────────
+// Stored in the URL (?s=xxx) AND in localStorage so progress
+// survives tab closes even when the URL is not bookmarked.
+
+const _SESSION_STORE_KEY = 'ridgemysterydrop_session';
 
 function getSessionId() {
   const params = new URLSearchParams(location.search);
   let sid = params.get('s');
   if (!sid) {
+    // Restore from localStorage so returning visitors keep their save
+    sid = localStorage.getItem(_SESSION_STORE_KEY);
+  }
+  if (!sid) {
+    // Truly first visit — generate a new ID
     sid = Math.random().toString(36).slice(2, 8);
+  }
+  // Persist the session ID so future bare-URL visits find it
+  try { localStorage.setItem(_SESSION_STORE_KEY, sid); } catch(e) {}
+  // Always put it in the URL for shareability
+  if (!params.get('s') || params.get('s') !== sid) {
     params.set('s', sid);
     history.replaceState(null, '', location.pathname + '?' + params.toString());
   }

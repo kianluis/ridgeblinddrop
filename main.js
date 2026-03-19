@@ -219,6 +219,14 @@ function init() {
   if (!localStorage.getItem(GUIDE_KEY)) {
     openGuide();
   }
+
+  // Save on tab close / navigate away
+  window.addEventListener('beforeunload', saveState);
+
+  // Save when tab is hidden (more reliable on mobile / quick tab switches)
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') saveState();
+  });
 }
 
 init();
