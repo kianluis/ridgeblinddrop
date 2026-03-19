@@ -2053,8 +2053,8 @@ body {
 }
 /* Subtle float for card icons */
 @keyframes guideIconFloat {
-  0%, 100% { transform: translateY(0)   scale(1); }
-  50%       { transform: translateY(-5px) scale(1.08); }
+  0%, 100% { transform: translateY(0);    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); }
+  50%       { transform: translateY(-10px); animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19); }
 }
 /* Per-card glow colours: gold, amber, blue, green, purple */
 @keyframes guideGlow1 {
