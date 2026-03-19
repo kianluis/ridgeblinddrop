@@ -2181,32 +2181,34 @@ body {
   box-shadow: .6em 0 0 0 #1a1a1a;
 }
 
-/* Priority — airplane (top-down view, nose at top) */
+/* Priority — airplane (side profile, flying right) */
 .css-tier-priority {
   display: inline-block;
-  width: 1em; height: .95em;
+  width: 1.2em; height: .82em;
   position: relative;
   vertical-align: middle;
 }
-.css-tier-priority::before { /* swept main wings — drawn first (behind fuselage) */
+.css-tier-priority::before { /* swept wing — drawn first (behind fuselage) */
   content: '';
   position: absolute;
   inset: 0;
-  background: #8aaec8;
-  clip-path: polygon(
-    0% 32%, 46% 24%, 54% 24%, 100% 32%,
-    100% 42%, 54% 34%, 46% 34%, 0% 42%
-  );
+  background: #7aaad8;
+  clip-path: polygon(35% 62%, 75% 62%, 50% 100%, 12% 100%);
 }
-.css-tier-priority::after { /* fuselage + horizontal tail stabilizer — drawn on top */
+.css-tier-priority::after { /* fuselage + swept vertical tail fin — drawn on top */
   content: '';
   position: absolute;
   inset: 0;
-  background: #d0e4f8;
+  background: #c8dff0;
   clip-path: polygon(
-    35% 0%, 65% 0%,
-    65% 72%, 88% 72%, 88% 90%,
-    12% 90%, 12% 72%, 35% 72%
+    8%  5%,    /* tail fin tip */
+    18% 32%,   /* tail fin base / fuselage top starts */
+    85% 32%,   /* fuselage top → near nose */
+    100% 50%,  /* nose tip */
+    85% 68%,   /* fuselage bottom near nose */
+    5%  68%,   /* fuselage bottom at tail */
+    5%  32%,   /* fuselage top at tail (closes fin rear edge) */
+    8%  5%
   );
 }
 
