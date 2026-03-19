@@ -1071,6 +1071,7 @@ body {
 .tier-card-time  { font-size: var(--fs-xs); color: var(--text-dim); margin-bottom: var(--sp-2); line-height: 2.2; }
 .tier-card-boost { font-size: var(--fs-xs); padding: 2px var(--sp-2); display: block; margin-bottom: var(--sp-2); word-break: break-word; }
 .tier-card-cost  { font-size: var(--fs-xs); color: var(--text); font-family: 'Press Start 2P', monospace; margin-bottom: var(--sp-2); }
+.tier-card-warn  { font-size: 5px; color: #e05050; letter-spacing: 0.5px; margin-bottom: var(--sp-2); }
 
 .btn-order-card {
   width: 100%;
@@ -1343,10 +1344,10 @@ body {
 #trophy-panel { padding: 8px 8px 10px; }
 
 #trophy-shelf {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  gap: 6px 0;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  justify-items: center;
+  gap: 8px 0;
   padding: 10px 8px 14px;
   background: linear-gradient(180deg, #7a4820 0%, #8a5428 40%, #9a6030 80%, #7a4018 100%);
   border-radius: 3px;

@@ -67,11 +67,17 @@ function openPackage(orderId) {
     ? doodle
     : rollItem(tier.rareboost);
 
-  // Update pity counter
+  // Update pity counters
   if (item.id === 'carryon-mr-doodle') {
     state.pullsSinceDoodle = 0;
   } else {
     state.pullsSinceDoodle = (state.pullsSinceDoodle || 0) + 1;
+  }
+  // Soft ultra pity counter — resets on any ultra (including doodle)
+  if (item.rarity === 'ultra') {
+    state.pullsSinceUltra = 0;
+  } else {
+    state.pullsSinceUltra = (state.pullsSinceUltra || 0) + 1;
   }
 
   // Update state
@@ -84,10 +90,11 @@ function openPackage(orderId) {
     if (!state.newCollectionItems.includes(item.id)) state.newCollectionItems.push(item.id);
   }
 
-  // Credits: base value, 2× on special, +3 duplicate bonus
+  // Credits: base value, 2× on special, rarity-scaled duplicate bonus
   let creditsGained = item.credits;
   if (item.special === '2xcredits') creditsGained *= 2;
-  const dupBonus = isNew ? 0 : 3;
+  const dupBonusByRarity = { common: 4, uncommon: 10, rare: 25, ultra: 60 };
+  const dupBonus = isNew ? 0 : (dupBonusByRarity[item.rarity] ?? 4);
   creditsGained += dupBonus;
 
   state.credits += creditsGained;

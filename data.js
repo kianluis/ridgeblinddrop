@@ -4,7 +4,7 @@
 // ═══════════════════════════════════════════════════════
 
 const PACKAGE_TIERS = [
-  { id:'standard',  name:'Standard',  cost:8,   baseTime:60,  rareboost:0,    cls:'tier-standard'  },
+  { id:'standard',  name:'Standard',  cost:8,   baseTime:40,  rareboost:0,    cls:'tier-standard'  },
   { id:'express',   name:'Express',   cost:20,  baseTime:30,  rareboost:0.10, cls:'tier-express'   },
   { id:'priority',  name:'Priority',  cost:50,  baseTime:15,  rareboost:0.25, cls:'tier-priority'  },
   { id:'overnight', name:'Overnight', cost:100, baseTime:5,   rareboost:0.50, cls:'tier-overnight' },
@@ -14,7 +14,7 @@ const CARRIERS = [
   { id:'usps',  name:'USPS',  cost:0,    mult:1.0, desc:'Default carrier. Gets the job done. Eventually.' },
   { id:'ups',   name:'UPS',   cost:75,   mult:1.5, desc:'1.5× speed. Brown never looked so fast.' },
   { id:'fedex', name:'FedEx', cost:190,  mult:2.5, desc:'2.5× speed. When it absolutely has to be there.' },
-  { id:'dhl',   name:'DHL',   cost:480,  mult:5.0, desc:'5× speed. International speed, delivered.' },
+  { id:'dhl',   name:'DHL',   cost:650,  mult:5.0, desc:'5× speed. International speed, delivered.' },
 ];
 
 const COLLECTIBLES = [

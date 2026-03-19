@@ -106,6 +106,13 @@ function rollItem(rareboost) {
   rates.uncommon = Math.max(0.10, rates.uncommon - totalBoost * 0.15);
   rates.rare    += totalBoost * 0.70;
   rates.ultra   += totalBoost * 0.10;
+  // Soft ultra pity: +0.5% per pull from pull 50→80 (max +15%), drains from common
+  const pullsSinceUltra = state.pullsSinceUltra || 0;
+  if (pullsSinceUltra >= 50) {
+    const ramp = Math.min(pullsSinceUltra - 49, 30) * 0.005;
+    rates.ultra  += ramp;
+    rates.common  = Math.max(0.05, rates.common - ramp);
+  }
   // Normalise
   const total = rates.common + rates.uncommon + rates.rare + rates.ultra;
   for (const k in rates) rates[k] /= total;
