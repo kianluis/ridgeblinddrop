@@ -149,7 +149,7 @@ function hasUpgrade(id) {
 }
 
 function getIdleRate() {
-  return hasUpgrade('upgrade-coffee') ? 15 : 10;
+  return hasUpgrade('upgrade-coffee') ? 7 : 4;
 }
 
 function getDupMultiplier() {
