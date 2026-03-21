@@ -3346,3 +3346,268 @@ body {
 .order-ready-label {
   animation: readyLabelPulse 2.2s ease-in-out infinite;
 }
+
+/* ═══════════════════════════════════════════════════════
+   DESIGN IMPROVEMENTS — 2025
+   ═══════════════════════════════════════════════════════ */
+
+/* ── PITY COUNTER ─────────────────────────────────────── */
+
+.pity-counter {
+  margin-top: var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.05);
+  text-align: center;
+  line-height: 1.6;
+  transition: color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.pity-counter.pity-ramping {
+  color: var(--ultra);
+  border-color: var(--ultra);
+  box-shadow: 0 0 8px rgba(112,64,184,0.3);
+  animation: pityGlow 2s ease-in-out infinite;
+}
+
+@keyframes pityGlow {
+  0%, 100% { box-shadow: 0 0 6px rgba(112,64,184,0.25); }
+  50%       { box-shadow: 0 0 14px rgba(112,64,184,0.55); }
+}
+
+/* ── OPEN ALL BUTTON ──────────────────────────────────── */
+
+.btn-open-all {
+  display: block;
+  width: 100%;
+  margin-bottom: var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
+  background: linear-gradient(135deg, #2a5fa8, #1a4080);
+  border: 1px solid #3a78c8;
+  color: #e8f0ff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: var(--fs-xs);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+.btn-open-all:hover {
+  background: linear-gradient(135deg, #3a6fc8, #2a5098);
+  box-shadow: 0 0 10px rgba(42,95,168,0.5);
+}
+
+/* ── ORDER CAP INDICATOR ──────────────────────────────── */
+
+.order-cap-indicator {
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+  text-align: right;
+  margin-bottom: var(--sp-2);
+  letter-spacing: 0.5px;
+}
+.order-cap-indicator.at-cap {
+  color: var(--danger);
+}
+
+/* ── TIER CAP BADGE ───────────────────────────────────── */
+
+.tier-cap-badge {
+  font-size: var(--fs-xs);
+  color: var(--danger);
+  margin: var(--sp-1) 0;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* ── WAREHOUSE UPGRADES ───────────────────────────────── */
+
+.upgrade-card {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  margin-bottom: var(--sp-2);
+  transition: border-color 0.15s;
+}
+.upgrade-card:hover:not(.owned):not(.cant-afford) {
+  border-color: var(--amber);
+}
+.upgrade-card.owned {
+  opacity: 0.7;
+  border-color: var(--success);
+}
+.upgrade-card.cant-afford {
+  opacity: 0.5;
+}
+
+.upgrade-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+  image-rendering: auto;
+}
+
+.upgrade-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.upgrade-name {
+  font-size: var(--fs-xs);
+  color: var(--amber);
+  margin-bottom: var(--sp-1);
+}
+
+.upgrade-desc {
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.upgrade-owned-badge {
+  font-size: var(--fs-xs);
+  color: var(--success);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-upgrade {
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--amber);
+  border: 1px solid var(--border-hi);
+  color: var(--cream);
+  font-family: 'Press Start 2P', monospace;
+  font-size: var(--fs-xs);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.btn-upgrade:hover:not(:disabled) { background: var(--amber2); }
+.btn-upgrade:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── LIFETIME TROPHY (dim glow — earned in a past run) ── */
+
+.trophy-lifetime {
+  opacity: 0.65;
+  filter: saturate(0.6);
+}
+.trophy-lifetime::after {
+  content: '✦';
+  position: absolute;
+  bottom: -6px;
+  right: -4px;
+  font-size: 5px;
+  color: var(--ultra);
+}
+
+/* ── PRESTIGE CONFIRM OVERLAY ─────────────────────────── */
+
+#prestige-confirm-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(20,8,0,0.82);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+}
+#prestige-confirm-overlay.active {
+  display: flex;
+}
+
+.prestige-confirm-box {
+  background: var(--bg2);
+  border: 2px solid var(--ultra);
+  box-shadow: 0 0 40px rgba(112,64,184,0.5), 0 0 0 4px rgba(112,64,184,0.15);
+  padding: clamp(20px, 4vw, 40px);
+  max-width: 380px;
+  width: 90%;
+  text-align: center;
+}
+
+.prestige-confirm-star {
+  font-size: clamp(24px, 4vw, 40px);
+  color: var(--ultra);
+  margin-bottom: var(--sp-3);
+  animation: pityGlow 2s ease-in-out infinite;
+}
+
+.prestige-confirm-title {
+  font-size: var(--fs-lg);
+  color: var(--ultra);
+  letter-spacing: 3px;
+  margin-bottom: var(--sp-4);
+}
+
+.prestige-confirm-body {
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+  line-height: 2.2;
+  margin-bottom: var(--sp-5);
+}
+.prestige-confirm-body strong {
+  color: var(--ultra);
+  font-size: var(--fs-md);
+}
+
+.prestige-confirm-buttons {
+  display: flex;
+  gap: var(--sp-3);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-prestige-confirm {
+  padding: var(--sp-3) var(--sp-4);
+  background: linear-gradient(135deg, #7040b8, #5030a0);
+  border: 1px solid var(--ultra-glow);
+  color: #f0e8ff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: var(--fs-xs);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: box-shadow 0.15s;
+}
+.btn-prestige-confirm:hover {
+  box-shadow: 0 0 16px rgba(112,64,184,0.6);
+}
+
+.btn-prestige-cancel {
+  padding: var(--sp-3) var(--sp-4);
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-family: 'Press Start 2P', monospace;
+  font-size: var(--fs-xs);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-prestige-cancel:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* ── DUST PUFF (common reveal particles) ──────────────── */
+
+@keyframes dustPuff {
+  0%   { transform: translate(-50%, -50%) translate(0, 0) scale(1); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+
+.dust-puff {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: dustPuff 0.5s ease-out forwards;
+}

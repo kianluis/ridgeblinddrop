@@ -202,7 +202,7 @@
         </div>
         <div class="stat-row">
           <span class="stat-label">IDLE RATE</span>
-          <span class="stat-val dim">1 cr / 10s</span>
+          <span class="stat-val dim" id="stat-idle-rate">10 cr / 5s</span>
         </div>
       </div>
 
@@ -222,6 +222,7 @@
             <span>IN TRANSIT</span>
             <span id="transit-count" class="transit-count"></span>
           </div>
+          <button id="open-all-btn" class="btn-open-all" onclick="openAll()" style="display:none">OPEN ALL</button>
           <div id="order-queue"></div>
         </div>
 
@@ -230,9 +231,12 @@
         <div class="book-page book-right" id="order-panel">
           <div class="panel-title">PLACE ORDER</div>
           <p class="order-panel-hint">Higher tiers = faster shipping &amp; better rare odds.</p>
+          <div id="order-cap-indicator" class="order-cap-indicator"></div>
           <div id="inline-tier-cards" class="tier-cards-grid"></div>
           <div class="order-panel-divider">▸ CARRIER UPGRADES</div>
           <div id="inline-carrier-shop"></div>
+          <div class="order-panel-divider">▸ WAREHOUSE UPGRADES</div>
+          <div id="inline-warehouse-upgrades"></div>
         </div>
 
       </div>
@@ -254,6 +258,7 @@
     <div id="col-right">
       <div class="panel-title">RECENT PULLS</div>
       <div class="pull-history" id="pull-history"></div>
+      <div id="pity-counter" class="pity-counter"></div>
     </div>
 
   </div>
@@ -457,6 +462,24 @@
 <div id="rarity-flash"></div>
 <div id="screen-flash"></div>
 <div id="toast-container"></div>
+
+<!-- ══ PRESTIGE CONFIRM OVERLAY ══════════════════════════ -->
+<div id="prestige-confirm-overlay">
+  <div class="prestige-confirm-box">
+    <div class="prestige-confirm-star">✦</div>
+    <div class="prestige-confirm-title">PRESTIGE?</div>
+    <p class="prestige-confirm-body">
+      Your collection will reset.<br>
+      You'll earn a permanent<br>
+      <strong id="prestige-confirm-bonus">?%</strong> total rare rate bonus.<br><br>
+      Credits &amp; carriers are kept.
+    </p>
+    <div class="prestige-confirm-buttons">
+      <button class="btn-prestige-confirm" onclick="confirmPrestige()">✦ PRESTIGE ✦</button>
+      <button class="btn-prestige-cancel"  onclick="cancelPrestige()">CANCEL</button>
+    </div>
+  </div>
+</div>
 
 <script src="data.js"></script>
 <script src="state.js"></script>

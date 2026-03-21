@@ -27,6 +27,8 @@ let state = {
   newCollectionItems: [], // newly unlocked items not yet viewed in Collection tab
   roomOwned: [],         // purchased store item IDs
   roomColor: {},         // { wall, cat, shirt } → active item ID
+  warehouseUpgrades: [], // purchased warehouse upgrade IDs
+  lifetimeTrophies: [],  // trophies earned across ALL prestige runs (never reset)
 };
 
 // ── Session ID ────────────────────────────────────────────
@@ -140,6 +142,22 @@ function rollItem(tier) {
     if (pick <= 0) return c;
   }
   return pool[pool.length - 1];
+}
+
+function hasUpgrade(id) {
+  return (state.warehouseUpgrades || []).includes(id);
+}
+
+function getIdleRate() {
+  return hasUpgrade('upgrade-coffee') ? 15 : 10;
+}
+
+function getDupMultiplier() {
+  return hasUpgrade('upgrade-membership') ? 1.5 : 1.0;
+}
+
+function getMaxOrders() {
+  return hasUpgrade('upgrade-expansion') ? 10 : DEFAULT_MAX_ORDERS;
 }
 
 function rarityColor(r) {

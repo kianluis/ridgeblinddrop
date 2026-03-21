@@ -66,7 +66,9 @@ function playSound(type) {
 
     // ── Rarity reveals ────────────────────────────────
     case 'common':
-      playNote(440, 0.20, 'sine', 0.07);
+      // Soft thud then single note
+      playNote(120, 0.08, 'sine', 0.09);
+      playNote(440, 0.20, 'sine', 0.07, 0.06);
       break;
 
     case 'uncommon':
