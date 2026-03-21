@@ -6,7 +6,8 @@
 const PACKAGE_TIERS = [
   { id:'standard',  name:'Standard',  cost:20,  baseCredits:10, baseTime:40,  rareboost:0,    cls:'tier-standard',
     baseRates: { common:0.82, uncommon:0.15, rare:0.025, ultra:0.005 } },
-  { id:'express',   name:'Express',   cost:30,  baseCredits:15, baseTime:30,  rareboost:0.10, cls:'tier-express'   },
+  { id:'express',   name:'Express',   cost:30,  baseCredits:15, baseTime:30,  rareboost:0.10, cls:'tier-express',
+    baseRates: { common:0.70, uncommon:0.20, rare:0.075, ultra:0.025 } },
   { id:'priority',  name:'Priority',  cost:50,  baseCredits:25, baseTime:15,  rareboost:0.25, cls:'tier-priority'  },
   { id:'overnight', name:'Overnight', cost:100, baseCredits:50, baseTime:5,   rareboost:0.50, cls:'tier-overnight',
     baseRates: { common:0, uncommon:0.55, rare:0.35, ultra:0.10 } },
@@ -56,7 +57,7 @@ const COLLECTIBLES = [
     img:'https://cdn.shopify.com/s/files/1/0613/6213/files/Iridescence-Wallet-RenderFront.jpg?v=1770820026' },
   { id:'carryon-mr-doodle',     name:'Ridge Carry On\n(Mr. Doodle)',         rarity:'ultra',    credits:180, weight:0.4,
     img:'https://ridge.com/cdn/shop/files/MrDoodle_CarryOn_THUMB_01_f8d3286f-c8b4-486c-862b-7140129d3e13_2000x.jpg?v=1764150871' },
-  { id:'wallet-mkbhd-vapor',    name:'Ridge Wallet\n(MKBHD Vapor)',          rarity:'ultra',    credits:300,
+  { id:'wallet-mkbhd-vapor',    name:'Ridge Wallet\n(MKBHD Vapor)',          rarity:'ultra',    credits:200,
     img:'https://ridge.com/cdn/shop/files/MKBHDVapor-Wallet-RenderFront_7c649890-2065-4e4d-9b87-8cbf4df7c5e1_2000x.jpg?v=1767831553', special:'2xcredits' },
 ];
 
@@ -67,7 +68,7 @@ const DEFAULT_MAX_ORDERS   = 5;   // default total active order cap
 
 // ── Warehouse Upgrades ────────────────────────────────────
 const WAREHOUSE_UPGRADES = [
-  { id:'upgrade-coffee',    name:'Coffee Machine',      desc:'Boosts idle rate from 10 → 15 cr / 5s',          cost:300,  icon:'☕' },
+  { id:'upgrade-coffee',    name:'Coffee Machine',      desc:'Boosts idle rate from 4 → 7 cr / 5s',            cost:300,  icon:'☕' },
   { id:'upgrade-membership',name:'Premium Membership',  desc:'Duplicate items give +50% bonus credits',         cost:600,  icon:'★' },
   { id:'upgrade-expansion', name:'Warehouse Expansion', desc:'Increases max active orders from 5 → 10',        cost:1000, icon:'📦' },
 ];
