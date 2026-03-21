@@ -3354,7 +3354,7 @@ body {
 /* ── PITY COUNTER ─────────────────────────────────────── */
 
 .pity-counter {
-  margin-top: var(--sp-3);
+  margin-bottom: var(--sp-3);
   padding: var(--sp-2) var(--sp-3);
   font-size: var(--fs-xs);
   color: var(--text-dim);
