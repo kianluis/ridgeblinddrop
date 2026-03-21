@@ -56,7 +56,32 @@ function renderStore() {
 
   const owned  = state.roomOwned  || [];
   const color  = state.roomColor  || {};
-  let html = '';
+
+  // ── Warehouse Upgrades section ───────────────────────────
+  let html = `<div class="store-section">
+    <div class="store-section-title">WAREHOUSE UPGRADES</div>
+    <div class="upgrade-list">`;
+
+  for (const upg of WAREHOUSE_UPGRADES) {
+    const isOwned   = (state.warehouseUpgrades || []).includes(upg.id);
+    const canAfford = state.credits >= upg.cost;
+    html += `<div class="upgrade-card${isOwned ? ' owned' : ''}${!canAfford && !isOwned ? ' cant-afford' : ''}">
+      <div class="upgrade-icon">${upg.icon}</div>
+      <div class="upgrade-info">
+        <div class="upgrade-name">${upg.name}</div>
+        <div class="upgrade-desc">${upg.desc}</div>
+      </div>
+      ${isOwned
+        ? `<div class="upgrade-owned-badge">OWNED</div>`
+        : `<button class="btn-upgrade${canAfford ? '' : ' cant-afford'}"
+             ${canAfford ? '' : 'disabled'}
+             onclick="buyWarehouseUpgrade('${upg.id}')">
+             ${upg.cost} cr
+           </button>`
+      }
+    </div>`;
+  }
+  html += `</div></div>`;
 
   for (const cat of ['wall', 'cat', 'shirt', 'props', 'workers']) {
     const items = STORE_ITEMS.filter(i => i.cat === cat);

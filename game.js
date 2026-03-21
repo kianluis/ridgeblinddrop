@@ -57,7 +57,7 @@ function buyWarehouseUpgrade(upgradeId) {
   state.warehouseUpgrades.push(upgradeId);
   saveState();
   renderAll();
-  renderOrderPanel();
+  renderStore();
   playSound('carrier');
   showToast(upgrade.icon + ' ' + upgrade.name, upgrade.desc);
 }
@@ -433,13 +433,13 @@ function _openAllSingle(orderId, onDone) {
     _showReveal(item, isNew, creditsGained, dupBonus);
   }, 220);
 
-  // Phase 3 — auto-close (820ms total), then next
+  // Phase 3 — auto-close (2500ms total, ~2.3s on reveal card), then next
   setTimeout(() => {
     overlay.classList.remove('active');
     isOpening = false;
     renderAll();
     onDone();
-  }, 820);
+  }, 2500);
 }
 
 // ── Milestones ───────────────────────────────────────────
