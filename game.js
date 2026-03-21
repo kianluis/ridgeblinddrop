@@ -57,7 +57,7 @@ function buyWarehouseUpgrade(upgradeId) {
   state.warehouseUpgrades.push(upgradeId);
   saveState();
   renderAll();
-  renderOrderPanel();
+  renderStore();
   playSound('carrier');
   showToast(upgrade.icon + ' ' + upgrade.name, upgrade.desc);
 }

@@ -151,30 +151,6 @@ function renderOrderPanel() {
     shopEl.appendChild(div);
   });
 
-  // Warehouse Upgrades
-  const upgradesEl = document.getElementById('inline-warehouse-upgrades');
-  if (!upgradesEl) return;
-  upgradesEl.innerHTML = '';
-  WAREHOUSE_UPGRADES.forEach(upg => {
-    const owned     = (state.warehouseUpgrades || []).includes(upg.id);
-    const canAfford = state.credits >= upg.cost;
-    const div = document.createElement('div');
-    div.className = 'upgrade-card' + (owned ? ' owned' : '') + (!canAfford && !owned ? ' cant-afford' : '');
-    div.innerHTML = `
-      <div class="upgrade-icon">${upg.icon}</div>
-      <div class="upgrade-info">
-        <div class="upgrade-name">${upg.name}</div>
-        <div class="upgrade-desc">${upg.desc}</div>
-      </div>
-      ${owned
-        ? `<div class="upgrade-owned-badge">OWNED</div>`
-        : `<button class="btn-upgrade" ${canAfford ? '' : 'disabled'} onclick="buyWarehouseUpgrade('${upg.id}')">
-             ${upg.cost} cr
-           </button>`
-      }
-    `;
-    upgradesEl.appendChild(div);
-  });
 }
 
 // ── Order Queue (center panel) ────────────────────────────
