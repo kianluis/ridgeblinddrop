@@ -62,6 +62,16 @@ const COLLECTIBLES = [
 
 const BASE_RATES = { common:0.60, uncommon:0.25, rare:0.12, ultra:0.03 };
 
+const MAX_OVERNIGHT_ORDERS = 2;   // cap on concurrent Overnight orders
+const DEFAULT_MAX_ORDERS   = 5;   // default total active order cap
+
+// ── Warehouse Upgrades ────────────────────────────────────
+const WAREHOUSE_UPGRADES = [
+  { id:'upgrade-coffee',    name:'Coffee Machine',      desc:'Boosts idle rate from 10 → 15 cr / 5s',          cost:300,  icon:'☕' },
+  { id:'upgrade-membership',name:'Premium Membership',  desc:'Duplicate items give +50% bonus credits',         cost:600,  icon:'★' },
+  { id:'upgrade-expansion', name:'Warehouse Expansion', desc:'Increases max active orders from 5 → 10',        cost:1000, icon:'📦' },
+];
+
 // ── Testimonials ─────────────────────────────────────────
 const TESTIMONIALS = [
   { name:'Tyler M.',    location:'Austin, TX',        stars:5, avatar:0,

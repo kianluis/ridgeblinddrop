@@ -46,6 +46,10 @@ function renderTopBar() {
   document.getElementById('stat-carrier').textContent = carrier.name;
   document.getElementById('stat-speed').textContent   = carrier.mult + 'x';
 
+  // Idle rate (updates when Coffee Machine upgrade is purchased)
+  const idleRateEl = document.getElementById('stat-idle-rate');
+  if (idleRateEl) idleRateEl.textContent = getIdleRate() + ' cr / 5s';
+
   // Prestige row
   if (state.prestigeCount > 0) {
     document.getElementById('prestige-stat-row').style.display = '';
@@ -78,12 +82,24 @@ function renderOrderPanel() {
   const cardsEl = document.getElementById('inline-tier-cards');
   if (!cardsEl) return;
   cardsEl.innerHTML = '';
+
+  const activeOvernight = state.orders.filter(o => o.tier === 'overnight').length;
+  const atMaxOrders     = state.orders.length >= getMaxOrders();
+
   PACKAGE_TIERS.forEach(tier => {
-    const shipTime  = getShipTime(tier);
-    const canAfford = state.credits >= tier.cost;
-    const carrier   = getCurrentCarrier();
+    const shipTime     = getShipTime(tier);
+    const canAfford    = state.credits >= tier.cost;
+    const overnightCap = tier.id === 'overnight' && activeOvernight >= MAX_OVERNIGHT_ORDERS;
+    const orderCap     = atMaxOrders;
+    const blocked      = !canAfford || overnightCap || orderCap;
+    const carrier      = getCurrentCarrier();
     const div = document.createElement('div');
-    div.className = 'tier-card ' + tier.cls + (canAfford ? '' : ' cant-afford');
+    div.className = 'tier-card ' + tier.cls + (blocked ? ' cant-afford' : '');
+
+    let capBadge = '';
+    if (overnightCap) capBadge = `<div class="tier-cap-badge">MAX ${MAX_OVERNIGHT_ORDERS} ACTIVE</div>`;
+    else if (orderCap) capBadge = `<div class="tier-cap-badge">QUEUE FULL</div>`;
+
     div.innerHTML = `
       <div class="tier-card-name">${tier.name.toUpperCase()}</div>
       <div class="tier-card-icon">${TIER_ICONS[tier.id] || TIER_ICONS.standard}</div>
@@ -94,13 +110,21 @@ function renderOrderPanel() {
            </div>`
         : `<div class="tier-card-boost badge-common">STANDARD RATES</div>`
       }
+      ${capBadge}
       <div class="tier-card-cost">${tier.cost} cr</div>
-      <button class="btn-order-card" ${canAfford ? '' : 'disabled'} onclick="placeOrder('${tier.id}')">
+      <button class="btn-order-card" ${blocked ? 'disabled' : ''} onclick="placeOrder('${tier.id}')">
         ORDER
       </button>
     `;
     cardsEl.appendChild(div);
   });
+
+  // Order queue capacity indicator
+  const capEl = document.getElementById('order-cap-indicator');
+  if (capEl) {
+    capEl.textContent = 'QUEUE: ' + state.orders.length + ' / ' + getMaxOrders();
+    capEl.className = 'order-cap-indicator' + (atMaxOrders ? ' at-cap' : '');
+  }
 
   // Carrier tiles
   const shopEl = document.getElementById('inline-carrier-shop');
@@ -126,6 +150,31 @@ function renderOrderPanel() {
     `;
     shopEl.appendChild(div);
   });
+
+  // Warehouse Upgrades
+  const upgradesEl = document.getElementById('inline-warehouse-upgrades');
+  if (!upgradesEl) return;
+  upgradesEl.innerHTML = '';
+  WAREHOUSE_UPGRADES.forEach(upg => {
+    const owned     = (state.warehouseUpgrades || []).includes(upg.id);
+    const canAfford = state.credits >= upg.cost;
+    const div = document.createElement('div');
+    div.className = 'upgrade-card' + (owned ? ' owned' : '') + (!canAfford && !owned ? ' cant-afford' : '');
+    div.innerHTML = `
+      <div class="upgrade-icon">${upg.icon}</div>
+      <div class="upgrade-info">
+        <div class="upgrade-name">${upg.name}</div>
+        <div class="upgrade-desc">${upg.desc}</div>
+      </div>
+      ${owned
+        ? `<div class="upgrade-owned-badge">OWNED</div>`
+        : `<button class="btn-upgrade" ${canAfford ? '' : 'disabled'} onclick="buyWarehouseUpgrade('${upg.id}')">
+             ${upg.cost} cr
+           </button>`
+      }
+    `;
+    upgradesEl.appendChild(div);
+  });
 }
 
 // ── Order Queue (center panel) ────────────────────────────
@@ -136,9 +185,19 @@ function renderOrderQueue() {
   if (state.orders.length === 0) {
     el.innerHTML = '<div class="no-orders">No packages in transit.<br><br>Hit PLACE ORDER to begin!</div>';
     if (countEl) countEl.textContent = '';
+    const openAllBtn = document.getElementById('open-all-btn');
+    if (openAllBtn) openAllBtn.style.display = 'none';
     return;
   }
   if (countEl) countEl.textContent = state.orders.length + ' pkg' + (state.orders.length > 1 ? 's' : '');
+
+  // Show "Open All" button when 2+ orders are ready
+  const readyCount = state.orders.filter(o => o.ready).length;
+  const openAllBtn = document.getElementById('open-all-btn');
+  if (openAllBtn) {
+    openAllBtn.style.display = readyCount >= 2 ? '' : 'none';
+    openAllBtn.textContent   = 'OPEN ALL (' + readyCount + ')';
+  }
   el.innerHTML = '';
   const now = Date.now();
   const carrier = getCurrentCarrier();
@@ -191,6 +250,18 @@ function renderPullHistory() {
       div.className = 'pull-entry pull-entry--empty';
     }
     el.appendChild(div);
+  }
+
+  // Soft pity counter
+  const pityEl = document.getElementById('pity-counter');
+  if (pityEl) {
+    const pulls = state.pullsSinceUltra || 0;
+    const isRamping = pulls >= 50;
+    pityEl.className = 'pity-counter' + (isRamping ? ' pity-ramping' : '');
+    pityEl.textContent = pulls + ' pulls since last ✦ Ultra';
+    pityEl.title = isRamping
+      ? 'Soft pity active! Ultra chance is increasing each pull.'
+      : 'Soft pity ramp starts at 50 pulls without an Ultra.';
   }
 }
 
@@ -575,12 +646,17 @@ function renderTrophyShelf() {
   if (!shelf) return;
   shelf.innerHTML = '';
   MILESTONES.filter(ms => ms.trophy).forEach(ms => {
-    const earned  = state.milestonesCompleted.includes(ms.id);
-    const pending = !earned && (state.milestonesToClaim || []).includes(ms.id);
+    // Earned = current run completed OR lifetime earned (persists through prestige)
+    const earnedLifetime = (state.lifetimeTrophies || []).includes(ms.id);
+    const earnedThisRun  = state.milestonesCompleted.includes(ms.id);
+    const earned         = earnedThisRun || earnedLifetime;
+    const pending        = !earnedThisRun && (state.milestonesToClaim || []).includes(ms.id);
     const cls = earned ? 'trophy-' + ms.trophy : pending ? 'trophy-pending' : 'trophy-empty';
     const slot = document.createElement('div');
-    slot.className = 'trophy-slot ' + cls;
-    slot.dataset.tooltip = earned ? ms.name + ' — ' + ms.desc : pending ? ms.name + ' — READY TO CLAIM!' : 'Unlock Trophy';
+    slot.className = 'trophy-slot ' + cls + (earnedLifetime && !earnedThisRun ? ' trophy-lifetime' : '');
+    slot.dataset.tooltip = earned
+      ? ms.name + ' — ' + ms.desc + (earnedLifetime && !earnedThisRun ? ' (from prev. run)' : '')
+      : pending ? ms.name + ' — READY TO CLAIM!' : 'Unlock Trophy';
     slot.innerHTML = `<div class="trophy-r">R</div><div class="trophy-stand"></div>`;
     shelf.appendChild(slot);
   });
